@@ -15,21 +15,27 @@
   --gold: #facc6b;
 }
 
-/* RESET */
 * { box-sizing: border-box; }
 
-body {
+html, body {
   margin: 0;
+  padding: 0;
+  min-height: 100%;
+  height: auto;
+}
+
+body {
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   background: var(--bg);
   color: var(--text);
-  overflow-y: auto; /* 🔑 permite scroll */
+  overflow-y: auto;
 }
 
-/* LAYOUT GERAL */
+/* LAYOUT */
 .app {
   display: flex;
   min-height: 100vh;
+  height: auto;
   padding: 16px 20px;
   gap: 20px;
 }
@@ -51,206 +57,15 @@ body {
   font-weight: 800;
   color: var(--gold);
   margin: 0 0 6px;
-  line-height: 1.05;
 }
 
 .sidebar p {
-  margin: 4px 0 14px;
-  color: var(--muted);
+  margin: 0 0 14px;
   font-size: 13px;
+  color: var(--muted);
 }
 
 .sidebar button {
   width: 100%;
   padding: 11px 0;
-  margin-top: 10px;
-  border-radius: 999px;
-  border: 1px solid #4b5563;
-  background: linear-gradient(135deg,#4c1d95,#1f2937);
-  color: #f9fafb;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 500;
-  text-transform: uppercase;
-  transition: 0.15s;
-}
-
-.sidebar button:hover {
-  background: linear-gradient(135deg,#7c3aed,#111827);
-  border-color: #6366f1;
-}
-
-.sidebar-bottom {
-  font-size: 11px;
-  color: var(--muted);
-}
-
-/* MAIN */
-.main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* HEADER */
-.header {
-  border-radius: 16px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  padding: 14px 22px;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.header-title-main {
-  font-size: 22px;
-  font-weight: 700;
-  color: #fef3c7;
-}
-
-.header-title-sub {
-  font-size: 12px;
-  color: var(--muted);
-}
-
-.header-metrics {
-  display: flex;
-  gap: 22px;
-}
-
-.metric-label {
-  font-size: 12px;
-  color: var(--muted);
-}
-
-.metric-value {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--gold);
-}
-
-/* CONTENT */
-.content-row {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-
-/* CENTER PANEL */
-.center-panel {
-  flex: 1;
-  border-radius: 18px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  padding: 18px 22px;
-}
-
-.center-panel h2 {
-  color: var(--gold);
-}
-
-.emotion-row button {
-  padding: 7px 16px;
-  border-radius: 999px;
-  border: 1px solid #374151;
-  background: #111827;
-  color: var(--text);
-  cursor: pointer;
-}
-
-.record-btn {
-  margin-top: 14px;
-  padding: 11px 26px;
-  border-radius: 999px;
-  border: none;
-  background: linear-gradient(135deg,#d8b4fe,#fcd34d);
-  color: #0b1120;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-/* VERIFY */
-.verify-card {
-  width: 300px;
-  border-radius: 18px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  padding: 18px;
-  font-size: 13px;
-}
-
-.verify-card h3 {
-  color: var(--gold);
-}
-
-.verify-card a {
-  display: block;
-  margin-top: 6px;
-  color: #93c5fd;
-  text-decoration: none;
-}
-
-/* TRIPLE */
-.triple-row {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-
-.triple-card {
-  flex: 1;
-  min-height: 200px;
-  border-radius: 18px;
-  background: var(--panel);
-  border: 1px solid rgba(251,191,36,0.9);
-  padding: 10px;
-}
-
-/* AIRDROP SECTION */
-.airdrop {
-  margin-top: 20px;
-  padding: 22px;
-  border-radius: 18px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-}
-
-.airdrop h2 {
-  color: var(--gold);
-}
-
-.airdrop a {
-  display: inline-block;
-  margin-top: 12px;
-  padding: 12px 20px;
-  background: #6c5ce7;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: 600;
-}
-
-/* MOBILE */
-@media (max-width: 900px) {
-  .app { flex-direction: column; }
-  .sidebar { width: 100%; }
-  .verify-card { width: 100%; }
-}
-</style>
-</head>
-
-<body>
-
-<div class="app">
-
-  <aside class="sidebar">
-    <div>
-      <h1>ReflexCoin<br>2.0</h1>
-      <p>RFX2 • Solana</p>
-
-      <button onclick="window.open('https://raydium.io/swap/?inputMint=sol&outputMint=43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z')">Buy on Raydium</button>
-      <button onclick="window.open('https://t.me/+dkJnuyXjGmcxZDk0')">Telegram</button>
-      <button onclick="window.open('https://x.com/0Rfx243906')">X
-
+  margin-top: 1
