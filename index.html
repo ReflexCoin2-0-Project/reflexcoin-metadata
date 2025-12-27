@@ -21,35 +21,36 @@ body{
   font-family:Inter,system-ui,-apple-system;
   background:radial-gradient(circle at top,#0b1020,#020617 80%);
   color:var(--text);
+  overflow:hidden; /* 🔒 SEM SCROLL NO DESKTOP */
 }
+
+/* GRID GERAL */
 .app{
-  display:flex;
-  min-height:100vh;
-  padding:18px;
-  gap:18px;
+  display:grid;
+  grid-template-columns:260px 1fr 300px;
+  grid-template-rows:90px 1fr 260px;
+  gap:14px;
+  padding:14px;
+  height:100vh;
 }
 
 /* SIDEBAR */
 .sidebar{
-  width:280px;
+  grid-row:1 / span 3;
   background:radial-gradient(circle at top left,#111827,#020617);
   border:1px solid var(--border);
   border-radius:18px;
-  padding:20px;
+  padding:18px;
   display:flex;
   flex-direction:column;
   justify-content:space-between;
 }
-.sidebar h1{
-  font-size:32px;
-  color:var(--gold);
-  margin:0;
-}
-.sidebar p{color:var(--muted);font-size:13px}
+.sidebar h1{margin:0;color:var(--gold);font-size:30px}
+.sidebar p{font-size:12px;color:var(--muted)}
 .sidebar button{
-  margin-top:10px;
+  margin-top:8px;
   width:100%;
-  padding:12px;
+  padding:10px;
   border-radius:999px;
   border:1px solid #4b5563;
   background:linear-gradient(135deg,#4c1d95,#1f2937);
@@ -57,56 +58,37 @@ body{
   cursor:pointer;
   font-weight:600;
 }
-.sidebar button:hover{
-  box-shadow:0 0 18px rgba(124,58,237,.6);
-}
-.sidebar small{
-  color:var(--muted);
-  font-size:11px;
-}
-
-/* MAIN */
-.main{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  gap:16px;
-}
+.sidebar small{font-size:11px;color:var(--muted)}
 
 /* HEADER */
 .header{
+  grid-column:2 / span 2;
   background:var(--panel);
   border:1px solid var(--border);
   border-radius:16px;
-  padding:16px 20px;
+  padding:14px 18px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
 }
 .header h2{margin:0;color:var(--gold)}
-.metrics{display:flex;gap:24px}
-.metric span{color:var(--muted);font-size:12px}
-.metric strong{display:block;color:var(--gold);font-size:18px}
+.metrics{display:flex;gap:20px}
+.metric span{font-size:11px;color:var(--muted)}
+.metric strong{display:block;color:var(--gold)}
 
-/* CONTENT */
-.content{
-  display:flex;
-  gap:16px;
-  flex:1;
-}
-
-/* CENTER */
+/* CENTRO */
 .center{
-  flex:1;
+  grid-column:2;
+  grid-row:2;
   background:var(--panel);
   border:1px solid var(--border);
   border-radius:18px;
-  padding:20px;
+  padding:18px;
 }
-.center h3{color:var(--gold);margin-top:0}
+.center h3{margin-top:0;color:var(--gold)}
 .emotions button{
-  margin:6px 6px 0 0;
-  padding:8px 14px;
+  margin:4px;
+  padding:7px 12px;
   border-radius:999px;
   border:1px solid #374151;
   background:#111827;
@@ -114,9 +96,9 @@ body{
   cursor:pointer;
 }
 .emotions button.active{background:var(--purple)}
-.record{
-  margin-top:14px;
-  padding:12px 28px;
+.center .record{
+  margin-top:10px;
+  padding:10px 24px;
   border:none;
   border-radius:999px;
   background:linear-gradient(135deg,#fcd34d,#facc15);
@@ -124,41 +106,76 @@ body{
   cursor:pointer;
 }
 
-/* RIGHT */
-.right{
-  width:300px;
+/* VERIFICAÇÃO */
+.verify{
+  grid-column:3;
+  grid-row:2;
   background:var(--panel);
   border:1px solid var(--border);
   border-radius:18px;
-  padding:20px;
+  padding:18px;
 }
-.right a{
+.verify a{
   display:block;
   margin-top:6px;
   color:#93c5fd;
   text-decoration:none;
 }
 
-/* BOTTOM */
-.bottom{
-  display:flex;
-  gap:16px;
+/* AIRDROP / JOGO — CANTO INFERIOR ESQUERDO */
+.airdrop{
+  grid-column:2;
+  grid-row:3;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:16px;
+}
+.airdrop h3{margin-top:0;color:var(--gold)}
+.airdrop a{
+  display:inline-block;
+  margin-top:10px;
+  padding:10px 18px;
+  background:var(--purple);
+  color:#fff;
+  border-radius:999px;
+  text-decoration:none;
+  font-weight:600;
+}
+
+/* DEX + VIDEO */
+.bottom-right{
+  grid-column:3;
+  grid-row:3;
+  display:grid;
+  grid-template-columns:1fr;
+  grid-template-rows:1fr 1fr;
+  gap:14px;
 }
 .card{
-  flex:1;
   background:var(--panel);
   border:1px solid var(--border);
   border-radius:18px;
   overflow:hidden;
 }
-.card iframe,.card video{width:100%;height:100%;border:none}
+.card iframe,.card video{
+  width:100%;
+  height:100%;
+  border:none;
+}
 
+/* MOBILE */
 @media(max-width:900px){
-  .app{flex-direction:column}
-  .sidebar{width:100%}
-  .content{flex-direction:column}
-  .right{width:100%}
-  .bottom{flex-direction:column}
+  body{overflow:auto}
+  .app{
+    grid-template-columns:1fr;
+    grid-template-rows:auto;
+    height:auto;
+  }
+  .sidebar,.header,.center,.verify,.airdrop,.bottom-right{
+    grid-column:auto;
+    grid-row:auto;
+  }
 }
 </style>
 </head>
@@ -178,13 +195,10 @@ body{
     <button onclick="window.open('ReflexCoin2_Whitepaper_Pro.pdf')">Whitepaper</button>
     <button onclick="window.open('ReflexCoin2_Litepaper.pdf')">Litepaper</button>
   </div>
-
   <small>Projeto experimental. Verifique sempre o mint oficial.</small>
 </aside>
 
-<!-- MAIN -->
-<main class="main">
-
+<!-- HEADER -->
 <header class="header">
   <h2>ReflexCoin 2.0 — RFX2</h2>
   <div class="metrics">
@@ -194,12 +208,10 @@ body{
   </div>
 </header>
 
-<section class="content">
-
-<div class="center">
+<!-- CENTRO -->
+<section class="center">
   <h3>Sistema de Valores Emocionais</h3>
   <p>Experimento simbólico. Sem promessas. Sem garantias.</p>
-
   <div class="emotions">
     <button onclick="selectEmotion(this)">😄 Feliz</button>
     <button onclick="selectEmotion(this)">😡 Irritado</button>
@@ -207,56 +219,58 @@ body{
     <button onclick="selectEmotion(this)">🔥 Motivado</button>
     <button onclick="selectEmotion(this)">❤️ Adorei</button>
   </div>
-
   <button class="record" onclick="recordEmotion()">Registar emoção</button>
-</div>
+</section>
 
-<aside class="right">
-  <h3>Verificar Autenticidade</h3>
+<!-- VERIFICAÇÃO -->
+<aside class="verify">
+  <h3>Verificar autenticidade</h3>
   <a href="https://solscan.io/token/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z" target="_blank">Solscan</a>
   <a href="https://explorer.solana.com/address/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z" target="_blank">Solana Explorer</a>
   <a href="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z" target="_blank">DexScreener</a>
-  <a href="https://github.com/ReflexCoin2-0-Project/reflexcoin-metadata" target="_blank">GitHub</a>
 </aside>
 
+<!-- AIRDROP -->
+<section class="airdrop">
+  <h3>Airdrop da Comunidade</h3>
+  <p>Experimento opcional para early supporters.</p>
+  <a href="/airdrop/" target="_blank">👉 Abrir Airdrop</a>
 </section>
 
-<section class="bottom">
+<!-- DEX + VIDEO -->
+<div class="bottom-right">
   <div class="card">
     <iframe src="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z?embed=1"></iframe>
   </div>
   <div class="card">
-    <video src="rfx2-video.mp4" autoplay muted loop controls></video>
+    <video src="rfx2-video.mp4" autoplay muted loop></video>
   </div>
-</section>
+</div>
 
-</main>
 </div>
 
 <script>
 let emotion=null;
-function selectEmotion(btn){
-  document.querySelectorAll('.emotions button').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  emotion=btn.innerText;
+function selectEmotion(b){
+  document.querySelectorAll('.emotions button').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');emotion=b.innerText;
 }
 function recordEmotion(){
   if(!emotion){alert("Escolha uma emoção");return;}
-  const logs=JSON.parse(localStorage.getItem("rfx2_emotions")||"[]");
-  logs.push({emotion,time:new Date().toISOString()});
-  localStorage.setItem("rfx2_emotions",JSON.stringify(logs));
+  const l=JSON.parse(localStorage.getItem("rfx2_emotions")||"[]");
+  l.push({emotion,time:new Date().toISOString()});
+  localStorage.setItem("rfx2_emotions",JSON.stringify(l));
   alert("Emoção registada: "+emotion);
 }
 async function loadPrice(){
   try{
     const r=await fetch("https://api.dexscreener.com/tokens/v1/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z");
     const d=await r.json();
-    document.getElementById("price").innerText="$"+Number(d[0].priceUsd).toFixed(6);
-    document.getElementById("mcap").innerText="$"+(d[0].marketCap||0).toLocaleString();
+    price.innerText="$"+Number(d[0].priceUsd).toFixed(6);
+    mcap.innerText="$"+(d[0].marketCap||0).toLocaleString();
   }catch(e){}
 }
-loadPrice();
-setInterval(loadPrice,30000);
+loadPrice();setInterval(loadPrice,30000);
 </script>
 
 </body>
