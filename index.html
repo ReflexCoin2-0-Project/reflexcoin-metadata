@@ -3,275 +3,305 @@
 <head>
 <meta charset="UTF-8">
 <title>ReflexCoin 2.0 — RFX2</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 :root{
-  --bg:#050812;
-  --panel:#0b1020;
+  --bg: radial-gradient(circle at top, #0b1120, #020617 75%);
+  --panel: radial-gradient(circle at top, #111827, #020617);
   --border:#1f2937;
   --gold:#facc15;
-  --purple:#7c3aed;
   --text:#e5e7eb;
   --muted:#9ca3af;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Inter,system-ui,-apple-system;
-  background:radial-gradient(circle at top,#0b1020,#020617 80%);
-  color:var(--text);
-  overflow:hidden; /* 🔒 SEM SCROLL NO DESKTOP */
+  --purple:#7c3aed;
 }
 
-/* GRID GERAL */
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  height:100vh;
+  overflow:hidden;
+}
+
+/* ===== GRID PRINCIPAL ===== */
 .app{
   display:grid;
-  grid-template-columns:260px 1fr 300px;
-  grid-template-rows:90px 1fr 260px;
+  grid-template-columns:260px minmax(0,1fr) 320px;
+  grid-template-rows:80px minmax(0,1fr);
   gap:14px;
   padding:14px;
   height:100vh;
 }
 
-/* SIDEBAR */
+/* ===== SIDEBAR ===== */
 .sidebar{
-  grid-row:1 / span 3;
-  background:radial-gradient(circle at top left,#111827,#020617);
+  grid-row:1 / span 2;
+  background:var(--panel);
   border:1px solid var(--border);
   border-radius:18px;
-  padding:18px;
+  padding:20px;
   display:flex;
   flex-direction:column;
   justify-content:space-between;
 }
-.sidebar h1{margin:0;color:var(--gold);font-size:30px}
-.sidebar p{font-size:12px;color:var(--muted)}
+
+.sidebar h1{
+  font-size:34px;
+  font-weight:800;
+  color:var(--gold);
+  margin:0;
+}
+
+.sidebar p{
+  margin:6px 0 18px;
+  font-size:13px;
+  color:var(--muted);
+}
+
 .sidebar button{
-  margin-top:8px;
   width:100%;
-  padding:10px;
+  margin-bottom:10px;
+  padding:11px 0;
   border-radius:999px;
   border:1px solid #4b5563;
   background:linear-gradient(135deg,#4c1d95,#1f2937);
   color:#fff;
-  cursor:pointer;
+  font-size:13px;
   font-weight:600;
+  cursor:pointer;
 }
-.sidebar small{font-size:11px;color:var(--muted)}
 
-/* HEADER */
+.sidebar button:hover{
+  background:linear-gradient(135deg,#7c3aed,#111827);
+  border-color:#6366f1;
+}
+
+.sidebar small{
+  font-size:11px;
+  color:var(--muted);
+}
+
+/* ===== HEADER ===== */
 .header{
   grid-column:2 / span 2;
   background:var(--panel);
   border:1px solid var(--border);
   border-radius:16px;
-  padding:14px 18px;
+  padding:14px 22px;
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
 }
-.header h2{margin:0;color:var(--gold)}
-.metrics{display:flex;gap:20px}
-.metric span{font-size:11px;color:var(--muted)}
-.metric strong{display:block;color:var(--gold)}
 
-/* CENTRO */
+.header h2{
+  margin:0;
+  font-size:22px;
+  color:var(--gold);
+}
+
+.metrics{
+  display:flex;
+  gap:28px;
+}
+
+.metric label{
+  font-size:11px;
+  color:var(--muted);
+}
+
+.metric div{
+  font-size:18px;
+  font-weight:700;
+  color:var(--gold);
+}
+
+/* ===== CENTRO ===== */
 .center{
-  grid-column:2;
-  grid-row:2;
   background:var(--panel);
   border:1px solid var(--border);
   border-radius:18px;
-  padding:18px;
+  padding:22px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
 }
-.center h3{margin-top:0;color:var(--gold)}
+
+.center h3{
+  margin:0 0 6px;
+  font-size:22px;
+  color:var(--gold);
+}
+
+.center p{
+  font-size:14px;
+  color:#d1d5db;
+  margin-bottom:14px;
+}
+
+.emotions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
 .emotions button{
-  margin:4px;
-  padding:7px 12px;
+  padding:7px 16px;
   border-radius:999px;
   border:1px solid #374151;
   background:#111827;
-  color:#fff;
+  color:var(--text);
+  font-size:13px;
   cursor:pointer;
 }
-.emotions button.active{background:var(--purple)}
-.center .record{
-  margin-top:10px;
-  padding:10px 24px;
-  border:none;
+
+.record{
+  margin-top:14px;
+  align-self:flex-start;
+  padding:11px 26px;
   border-radius:999px;
+  border:none;
   background:linear-gradient(135deg,#fcd34d,#facc15);
+  color:#020617;
   font-weight:700;
   cursor:pointer;
 }
 
-/* VERIFICAÇÃO */
-.verify{
-  grid-column:3;
-  grid-row:2;
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:18px;
-}
-.verify a{
-  display:block;
-  margin-top:6px;
-  color:#93c5fd;
-  text-decoration:none;
-}
-
-/* AIRDROP / JOGO — CANTO INFERIOR ESQUERDO */
+/* ===== JOGO / AIRDROP (CANTO INFERIOR ESQUERDO) ===== */
 .airdrop{
-  grid-column:2;
-  grid-row:3;
+  position:absolute;
+  bottom:20px;
+  left:300px;
+  width:340px;
+  height:200px;
   background:var(--panel);
-  border:1px solid var(--border);
+  border:1px solid rgba(250,204,21,0.9);
   border-radius:18px;
-  padding:16px;
-}
-.airdrop h3{margin-top:0;color:var(--gold)}
-.airdrop a{
-  display:inline-block;
-  margin-top:10px;
-  padding:10px 18px;
-  background:var(--purple);
-  color:#fff;
-  border-radius:999px;
-  text-decoration:none;
-  font-weight:600;
-}
-
-/* DEX + VIDEO */
-.bottom-right{
-  grid-column:3;
-  grid-row:3;
-  display:grid;
-  grid-template-columns:1fr;
-  grid-template-rows:1fr 1fr;
-  gap:14px;
-}
-.card{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:18px;
+  box-shadow:0 0 18px rgba(250,204,21,0.35);
   overflow:hidden;
 }
-.card iframe,.card video{
+
+.airdrop iframe{
   width:100%;
   height:100%;
   border:none;
 }
 
-/* MOBILE */
-@media(max-width:900px){
-  body{overflow:auto}
-  .app{
-    grid-template-columns:1fr;
-    grid-template-rows:auto;
-    height:auto;
-  }
-  .sidebar,.header,.center,.verify,.airdrop,.bottom-right{
-    grid-column:auto;
-    grid-row:auto;
-  }
+/* ===== DIREITA ===== */
+.right{
+  display:grid;
+  grid-template-rows:1fr 1fr;
+  gap:14px;
+}
+
+.verify{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:18px;
+}
+
+.verify h4{
+  margin:0 0 8px;
+  font-size:18px;
+  color:var(--gold);
+}
+
+.verify a{
+  display:block;
+  color:#93c5fd;
+  font-size:13px;
+  text-decoration:none;
+  margin-bottom:6px;
+}
+
+.dex{
+  background:var(--panel);
+  border:1px solid rgba(250,204,21,0.9);
+  border-radius:18px;
+  overflow:hidden;
+}
+
+.dex iframe{
+  width:100%;
+  height:100%;
+  border:none;
 }
 </style>
 </head>
 
 <body>
+
 <div class="app">
 
-<!-- SIDEBAR -->
-<aside class="sidebar">
-  <div>
-    <h1>ReflexCoin<br>2.0</h1>
-    <p>RFX2 • Solana</p>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div>
+      <h1>ReflexCoin<br>2.0</h1>
+      <p>RFX2 • Solana</p>
 
-    <button onclick="window.open('https://raydium.io/swap/?inputMint=sol&outputMint=43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z')">Comprar na Raydium</button>
-    <button onclick="window.open('https://t.me/+dkJnuyXjGmcxZDk0')">Telegram</button>
-    <button onclick="window.open('https://x.com/0Rfx243906')">X (Twitter)</button>
-    <button onclick="window.open('ReflexCoin2_Whitepaper_Pro.pdf')">Whitepaper</button>
-    <button onclick="window.open('ReflexCoin2_Litepaper.pdf')">Litepaper</button>
-  </div>
-  <small>Projeto experimental. Verifique sempre o mint oficial.</small>
-</aside>
+      <button onclick="window.open('https://raydium.io')">Comprar na Raydium</button>
+      <button onclick="window.open('https://t.me')">Telegram</button>
+      <button onclick="window.open('https://x.com')">X (Twitter)</button>
+      <button onclick="window.open('ReflexCoin2_Whitepaper_Pro.pdf')">Whitepaper</button>
+      <button onclick="window.open('ReflexCoin2_Litepaper.pdf')">Litepaper</button>
+    </div>
 
-<!-- HEADER -->
-<header class="header">
-  <h2>ReflexCoin 2.0 — RFX2</h2>
-  <div class="metrics">
-    <div class="metric"><span>Preço</span><strong id="price">$0</strong></div>
-    <div class="metric"><span>Market Cap</span><strong id="mcap">$0</strong></div>
-    <div class="metric"><span>Supply</span><strong>2,000,000</strong></div>
-  </div>
-</header>
+    <small>
+      Projeto experimental.<br>
+      Verifique sempre o mint oficial.
+    </small>
+  </aside>
 
-<!-- CENTRO -->
-<section class="center">
-  <h3>Sistema de Valores Emocionais</h3>
-  <p>Experimento simbólico. Sem promessas. Sem garantias.</p>
-  <div class="emotions">
-    <button onclick="selectEmotion(this)">😄 Feliz</button>
-    <button onclick="selectEmotion(this)">😡 Irritado</button>
-    <button onclick="selectEmotion(this)">😢 Triste</button>
-    <button onclick="selectEmotion(this)">🔥 Motivado</button>
-    <button onclick="selectEmotion(this)">❤️ Adorei</button>
-  </div>
-  <button class="record" onclick="recordEmotion()">Registar emoção</button>
-</section>
+  <!-- HEADER -->
+  <header class="header">
+    <h2>ReflexCoin 2.0 — RFX2</h2>
+    <div class="metrics">
+      <div class="metric"><label>Preço</label><div>$0</div></div>
+      <div class="metric"><label>Market Cap</label><div>$0</div></div>
+      <div class="metric"><label>Supply</label><div>2,000,000</div></div>
+    </div>
+  </header>
 
-<!-- VERIFICAÇÃO -->
-<aside class="verify">
-  <h3>Verificar autenticidade</h3>
-  <a href="https://solscan.io/token/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z" target="_blank">Solscan</a>
-  <a href="https://explorer.solana.com/address/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z" target="_blank">Solana Explorer</a>
-  <a href="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z" target="_blank">DexScreener</a>
-</aside>
+  <!-- CENTRO -->
+  <section class="center">
+    <h3>Sistema de Valores Emocionais</h3>
+    <p>Experimento simbólico. Sem promessas. Sem garantias.</p>
 
-<!-- AIRDROP -->
-<section class="airdrop">
-  <h3>Airdrop da Comunidade</h3>
-  <p>Experimento opcional para early supporters.</p>
-  <a href="/airdrop/" target="_blank">👉 Abrir Airdrop</a>
-</section>
+    <div class="emotions">
+      <button>😄 Feliz</button>
+      <button>😡 Irritado</button>
+      <button>😢 Triste</button>
+      <button>🔥 Motivado</button>
+      <button>❤️ Adorei</button>
+    </div>
 
-<!-- DEX + VIDEO -->
-<div class="bottom-right">
-  <div class="card">
-    <iframe src="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z?embed=1"></iframe>
-  </div>
-  <div class="card">
-    <video src="rfx2-video.mp4" autoplay muted loop></video>
-  </div>
-</div>
+    <button class="record">Registar emoção</button>
+  </section>
+
+  <!-- DIREITA -->
+  <aside class="right">
+    <div class="verify">
+      <h4>Verificar autenticidade</h4>
+      <a href="https://solscan.io" target="_blank">Solscan</a>
+      <a href="https://explorer.solana.com" target="_blank">Solana Explorer</a>
+      <a href="https://dexscreener.com" target="_blank">DexScreener</a>
+    </div>
+
+    <div class="dex">
+      <iframe src="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z?embed=1"></iframe>
+    </div>
+  </aside>
 
 </div>
 
-<script>
-let emotion=null;
-function selectEmotion(b){
-  document.querySelectorAll('.emotions button').forEach(x=>x.classList.remove('active'));
-  b.classList.add('active');emotion=b.innerText;
-}
-function recordEmotion(){
-  if(!emotion){alert("Escolha uma emoção");return;}
-  const l=JSON.parse(localStorage.getItem("rfx2_emotions")||"[]");
-  l.push({emotion,time:new Date().toISOString()});
-  localStorage.setItem("rfx2_emotions",JSON.stringify(l));
-  alert("Emoção registada: "+emotion);
-}
-async function loadPrice(){
-  try{
-    const r=await fetch("https://api.dexscreener.com/tokens/v1/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z");
-    const d=await r.json();
-    price.innerText="$"+Number(d[0].priceUsd).toFixed(6);
-    mcap.innerText="$"+(d[0].marketCap||0).toLocaleString();
-  }catch(e){}
-}
-loadPrice();setInterval(loadPrice,30000);
-</script>
+<!-- AIRDROP / JOGO -->
+<div class="airdrop">
+  <iframe src="https://reflex-airdrop-rewards-effa2776.base44.app/"></iframe>
+</div>
 
 </body>
 </html>
