@@ -68,4 +68,267 @@ body {
 .sidebar button {
   width: 100%;
   padding: 11px 0;
-  margin-top: 1
+  margin-top: 10px;
+  border-radius: 999px;
+  border: 1px solid #4b5563;
+  background: linear-gradient(135deg,#4c1d95,#1f2937);
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.sidebar-bottom {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* HEADER */
+.header {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 14px 22px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.header-title-main {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fef3c7;
+}
+
+.header-title-sub {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.header-metrics {
+  display: flex;
+  gap: 22px;
+}
+
+.metric-label {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.metric-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+/* CONTENT */
+.content-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* CENTER PANEL */
+.center-panel {
+  flex: 1;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 18px 22px;
+}
+
+.center-panel h2 {
+  margin-top: 0;
+  color: var(--gold);
+}
+
+.emotion-row button {
+  margin: 4px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 1px solid #374151;
+  background: #111827;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.record-btn {
+  margin-top: 14px;
+  padding: 11px 26px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg,#d8b4fe,#fcd34d);
+  color: #0b1120;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* VERIFY */
+.verify-card {
+  width: 300px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.verify-card h3 {
+  margin-top: 0;
+  color: var(--gold);
+}
+
+.verify-card a {
+  display: block;
+  margin-top: 6px;
+  color: #93c5fd;
+  text-decoration: none;
+}
+
+/* AIRDROP */
+.airdrop {
+  margin-top: 20px;
+  padding: 22px;
+  border-radius: 18px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+}
+
+.airdrop h2 {
+  margin-top: 0;
+  color: var(--gold);
+}
+
+.airdrop a {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 12px 20px;
+  background: #6c5ce7;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+  .app { flex-direction: column; }
+  .sidebar { width: 100%; }
+  .verify-card { width: 100%; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <aside class="sidebar">
+    <div>
+      <h1>ReflexCoin<br>2.0</h1>
+      <p>RFX2 • Solana</p>
+
+      <button onclick="window.open('https://raydium.io/swap/?inputMint=sol&outputMint=43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z')">
+        Buy on Raydium
+      </button>
+      <button onclick="window.open('https://t.me/+dkJnuyXjGmcxZDk0')">
+        Telegram
+      </button>
+      <button onclick="window.open('https://x.com/0Rfx243906')">
+        X (Twitter)
+      </button>
+    </div>
+
+    <div class="sidebar-bottom">
+      Experimental project. Always verify the official mint address.
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <section class="header">
+      <div>
+        <div class="header-title-main">ReflexCoin 2.0 — RFX2</div>
+        <div class="header-title-sub">Experimental emotional-value token on Solana.</div>
+      </div>
+
+      <div class="header-metrics">
+        <div>
+          <div class="metric-label">Live Price</div>
+          <div class="metric-value" id="livePrice">$0</div>
+        </div>
+        <div>
+          <div class="metric-label">Market Cap</div>
+          <div class="metric-value" id="mcap">$0</div>
+        </div>
+        <div>
+          <div class="metric-label">Supply</div>
+          <div class="metric-value">2,000,000</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-row">
+      <section class="center-panel">
+        <h2>Emotional Value System</h2>
+        <p>Symbolic participation experiment. No promises. No guarantees.</p>
+
+        <div class="emotion-row">
+          <button>😄 Happy</button>
+          <button>😡 Angry</button>
+          <button>😢 Sad</button>
+          <button>🔥 Motivated</button>
+          <button>❤️ Loved</button>
+        </div>
+
+        <button class="record-btn">Record Emotion</button>
+      </section>
+
+      <aside class="verify-card">
+        <h3>Verify Authenticity</h3>
+        <a href="https://solscan.io/token/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z" target="_blank">Solscan</a>
+        <a href="https://explorer.solana.com/address/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z" target="_blank">Solana Explorer</a>
+        <a href="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z" target="_blank">DexScreener</a>
+      </aside>
+    </section>
+
+    <section class="airdrop">
+      <h2>Community Airdrop (Optional)</h2>
+      <p>
+        ReflexCoin 2.0 runs a small community airdrop experiment.
+        Participation is optional and meant for early supporters.
+      </p>
+      <p>
+        This is an experimental feature. No promises. No guarantees.
+      </p>
+      <a href="https://app.base44.com/apps/694fcfc8e5bea1e7effa2776/editor/preview/Home" target="_blank">
+        👉 Try the Community Airdrop
+      </a>
+    </section>
+
+  </main>
+</div>
+
+<script>
+async function loadPrice() {
+  try {
+    const res = await fetch("https://api.dexscreener.com/tokens/v1/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z");
+    const data = await res.json();
+    const p = data[0];
+    document.getElementById("livePrice").innerText = "$" + Number(p.priceUsd).toFixed(6);
+    document.getElementById("mcap").innerText = "$" + (p.marketCap ? Number(p.marketCap).toLocaleString() : "0");
+  } catch (e) {}
+}
+loadPrice();
+setInterval(loadPrice, 30000);
+</script>
+
+</body>
+</html>
