@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 <title>ReflexCoin 2.0 — RFX2</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 :root {
@@ -21,11 +21,10 @@ html, body {
   margin: 0;
   padding: 0;
   min-height: 100%;
-  height: auto;
 }
 
 body {
-  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: Inter, system-ui, sans-serif;
   background: var(--bg);
   color: var(--text);
   overflow-y: auto;
@@ -35,7 +34,6 @@ body {
 .app {
   display: flex;
   min-height: 100vh;
-  height: auto;
   padding: 16px 20px;
   gap: 20px;
 }
@@ -43,7 +41,7 @@ body {
 /* SIDEBAR */
 .sidebar {
   width: 280px;
-  background: radial-gradient(circle at top left, #111827, #020617);
+  background: var(--panel);
   border-radius: 18px;
   border: 1px solid var(--border);
   padding: 20px;
@@ -53,29 +51,25 @@ body {
 }
 
 .sidebar h1 {
-  font-size: 34px;
-  font-weight: 800;
   color: var(--gold);
+  font-size: 34px;
   margin: 0 0 6px;
 }
 
 .sidebar p {
-  margin: 0 0 14px;
-  font-size: 13px;
   color: var(--muted);
+  font-size: 13px;
 }
 
 .sidebar button {
   width: 100%;
-  padding: 11px 0;
   margin-top: 10px;
+  padding: 11px 0;
   border-radius: 999px;
   border: 1px solid #4b5563;
   background: linear-gradient(135deg,#4c1d95,#1f2937);
   color: #fff;
   cursor: pointer;
-  font-size: 13px;
-  text-transform: uppercase;
 }
 
 .sidebar-bottom {
@@ -105,7 +99,7 @@ body {
 .header-title-main {
   font-size: 22px;
   font-weight: 700;
-  color: #fef3c7;
+  color: var(--gold);
 }
 
 .header-title-sub {
@@ -136,7 +130,7 @@ body {
   flex-wrap: wrap;
 }
 
-/* CENTER PANEL */
+/* CENTER */
 .center-panel {
   flex: 1;
   background: var(--panel);
@@ -145,10 +139,7 @@ body {
   padding: 18px 22px;
 }
 
-.center-panel h2 {
-  margin-top: 0;
-  color: var(--gold);
-}
+.center-panel h2 { color: var(--gold); }
 
 .emotion-row button {
   margin: 4px;
@@ -157,7 +148,6 @@ body {
   border: 1px solid #374151;
   background: #111827;
   color: var(--text);
-  cursor: pointer;
 }
 
 .record-btn {
@@ -168,7 +158,6 @@ body {
   background: linear-gradient(135deg,#d8b4fe,#fcd34d);
   color: #0b1120;
   font-weight: 600;
-  cursor: pointer;
 }
 
 /* VERIFY */
@@ -180,16 +169,44 @@ body {
   padding: 18px;
 }
 
-.verify-card h3 {
-  margin-top: 0;
-  color: var(--gold);
-}
+.verify-card h3 { color: var(--gold); }
 
 .verify-card a {
   display: block;
   margin-top: 6px;
   color: #93c5fd;
   text-decoration: none;
+}
+
+/* TRIPLE ROW */
+.triple-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.triple-card {
+  flex: 1;
+  min-height: 200px;
+  background: var(--panel);
+  border-radius: 18px;
+  border: 1px solid rgba(251,191,36,0.8);
+  padding: 10px;
+}
+
+/* DEX */
+.dex-card iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* VIDEO */
+.video-card video {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  object-fit: cover;
 }
 
 /* AIRDROP */
@@ -201,10 +218,7 @@ body {
   border: 1px solid var(--border);
 }
 
-.airdrop h2 {
-  margin-top: 0;
-  color: var(--gold);
-}
+.airdrop h2 { color: var(--gold); }
 
 .airdrop a {
   display: inline-block;
@@ -212,8 +226,8 @@ body {
   padding: 12px 20px;
   background: #6c5ce7;
   color: #fff;
-  text-decoration: none;
   border-radius: 8px;
+  text-decoration: none;
   font-weight: 600;
 }
 
@@ -230,104 +244,100 @@ body {
 
 <div class="app">
 
-  <aside class="sidebar">
-    <div>
-      <h1>ReflexCoin<br>2.0</h1>
-      <p>RFX2 • Solana</p>
+<aside class="sidebar">
+  <div>
+    <h1>ReflexCoin<br>2.0</h1>
+    <p>RFX2 • Solana</p>
 
-      <button onclick="window.open('https://raydium.io/swap/?inputMint=sol&outputMint=43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z')">
-        Buy on Raydium
-      </button>
-      <button onclick="window.open('https://t.me/+dkJnuyXjGmcxZDk0')">
-        Telegram
-      </button>
-      <button onclick="window.open('https://x.com/0Rfx243906')">
-        X (Twitter)
-      </button>
-    </div>
+    <button onclick="window.open('https://raydium.io/swap/?inputMint=sol&outputMint=43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z')">BUY ON RAYDIUM</button>
+    <button onclick="window.open('https://t.me/+dkJnuyXjGmcxZDk0')">TELEGRAM</button>
+    <button onclick="window.open('https://x.com/0Rfx243906')">X (TWITTER)</button>
+    <button onclick="window.open('ReflexCoin2_Whitepaper_Pro.pdf')">WHITEPAPER</button>
+    <button onclick="window.open('ReflexCoin2_Litepaper.pdf')">LITEPAPER</button>
+  </div>
 
-    <div class="sidebar-bottom">
-      Experimental project. Always verify the official mint address.
+  <div class="sidebar-bottom">
+    Experimental project. Always verify the official mint.
+  </div>
+</aside>
+
+<main class="main">
+
+<section class="header">
+  <div>
+    <div class="header-title-main">ReflexCoin 2.0 — RFX2</div>
+    <div class="header-title-sub">Experimental emotional-value token on Solana</div>
+  </div>
+  <div class="header-metrics">
+    <div><div class="metric-label">Live Price</div><div class="metric-value" id="livePrice">$0</div></div>
+    <div><div class="metric-label">Market Cap</div><div class="metric-value" id="mcap">$0</div></div>
+    <div><div class="metric-label">Supply</div><div class="metric-value">2,000,000</div></div>
+  </div>
+</section>
+
+<section class="content-row">
+  <section class="center-panel">
+    <h2>Emotional Value System</h2>
+    <p>Symbolic participation experiment. No guarantees.</p>
+    <div class="emotion-row">
+      <button>😄 Happy</button>
+      <button>😡 Angry</button>
+      <button>😢 Sad</button>
+      <button>🔥 Motivated</button>
+      <button>❤️ Loved</button>
     </div>
+    <button class="record-btn">Record Emotion</button>
+  </section>
+
+  <aside class="verify-card">
+    <h3>Verify Authenticity</h3>
+    <a href="https://solscan.io/token/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z">Solscan</a>
+    <a href="https://explorer.solana.com/address/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z">Solana Explorer</a>
+    <a href="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z">DexScreener</a>
   </aside>
+</section>
 
-  <main class="main">
+<section class="triple-row">
+  <div class="triple-card dex-card">
+    <iframe src="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z?embed=1"></iframe>
+  </div>
 
-    <section class="header">
-      <div>
-        <div class="header-title-main">ReflexCoin 2.0 — RFX2</div>
-        <div class="header-title-sub">Experimental emotional-value token on Solana.</div>
-      </div>
+  <div class="triple-card">
+    <h3 style="color:var(--gold)">How to get RFX2</h3>
+    <ul>
+      <li>Install Phantom Wallet</li>
+      <li>Add RFX2 mint</li>
+      <li>Buy on Raydium</li>
+      <li>Participate in experiments</li>
+    </ul>
+  </div>
 
-      <div class="header-metrics">
-        <div>
-          <div class="metric-label">Live Price</div>
-          <div class="metric-value" id="livePrice">$0</div>
-        </div>
-        <div>
-          <div class="metric-label">Market Cap</div>
-          <div class="metric-value" id="mcap">$0</div>
-        </div>
-        <div>
-          <div class="metric-label">Supply</div>
-          <div class="metric-value">2,000,000</div>
-        </div>
-      </div>
-    </section>
+  <div class="triple-card video-card">
+    <video src="rfx2-video.mp4" autoplay muted loop controls></video>
+  </div>
+</section>
 
-    <section class="content-row">
-      <section class="center-panel">
-        <h2>Emotional Value System</h2>
-        <p>Symbolic participation experiment. No promises. No guarantees.</p>
+<section class="airdrop">
+  <h2>Community Airdrop (Optional)</h2>
+  <p>Optional community experiment for early supporters.</p>
+  <a href="https://app.base44.com/apps/694fcfc8e5bea1e7effa2776/editor/preview/Home" target="_blank">
+    👉 Try the Community Airdrop
+  </a>
+</section>
 
-        <div class="emotion-row">
-          <button>😄 Happy</button>
-          <button>😡 Angry</button>
-          <button>😢 Sad</button>
-          <button>🔥 Motivated</button>
-          <button>❤️ Loved</button>
-        </div>
-
-        <button class="record-btn">Record Emotion</button>
-      </section>
-
-      <aside class="verify-card">
-        <h3>Verify Authenticity</h3>
-        <a href="https://solscan.io/token/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z" target="_blank">Solscan</a>
-        <a href="https://explorer.solana.com/address/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z" target="_blank">Solana Explorer</a>
-        <a href="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z" target="_blank">DexScreener</a>
-      </aside>
-    </section>
-
-    <section class="airdrop">
-      <h2>Community Airdrop (Optional)</h2>
-      <p>
-        ReflexCoin 2.0 runs a small community airdrop experiment.
-        Participation is optional and meant for early supporters.
-      </p>
-      <p>
-        This is an experimental feature. No promises. No guarantees.
-      </p>
-      <a href="https://app.base44.com/apps/694fcfc8e5bea1e7effa2776/editor/preview/Home" target="_blank">
-        👉 Try the Community Airdrop
-      </a>
-    </section>
-
-  </main>
+</main>
 </div>
 
 <script>
-async function loadPrice() {
-  try {
-    const res = await fetch("https://api.dexscreener.com/tokens/v1/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z");
-    const data = await res.json();
-    const p = data[0];
-    document.getElementById("livePrice").innerText = "$" + Number(p.priceUsd).toFixed(6);
-    document.getElementById("mcap").innerText = "$" + (p.marketCap ? Number(p.marketCap).toLocaleString() : "0");
-  } catch (e) {}
+async function loadPrice(){
+  try{
+    const r=await fetch("https://api.dexscreener.com/tokens/v1/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z");
+    const d=await r.json();const p=d[0];
+    livePrice.innerText="$"+Number(p.priceUsd).toFixed(6);
+    mcap.innerText="$"+(p.marketCap?Number(p.marketCap).toLocaleString():0);
+  }catch(e){}
 }
-loadPrice();
-setInterval(loadPrice, 30000);
+loadPrice();setInterval(loadPrice,30000);
 </script>
 
 </body>
