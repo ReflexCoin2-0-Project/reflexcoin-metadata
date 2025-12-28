@@ -6,15 +6,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{margin:0;padding:0;box-sizing:border-box}
 body{
-  background:radial-gradient(circle at top,#0b1020,#050914 70%);
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
-  color:#fff;
   height:100vh;
+  background:radial-gradient(circle at top,#0b1020,#050914 70%);
+  font-family:system-ui,sans-serif;
+  color:#fff;
   overflow:hidden;
 }
-a{color:#4da3ff;text-decoration:none}
+a{text-decoration:none;color:#4da3ff}
 
 .wrapper{
   display:grid;
@@ -32,7 +32,6 @@ a{color:#4da3ff;text-decoration:none}
   flex-direction:column;
   gap:14px;
 }
-
 .sidebar h1{color:#ffd84d;font-size:32px}
 .sidebar small{opacity:.6}
 
@@ -41,8 +40,8 @@ a{color:#4da3ff;text-decoration:none}
   border-radius:999px;
   background:linear-gradient(135deg,#5a2ea6,#7b4ce0);
   color:#fff;
-  text-align:center;
   font-weight:600;
+  text-align:center;
 }
 
 .main{
@@ -59,9 +58,7 @@ a{color:#4da3ff;text-decoration:none}
   justify-content:space-between;
   align-items:center;
 }
-
 .header h2{color:#ffd84d}
-
 .stats span{margin-left:16px;color:#ffd84d;font-weight:600}
 
 .section{
@@ -72,9 +69,9 @@ a{color:#4da3ff;text-decoration:none}
 
 .emotions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
 .emotion{
+  background:rgba(255,255,255,.08);
   padding:6px 14px;
   border-radius:999px;
-  background:rgba(255,255,255,.08);
 }
 
 .primary{
@@ -91,33 +88,20 @@ a{color:#4da3ff;text-decoration:none}
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:16px;
-  height:100%;
 }
 
 .card{
   background:rgba(255,255,255,.03);
   border-radius:20px;
   overflow:hidden;
-  position:relative;
+  height:100%;
 }
 
-.card iframe,
-.card video{
+iframe,video{
   width:100%;
   height:100%;
   border:0;
   object-fit:cover;
-}
-
-/* ESCONDER BASE44 */
-iframe{
-  pointer-events:auto;
-}
-iframe + div,
-iframe ~ div,
-div[class*="base44"],
-div[style*="Base44"]{
-  display:none!important;
 }
 </style>
 </head>
@@ -126,77 +110,73 @@ div[style*="Base44"]{
 
 <div class="wrapper">
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <h1>ReflexCoin<br>2.0</h1>
-    <small>RFX2 • Solana</small>
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <h1>ReflexCoin<br>2.0</h1>
+  <small>RFX2 • Solana</small>
 
-    <a class="btn" href="#">Comprar na Raydium</a>
-    <a class="btn" href="#">Telegram</a>
-    <a class="btn" href="#">X (Twitter)</a>
-    <a class="btn" href="#">Whitepaper</a>
-    <a class="btn" href="#">Litepaper</a>
+  <a class="btn" href="#">Comprar na Raydium</a>
+  <a class="btn" href="#">Telegram</a>
+  <a class="btn" href="#">X (Twitter)</a>
+  <a class="btn" href="#">Whitepaper</a>
+  <a class="btn" href="#">Litepaper</a>
 
-    <small>Projeto experimental.<br>Verifique sempre o mint oficial.</small>
-  </aside>
+  <small>Projeto experimental.<br>Verifique sempre o mint oficial.</small>
+</aside>
 
-  <!-- MAIN -->
-  <main class="main">
+<!-- MAIN -->
+<main class="main">
 
-    <div class="header">
-      <h2>ReflexCoin 2.0 — RFX2</h2>
-      <div class="stats">
-        <span>Preço $0</span>
-        <span>Market Cap $0</span>
-        <span>Supply 2,000,000</span>
-      </div>
-    </div>
+<div class="header">
+  <h2>ReflexCoin 2.0 — RFX2</h2>
+  <div class="stats">
+    <span>Preço $0</span>
+    <span>Market Cap $0</span>
+    <span>Supply 2,000,000</span>
+  </div>
+</div>
 
-    <div class="section">
-      <h3>Sistema de Valores Emocionais</h3>
-      <p>Experimento simbólico. Sem promessas. Sem garantias.</p>
+<div class="section">
+  <h3>Sistema de Valores Emocionais</h3>
+  <p>Experimento simbólico. Sem promessas. Sem garantias.</p>
 
-      <div class="emotions">
-        <div class="emotion">😊 Feliz</div>
-        <div class="emotion">😡 Irritado</div>
-        <div class="emotion">😢 Triste</div>
-        <div class="emotion">🔥 Motivado</div>
-        <div class="emotion">❤️ Adorei</div>
-      </div>
+  <div class="emotions">
+    <div class="emotion">😊 Feliz</div>
+    <div class="emotion">😡 Irritado</div>
+    <div class="emotion">😢 Triste</div>
+    <div class="emotion">🔥 Motivado</div>
+    <div class="emotion">❤️ Adorei</div>
+  </div>
 
-      <span class="primary">Registar emoção</span>
-    </div>
+  <span class="primary">Registar emoção</span>
+</div>
 
-    <!-- BLOCO INFERIOR -->
-    <div class="bottom">
+<!-- BLOCO INFERIOR -->
+<div class="bottom">
 
-      <!-- JOGO (CANTO INFERIOR ESQUERDO) -->
-      <div class="card">
-        <iframe src="https://reflex-airdrop-rewards-effa2776.base44.app/"></iframe>
-      </div>
+  <!-- JOGO -->
+  <div class="card">
+    <iframe src="https://app.base44.com/apps/694fcfc8e5bea1e7effa2776/preview"></iframe>
+  </div>
 
-      <!-- DEXSCREENER -->
-      <div class="card">
-        <iframe src="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z"></iframe>
-      </div>
+  <!-- DEXSCREENER -->
+  <div class="card">
+    <iframe src="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z"></iframe>
+  </div>
 
-      <!-- VIDEO 1 -->
-      <div class="card">
-        <video autoplay muted loop>
-          <source src="rfx2-video.mp4" type="video/mp4">
-        </video>
-      </div>
+  <!-- VIDEO -->
+  <div class="card">
+    <video autoplay muted loop>
+      <source src="rfx2-video.mp4" type="video/mp4">
+    </video>
+  </div>
 
-      <!-- VIDEO 2 -->
-      <div class="card">
-        <video autoplay muted loop>
-          <source src="rfx2-video.mp4" type="video/mp4">
-        </video>
-      </div>
+  <!-- BLOCO LIVRE / IMAGEM -->
+  <div class="card"></div>
 
-    </div>
+</div>
 
-  </main>
+</main>
 </div>
 
 </body>
