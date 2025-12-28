@@ -1,176 +1,158 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 <title>ReflexCoin 2.0 — RFX2</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-:root {
+:root{
   --bg: radial-gradient(circle at top, #0b1120, #020617 80%);
   --panel: radial-gradient(circle at top, #111827, #020617);
-  --border: #1f2937;
-  --text: #e5e7eb;
-  --muted: #9ca3af;
-  --gold: #facc15;
-  --purple: #7c3aed;
+  --border:#1f2937;
+  --gold:#facc15;
+  --purple:#7c3aed;
+  --text:#e5e7eb;
+  --muted:#9ca3af;
 }
 
-* { box-sizing: border-box; }
+*{box-sizing:border-box}
 
-body {
-  margin: 0;
-  font-family: Inter, system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  height: 100vh;
-  overflow: hidden; /* SEM SCROLL */
+body{
+  margin:0;
+  background:var(--bg);
+  font-family:Inter,system-ui,sans-serif;
+  color:var(--text);
+  height:100vh;
+  overflow:hidden;
 }
 
-/* LAYOUT */
-.app {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  height: 100vh;
-  gap: 14px;
-  padding: 14px;
+.app{
+  display:grid;
+  grid-template-columns:260px 1fr;
+  gap:14px;
+  padding:14px;
+  height:100vh;
 }
 
 /* SIDEBAR */
-.sidebar {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+.sidebar{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:18px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
 }
 
-.sidebar h1 {
-  font-size: 30px;
-  color: var(--gold);
-  margin: 0;
+.sidebar h1{
+  margin:0;
+  color:var(--gold);
+  font-size:30px;
 }
 
-.sidebar p {
-  font-size: 12px;
-  color: var(--muted);
-  margin-bottom: 14px;
+.sidebar p{
+  font-size:12px;
+  color:var(--muted);
 }
 
-.sidebar button {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 8px;
-  border-radius: 999px;
-  border: none;
-  background: linear-gradient(135deg,#5b21b6,#1e293b);
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
+.sidebar button{
+  width:100%;
+  margin-bottom:8px;
+  padding:10px;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(135deg,#5b21b6,#1e293b);
+  color:white;
+  font-weight:600;
+  cursor:pointer;
 }
 
-.sidebar small {
-  font-size: 11px;
-  color: var(--muted);
+.sidebar small{
+  font-size:11px;
+  color:var(--muted);
 }
 
 /* MAIN */
-.main {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  gap: 14px;
+.main{
+  display:grid;
+  grid-template-rows:auto 1fr;
+  gap:14px;
 }
 
 /* HEADER */
-.header {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 14px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.header{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:14px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-.header h2 {
-  margin: 0;
-  color: var(--gold);
+.header h2{margin:0;color:var(--gold)}
+
+.metrics span{
+  margin-left:18px;
+  color:var(--gold);
+  font-size:13px;
 }
 
-.metrics span {
-  margin-left: 18px;
-  font-size: 13px;
-  color: var(--gold);
-}
-
-/* CONTENT GRID */
-.content {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 14px;
+/* CONTENT */
+.content{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  grid-template-rows:auto 1fr;
+  gap:14px;
 }
 
 /* PANELS */
-.panel {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 16px;
-  overflow: hidden;
+.panel{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:16px;
 }
 
 /* EMOTIONS */
-.emotions button {
-  margin-right: 6px;
-  padding: 6px 14px;
-  border-radius: 999px;
-  border: 1px solid #374151;
-  background: #020617;
-  color: white;
+.emotions button{
+  margin-right:6px;
+  padding:6px 14px;
+  border-radius:999px;
+  border:1px solid #374151;
+  background:#020617;
+  color:white;
 }
 
-.cta {
-  margin-top: 12px;
-  padding: 10px 22px;
-  border-radius: 999px;
-  background: linear-gradient(135deg,#fde047,#facc15);
-  border: none;
-  font-weight: 700;
+.cta{
+  margin-top:12px;
+  padding:10px 22px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#fde047,#facc15);
+  border:none;
+  font-weight:700;
 }
 
-/* BOTTOM ROW */
-.bottom {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 14px;
-  height: 100%;
+/* BOTTOM ROW (SUBIDA E SEM CORTE) */
+.bottom{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  height:260px;          /* ALTURA CONTROLADA */
+  margin-top:-10px;      /* SOBE UM POUCO */
 }
 
-/* JOGO */
-.game iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-  border-radius: 14px;
-}
-
-/* DEX */
-.dex iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-/* VIDEO */
-.video video {
-  width: 100%;
-  height: 100%;
-  object-fit: contain; /* NÃO CORTA */
-  border-radius: 14px;
-  background: #020617;
+/* Iframes / media */
+.bottom iframe,
+.bottom video{
+  width:100%;
+  height:100%;
+  border:none;
+  border-radius:14px;
+  object-fit:contain;
+  background:#020617;
 }
 </style>
 </head>
@@ -210,10 +192,11 @@ body {
 <!-- CONTENT -->
 <div class="content">
 
-<!-- EMOTIONAL -->
+<!-- LEFT -->
 <div class="panel">
   <h3>Sistema de Valores Emocionais</h3>
   <p>Experimento simbólico. Sem promessas. Sem garantias.</p>
+
   <div class="emotions">
     <button>😊 Feliz</button>
     <button>😡 Irritado</button>
@@ -221,10 +204,11 @@ body {
     <button>🔥 Motivado</button>
     <button>❤️ Adorei</button>
   </div>
+
   <button class="cta">Registar emoção</button>
 </div>
 
-<!-- VERIFY -->
+<!-- RIGHT -->
 <div class="panel">
   <h3>Verificar autenticidade</h3>
   <p><a href="https://solscan.io" target="_blank">Solscan</a></p>
@@ -232,23 +216,28 @@ body {
   <p><a href="https://dexscreener.com" target="_blank">DexScreener</a></p>
 </div>
 
-<!-- BOTTOM -->
+<!-- BOTTOM ROW -->
 <div class="bottom">
 
-<!-- JOGO (CANTO INFERIOR ESQUERDO) -->
-<div class="panel game">
-  <iframe src="https://reflex-airdrop-rewards-effa2776.base44.app/"></iframe>
-</div>
+  <!-- JOGO -->
+  <div class="panel">
+    <iframe src="https://reflex-airdrop-rewards-effa2776.base44.app/"></iframe>
+  </div>
 
-<!-- DEX -->
-<div class="panel dex">
-  <iframe src="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z?embed=1"></iframe>
-</div>
+  <!-- DEX -->
+  <div class="panel">
+    <iframe src="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z?embed=1"></iframe>
+  </div>
 
-<!-- VIDEO -->
-<div class="panel video">
-  <video src="rfx2-video.mp4" autoplay muted loop></video>
-</div>
+  <!-- VIDEO -->
+  <div class="panel">
+    <video src="rfx2-video.mp4" autoplay muted loop></video>
+  </div>
+
+  <!-- VISUAL EXTRA -->
+  <div class="panel">
+    <video src="rfx2-video.mp4" autoplay muted loop></video>
+  </div>
 
 </div>
 </div>
