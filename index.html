@@ -1,223 +1,222 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>ReflexCoin 2.0 — RFX2</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReflexCoin 2.0 — RFX2</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-
+*{box-sizing:border-box;margin:0;padding:0}
 body{
+  background:radial-gradient(circle at top,#0b1120,#020617 80%);
+  color:#e5e7eb;
+  font-family:Inter,system-ui,sans-serif;
   height:100vh;
   overflow:hidden;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto;
-  background:radial-gradient(circle at top,#0b1020,#040711 75%);
-  color:#fff;
 }
-
-a{text-decoration:none;color:#6aa8ff}
-
-.layout{
+.app{
   display:grid;
   grid-template-columns:260px 1fr;
+  gap:20px;
+  padding:20px;
   height:100vh;
-  gap:14px;
-  padding:14px;
 }
-
-/* SIDEBAR */
 .sidebar{
-  background:rgba(255,255,255,.04);
-  border-radius:18px;
-  padding:18px;
+  background:linear-gradient(180deg,#111827,#020617);
+  border-radius:20px;
+  padding:20px;
   display:flex;
   flex-direction:column;
-  gap:12px;
 }
-.sidebar h1{color:#ffd84d;font-size:28px}
-.sidebar small{opacity:.6;font-size:12px}
-
-.btn{
-  background:linear-gradient(135deg,#5b2fb2,#7c52e8);
-  padding:11px;
+.sidebar h1{
+  color:#facc15;
+  font-size:34px;
+  margin-bottom:6px;
+}
+.sidebar p{
+  font-size:12px;
+  color:#9ca3af;
+  margin-bottom:16px
+}
+.sidebar button{
+  margin-bottom:10px;
+  padding:12px;
+  border:none;
   border-radius:999px;
-  text-align:center;
+  background:linear-gradient(135deg,#6d28d9,#4c1d95);
+  color:#fff;
+  cursor:pointer;
   font-weight:600;
 }
-
-/* MAIN */
+.sidebar small{
+  margin-top:auto;
+  font-size:11px;
+  color:#9ca3af;
+}
 .main{
   display:grid;
-  grid-template-rows:auto auto 1fr auto;
+  grid-template-rows:90px 1fr;
   gap:14px;
 }
-
-/* HEADER */
 .header{
-  background:rgba(255,255,255,.04);
-  border-radius:18px;
-  padding:12px 18px;
+  background:#020617;
+  border-radius:16px;
+  padding:20px;
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
-.header h2{color:#ffd84d;font-size:20px}
-.stats span{margin-left:16px;color:#ffd84d;font-weight:600;font-size:14px}
-
-/* SECTION */
-.section{
-  background:rgba(255,255,255,.04);
-  border-radius:18px;
-  padding:16px;
+.header h2{color:#facc15}
+.metrics span{
+  margin-left:16px;
+  color:#facc15;
+  font-weight:700
 }
-.emotions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.emotion{
-  background:rgba(255,255,255,.08);
-  padding:6px 12px;
+.content{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:14px;
+}
+.card{
+  background:#020617;
+  border-radius:16px;
+  padding:18px;
+}
+.emotions button{
+  margin:6px;
+  padding:8px 14px;
   border-radius:999px;
-  font-size:13px;
+  border:1px solid #374151;
+  background:#020617;
+  color:#fff;
 }
-.primary{
+.emotions .record{
+  background:#facc15;
+  color:#020617;
+  border:none;
   margin-top:12px;
-  background:#ffd84d;
-  color:#000;
-  padding:9px 16px;
-  border-radius:999px;
+  padding:12px 20px;
   font-weight:700;
-  display:inline-block;
 }
-
-/* BOTTOM GRID */
 .bottom{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:14px;
+  margin-top:14px;
+}
+iframe,video{
+  width:100%;
   height:220px;
+  border:none;
+  border-radius:14px;
 }
-
-.card{
-  background:rgba(255,255,255,.04);
-  border-radius:16px;
-  overflow:hidden;
-  height:100%;
+.token-info h3{
+  color:#facc15;
+  margin-bottom:8px;
 }
-
-iframe{
-  width:100%;
-  height:100%;
-  border:0;
-}
-
-video{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-/* NEXT STEPS */
-.next{
-  background:rgba(255,255,255,.04);
-  border-radius:18px;
-  padding:12px 16px;
+.token-info p, .token-info li{
   font-size:13px;
-  opacity:.85;
+  color:#d1d5db;
+  line-height:1.4;
 }
-.next ul{margin-left:16px;margin-top:6px}
+
+/* MOBILE */
+@media(max-width:900px){
+  body{overflow:auto}
+  .app{grid-template-columns:1fr}
+  .bottom{grid-template-columns:1fr}
+  iframe,video{height:240px}
+}
 </style>
 </head>
 
 <body>
+<div class="app">
 
-<div class="layout">
-
-<!-- SIDEBAR -->
 <aside class="sidebar">
   <h1>ReflexCoin<br>2.0</h1>
-  <small>RFX2 • Solana</small>
-
-  <div class="btn">Comprar na Raydium</div>
-  <div class="btn">Telegram</div>
-  <div class="btn">X (Twitter)</div>
-  <div class="btn">Whitepaper</div>
-  <div class="btn">Litepaper</div>
-
-  <small>Projeto experimental.<br>Verifique sempre o mint oficial.</small>
+  <p>RFX2 • Solana</p>
+  <button onclick="window.open('https://raydium.io')">Buy on Raydium</button>
+  <button onclick="window.open('https://t.me')">Telegram</button>
+  <button onclick="window.open('https://x.com')">X (Twitter)</button>
+  <button onclick="window.open('ReflexCoin2_Whitepaper_Pro.pdf')">Whitepaper</button>
+  <button onclick="window.open('ReflexCoin2_Litepaper.pdf')">Litepaper</button>
+  <small>Experimental project. Always verify the official mint.</small>
 </aside>
 
-<!-- MAIN -->
 <main class="main">
 
-<div class="header">
-  <h2>ReflexCoin 2.0 — RFX2</h2>
-  <div class="stats">
-    <span>Preço $0</span>
-    <span>Market Cap $0</span>
-    <span>Supply 2,000,000</span>
-  </div>
-</div>
-
-<div class="section">
-  <h3>Sistema de Valores Emocionais</h3>
-  <p>Experimento simbólico. Sem promessas. Sem garantias.</p>
-
-  <div class="emotions">
-    <div class="emotion">😊 Feliz</div>
-    <div class="emotion">😡 Irritado</div>
-    <div class="emotion">😢 Triste</div>
-    <div class="emotion">🔥 Motivado</div>
-    <div class="emotion">❤️ Adorei</div>
+  <div class="header">
+    <h2>ReflexCoin 2.0 — RFX2</h2>
+    <div class="metrics">
+      <span>Price $0</span>
+      <span>Market Cap $0</span>
+      <span>Supply 2,000,000</span>
+    </div>
   </div>
 
-  <span class="primary">Registar emoção</span>
-</div>
+  <div class="content">
+    <div class="card">
+      <h3>Emotional Value System</h3>
+      <p>Symbolic experiment. No promises. No guarantees.</p>
+      <div class="emotions">
+        <button>😊 Happy</button>
+        <button>😡 Angry</button>
+        <button>😢 Sad</button>
+        <button>🔥 Motivated</button>
+        <button>❤️ Loved it</button><br>
+        <button class="record">Register emotion</button>
+      </div>
+    </div>
 
-<!-- BOTTOM -->
-<div class="bottom">
+    <div class="card">
+      <h3>Verify authenticity</h3>
+      <a href="https://solscan.io" target="_blank">Solscan</a><br>
+      <a href="https://explorer.solana.com" target="_blank">Solana Explorer</a><br>
+      <a href="https://dexscreener.com" target="_blank">DexScreener</a>
+    </div>
+  </div>
 
-  <!-- JOGO (endpoint público correto) -->
-  <div class="card">
-    <iframe 
-      src="https://reflex-airdrop-rewards-effa2776.base44.app/"
+  <div class="bottom">
+
+    <!-- GAME (Base44 embed) -->
+    <iframe
+      src="https://reflex-airdrop-rewards-effa2776.base44.app"
       loading="lazy">
     </iframe>
-  </div>
 
-  <!-- DEXSCREENER -->
-  <div class="card">
-    <iframe 
-      src="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z?embed=1">
+    <!-- DEXSCREENER -->
+    <iframe
+      src="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z?embed=1&theme=dark">
     </iframe>
-  </div>
 
-  <!-- VIDEO 1 -->
-  <div class="card">
+    <!-- VIDEO -->
     <video autoplay muted loop>
       <source src="rfx2-video.mp4" type="video/mp4">
     </video>
+
+    <!-- TOKEN PURPOSE -->
+    <div class="card token-info">
+      <h3>What is RFX2 used for?</h3>
+      <p>
+        ReflexCoin 2.0 (RFX2) is an experimental token built on the Solana blockchain,
+        designed to explore the relationship between emotion, community participation
+        and digital value.
+      </p>
+      <ul>
+        <li>Represents participation in the ReflexCoin ecosystem</li>
+        <li>Access to experimental features and community tests</li>
+        <li>Eligibility for symbolic and experimental airdrops</li>
+        <li>Foundation for future integrations and use cases</li>
+      </ul>
+      <p>
+        The supply is fixed and cannot be increased. The project is built openly,
+        transparently and without financial return promises.
+      </p>
+    </div>
+
   </div>
-
-  <!-- VIDEO 2 -->
-  <div class="card">
-    <video autoplay muted loop>
-      <source src="rfx2-video-2.mp4" type="video/mp4">
-    </video>
-  </div>
-
-</div>
-
-<div class="next">
-  <strong>Próximos passos possíveis:</strong>
-  <ul>
-    <li>Migrar jogo para HTML próprio (sem Base44)</li>
-    <li>Substituir jogo por versão “light”</li>
-    <li>Versão mobile separada</li>
-    <li>Congelar layout final para investidores</li>
-  </ul>
-</div>
-
 </main>
 </div>
-
 </body>
 </html>
