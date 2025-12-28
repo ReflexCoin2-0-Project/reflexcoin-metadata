@@ -7,16 +7,18 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+
 body{
   height:100vh;
-  background:radial-gradient(circle at top,#0b1020,#050914 70%);
-  font-family:system-ui,sans-serif;
-  color:#fff;
   overflow:hidden;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto;
+  background:radial-gradient(circle at top,#0b1020,#040711 75%);
+  color:#fff;
 }
-a{text-decoration:none;color:#4da3ff}
 
-.wrapper{
+a{color:#6aa8ff;text-decoration:none}
+
+.layout{
   display:grid;
   grid-template-columns:260px 1fr;
   height:100vh;
@@ -24,6 +26,7 @@ a{text-decoration:none;color:#4da3ff}
   padding:16px;
 }
 
+/* SIDEBAR */
 .sidebar{
   background:rgba(255,255,255,.03);
   border-radius:20px;
@@ -32,48 +35,49 @@ a{text-decoration:none;color:#4da3ff}
   flex-direction:column;
   gap:14px;
 }
-.sidebar h1{color:#ffd84d;font-size:32px}
-.sidebar small{opacity:.6}
+.sidebar h1{color:#ffd84d;font-size:30px;line-height:1.1}
+.sidebar small{opacity:.6;font-size:13px}
 
 .btn{
+  background:linear-gradient(135deg,#5b2fb2,#7c52e8);
   padding:12px;
   border-radius:999px;
-  background:linear-gradient(135deg,#5a2ea6,#7b4ce0);
-  color:#fff;
-  font-weight:600;
   text-align:center;
+  font-weight:600;
 }
 
+/* MAIN */
 .main{
   display:grid;
-  grid-template-rows:auto auto 1fr;
+  grid-template-rows:auto auto 1fr auto;
   gap:16px;
 }
 
+/* HEADER */
 .header{
   background:rgba(255,255,255,.03);
   border-radius:20px;
-  padding:16px 20px;
+  padding:14px 20px;
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
 .header h2{color:#ffd84d}
-.stats span{margin-left:16px;color:#ffd84d;font-weight:600}
+.stats span{margin-left:18px;color:#ffd84d;font-weight:600}
 
+/* SECTION */
 .section{
   background:rgba(255,255,255,.03);
   border-radius:20px;
   padding:20px;
 }
-
-.emotions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.emotions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
 .emotion{
   background:rgba(255,255,255,.08);
   padding:6px 14px;
   border-radius:999px;
+  font-size:14px;
 }
-
 .primary{
   margin-top:14px;
   background:#ffd84d;
@@ -84,17 +88,18 @@ a{text-decoration:none;color:#4da3ff}
   display:inline-block;
 }
 
+/* BOTTOM GRID */
 .bottom{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:16px;
+  height:260px;
 }
 
 .card{
   background:rgba(255,255,255,.03);
-  border-radius:20px;
+  border-radius:18px;
   overflow:hidden;
-  height:100%;
 }
 
 iframe,video{
@@ -103,23 +108,33 @@ iframe,video{
   border:0;
   object-fit:cover;
 }
+
+/* NEXT STEPS */
+.next{
+  background:rgba(255,255,255,.03);
+  border-radius:20px;
+  padding:14px 20px;
+  font-size:14px;
+  opacity:.85;
+}
+.next ul{margin-left:18px;margin-top:6px}
 </style>
 </head>
 
 <body>
 
-<div class="wrapper">
+<div class="layout">
 
 <!-- SIDEBAR -->
 <aside class="sidebar">
   <h1>ReflexCoin<br>2.0</h1>
   <small>RFX2 • Solana</small>
 
-  <a class="btn" href="#">Comprar na Raydium</a>
-  <a class="btn" href="#">Telegram</a>
-  <a class="btn" href="#">X (Twitter)</a>
-  <a class="btn" href="#">Whitepaper</a>
-  <a class="btn" href="#">Litepaper</a>
+  <div class="btn">Comprar na Raydium</div>
+  <div class="btn">Telegram</div>
+  <div class="btn">X (Twitter)</div>
+  <div class="btn">Whitepaper</div>
+  <div class="btn">Litepaper</div>
 
   <small>Projeto experimental.<br>Verifique sempre o mint oficial.</small>
 </aside>
@@ -151,7 +166,7 @@ iframe,video{
   <span class="primary">Registar emoção</span>
 </div>
 
-<!-- BLOCO INFERIOR -->
+<!-- BOTTOM -->
 <div class="bottom">
 
   <!-- JOGO -->
@@ -159,7 +174,7 @@ iframe,video{
     <iframe src="https://app.base44.com/apps/694fcfc8e5bea1e7effa2776/preview"></iframe>
   </div>
 
-  <!-- DEXSCREENER -->
+  <!-- DEX -->
   <div class="card">
     <iframe src="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z"></iframe>
   </div>
@@ -171,9 +186,20 @@ iframe,video{
     </video>
   </div>
 
-  <!-- BLOCO LIVRE / IMAGEM -->
+  <!-- EMPTY / FUTURE -->
   <div class="card"></div>
 
+</div>
+
+<!-- NEXT STEPS -->
+<div class="next">
+  <strong>Próximos passos possíveis:</strong>
+  <ul>
+    <li>Migrar jogo para HTML próprio (sem Base44)</li>
+    <li>Substituir jogo por versão “light”</li>
+    <li>Versão mobile separada</li>
+    <li>Congelar layout final para investidores</li>
+  </ul>
 </div>
 
 </main>
