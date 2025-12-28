@@ -17,20 +17,19 @@
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
+
 html,body{
-  height:100%;
   background:var(--bg);
   font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;
   color:var(--text);
-  overflow:hidden;
 }
 
 .container{
   display:grid;
   grid-template-columns:260px 1fr;
-  height:100vh;
   gap:20px;
   padding:20px;
+  min-height:100vh;
 }
 
 .sidebar{
@@ -60,8 +59,8 @@ html,body{
 }
 
 .main{
-  display:grid;
-  grid-template-rows:auto auto 1fr;
+  display:flex;
+  flex-direction:column;
   gap:18px;
 }
 
@@ -86,7 +85,7 @@ html,body{
 .section{
   background:var(--card);
   border-radius:var(--radius);
-  padding:20px;
+  padding:22px;
 }
 
 .badges span{
@@ -99,10 +98,10 @@ html,body{
 
 .button{
   display:inline-block;
-  margin-top:14px;
+  margin-top:16px;
   background:var(--accent);
   color:#000;
-  padding:12px 20px;
+  padding:12px 22px;
   border-radius:999px;
   font-weight:700;
   text-decoration:none;
@@ -111,34 +110,31 @@ html,body{
 .grid-bottom{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:14px;
-  align-items:stretch;
+  gap:16px;
+  margin-top:10px;
 }
 
 .card{
   background:#0e1630;
   border-radius:14px;
-  padding:14px;
-  height:100%;
+  padding:16px;
 }
 
 .card h4{
   color:var(--accent);
-  margin-bottom:8px;
+  margin-bottom:10px;
 }
 
 .embed{
   width:100%;
-  height:180px;
+  height:170px;
   border-radius:12px;
   overflow:hidden;
 }
 
-.embed iframe,
 .embed video{
   width:100%;
   height:100%;
-  border:0;
   object-fit:cover;
 }
 
@@ -150,22 +146,21 @@ html,body{
 
 .dex iframe{
   width:100%;
-  height:160px;
+  height:150px;
   border:0;
 }
 
 .footer-note{
   color:var(--muted);
-  font-size:12px;
-  margin-top:10px;
+  font-size:13px;
+  line-height:1.5;
+  margin-top:8px;
 }
 
 /* MOBILE */
 @media(max-width:1024px){
-  html,body{overflow:auto}
   .container{
     grid-template-columns:1fr;
-    height:auto;
   }
   .grid-bottom{
     grid-template-columns:1fr;
@@ -197,7 +192,6 @@ html,body{
   <!-- MAIN -->
   <main class="main">
 
-    <!-- HEADER -->
     <div class="header">
       <h2>ReflexCoin 2.0 — RFX2</h2>
       <div class="stats">
@@ -207,7 +201,6 @@ html,body{
       </div>
     </div>
 
-    <!-- EMOTIONAL SYSTEM -->
     <section class="section">
       <h3>Emotional Value System</h3>
       <p class="footer-note">
@@ -222,18 +215,17 @@ html,body{
         <span>❤️ Loved</span>
       </div>
 
-      <a class="button" href="#">Register Emotion</a>
+      <a class="button">Register Emotion</a>
     </section>
 
-    <!-- BOTTOM GRID -->
     <section class="grid-bottom">
 
-      <!-- INTERACTIVE EXPERIENCE -->
       <div class="card">
         <h4>Interactive Experience (Optional)</h4>
         <p class="footer-note">
-          ReflexCoin 2.0 includes an optional interactive experience for early supporters.
-          This experience is hosted externally to ensure security and stability.
+          ReflexCoin 2.0 includes an optional interactive experience hosted externally
+          to ensure security and stability. Participation does not guarantee rewards
+          and does not represent an investment mechanism.
         </p>
 
         <a class="button"
@@ -242,13 +234,8 @@ html,body{
            rel="noopener noreferrer">
           👉 Open Interactive Experience
         </a>
-
-        <p class="footer-note">
-          This experience does not guarantee rewards and is not an investment mechanism.
-        </p>
       </div>
 
-      <!-- DEX -->
       <div class="card">
         <h4>Live Market Overview</h4>
         <div class="dex">
@@ -256,7 +243,6 @@ html,body{
         </div>
       </div>
 
-      <!-- VIDEO 1 -->
       <div class="card">
         <h4>Project Visualization</h4>
         <div class="embed">
@@ -266,13 +252,12 @@ html,body{
         </div>
       </div>
 
-      <!-- EXPLANATION -->
       <div class="card">
         <h4>What is RFX2?</h4>
         <p class="footer-note">
           ReflexCoin 2.0 (RFX2) is a fixed-supply experimental token built on Solana.
           It explores how emotion, narrative and collective attention can influence
-          perceived digital value. There is no inflation, no minting, and no insiders.
+          perceived digital value. No inflation. No minting. No insiders.
         </p>
       </div>
 
