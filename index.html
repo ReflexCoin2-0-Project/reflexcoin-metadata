@@ -120,11 +120,26 @@ a{color:#93c5fd;text-decoration:none}
   gap:14px;
   margin-top:14px;
 }
+
+.media-card{
+  background:linear-gradient(180deg,#020617,#020617);
+  border-radius:16px;
+  padding:10px;
+  box-shadow:0 0 0 1px rgba(255,255,255,0.05),
+             0 10px 30px rgba(0,0,0,0.6);
+}
+
+.media-card h4{
+  color:#facc15;
+  font-size:14px;
+  margin-bottom:6px;
+}
+
 iframe,video{
   width:100%;
-  height:220px;
+  height:200px;
   border:none;
-  border-radius:14px;
+  border-radius:12px;
 }
 
 /* INTERACTIVE CARD */
@@ -135,7 +150,7 @@ iframe,video{
 .interactive-card p{
   font-size:13px;
   color:#d1d5db;
-  line-height:1.4;
+  line-height:1.45;
   margin-bottom:10px;
 }
 .btn-primary{
@@ -218,12 +233,16 @@ iframe,video{
   <!-- BOTTOM ROW -->
   <div class="bottom">
 
-    <!-- INTERACTIVE EXPERIENCE (EXTERNAL LINK) -->
+    <!-- INTERACTIVE EXPERIENCE -->
     <div class="card interactive-card">
       <h3>Interactive Experience (Optional)</h3>
       <p>
-        ReflexCoin 2.0 includes an experimental interactive experience designed for early supporters.
-        This experience is hosted externally to ensure stability, security, and optimal performance.
+        ReflexCoin 2.0 includes an optional interactive experience created to explore
+        participation, attention, and community engagement around the token.
+      </p>
+      <p>
+        This experience is hosted externally to ensure security and stability.
+        Participation does not guarantee rewards and does not represent an investment mechanism.
       </p>
       <a
         href="https://reflex-airdrop-rewards-effa2776.base44.app/"
@@ -234,32 +253,41 @@ iframe,video{
         👉 Open Interactive Experience
       </a>
       <p class="disclaimer">
-        This interactive experience does not guarantee rewards and should not be considered an investment mechanism.
-        ReflexCoin 2.0 remains a fixed-supply experimental token on Solana.
+        RFX2 is a fixed-supply experimental token. No inflation. No promises. Community-driven.
       </p>
     </div>
 
-    <!-- DEXSCREENER -->
-    <iframe
-      src="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z?embed=1&theme=dark">
-    </iframe>
+    <!-- DEXSCREENER (PREMIUM CARD) -->
+    <div class="media-card">
+      <h4>Live Market Overview</h4>
+      <iframe
+        src="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z?embed=1&theme=dark">
+      </iframe>
+    </div>
 
     <!-- VIDEO -->
-    <video autoplay muted loop>
-      <source src="rfx2-video.mp4" type="video/mp4">
-    </video>
+    <div class="media-card">
+      <h4>Project Visual</h4>
+      <video autoplay muted loop>
+        <source src="rfx2-video.mp4" type="video/mp4">
+      </video>
+    </div>
 
     <!-- TOKEN PURPOSE -->
     <div class="card interactive-card">
       <h3>What is RFX2 used for?</h3>
       <p>
         ReflexCoin 2.0 (RFX2) is an experimental token built on the Solana blockchain,
-        designed to explore the relationship between emotion, community participation
-        and digital value.
+        designed to explore how emotion, narrative, and collective attention can
+        influence perceived digital value.
       </p>
       <p>
-        The supply is fixed and cannot be increased. The project is developed openly,
-        transparently, and without financial return promises.
+        The supply is permanently fixed at 2,000,000 tokens. There is no minting,
+        no inflation, no venture capital, and no insider allocation.
+      </p>
+      <p>
+        RFX2 is not a utility token, not a governance token, and not a promise of profit.
+        It is an open experiment built in public.
       </p>
     </div>
 
