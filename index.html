@@ -3,245 +3,201 @@
 <head>
 <meta charset="UTF-8">
 <title>ReflexCoin 2.0 — RFX2</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-:root{
-  --bg: radial-gradient(circle at top, #0b1120, #020617 80%);
-  --panel: radial-gradient(circle at top, #111827, #020617);
-  --border:#1f2937;
-  --gold:#facc15;
-  --purple:#7c3aed;
-  --text:#e5e7eb;
-  --muted:#9ca3af;
-}
-
-*{box-sizing:border-box}
-
+*{box-sizing:border-box;margin:0;padding:0}
 body{
-  margin:0;
-  background:var(--bg);
-  font-family:Inter,system-ui,sans-serif;
-  color:var(--text);
+  background:radial-gradient(circle at top,#0b1020,#050914 70%);
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+  color:#fff;
   height:100vh;
   overflow:hidden;
 }
+a{color:#4da3ff;text-decoration:none}
 
-.app{
+.wrapper{
   display:grid;
   grid-template-columns:260px 1fr;
-  gap:14px;
-  padding:14px;
   height:100vh;
+  gap:16px;
+  padding:16px;
 }
 
-/* SIDEBAR */
 .sidebar{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:18px;
+  background:rgba(255,255,255,.03);
+  border-radius:20px;
+  padding:20px;
   display:flex;
   flex-direction:column;
-  justify-content:space-between;
-}
-
-.sidebar h1{
-  margin:0;
-  color:var(--gold);
-  font-size:30px;
-}
-
-.sidebar p{
-  font-size:12px;
-  color:var(--muted);
-}
-
-.sidebar button{
-  width:100%;
-  margin-bottom:8px;
-  padding:10px;
-  border:none;
-  border-radius:999px;
-  background:linear-gradient(135deg,#5b21b6,#1e293b);
-  color:white;
-  font-weight:600;
-  cursor:pointer;
-}
-
-.sidebar small{
-  font-size:11px;
-  color:var(--muted);
-}
-
-/* MAIN */
-.main{
-  display:grid;
-  grid-template-rows:auto 1fr;
   gap:14px;
 }
 
-/* HEADER */
+.sidebar h1{color:#ffd84d;font-size:32px}
+.sidebar small{opacity:.6}
+
+.btn{
+  padding:12px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#5a2ea6,#7b4ce0);
+  color:#fff;
+  text-align:center;
+  font-weight:600;
+}
+
+.main{
+  display:grid;
+  grid-template-rows:auto auto 1fr;
+  gap:16px;
+}
+
 .header{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:14px 20px;
+  background:rgba(255,255,255,.03);
+  border-radius:20px;
+  padding:16px 20px;
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
 
-.header h2{margin:0;color:var(--gold)}
+.header h2{color:#ffd84d}
 
-.metrics span{
-  margin-left:18px;
-  color:var(--gold);
-  font-size:13px;
+.stats span{margin-left:16px;color:#ffd84d;font-weight:600}
+
+.section{
+  background:rgba(255,255,255,.03);
+  border-radius:20px;
+  padding:20px;
 }
 
-/* CONTENT */
-.content{
-  display:grid;
-  grid-template-columns:2fr 1fr;
-  grid-template-rows:auto 1fr;
-  gap:14px;
-}
-
-/* PANELS */
-.panel{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:16px;
-}
-
-/* EMOTIONS */
-.emotions button{
-  margin-right:6px;
+.emotions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.emotion{
   padding:6px 14px;
   border-radius:999px;
-  border:1px solid #374151;
-  background:#020617;
-  color:white;
+  background:rgba(255,255,255,.08);
 }
 
-.cta{
-  margin-top:12px;
-  padding:10px 22px;
+.primary{
+  margin-top:14px;
+  background:#ffd84d;
+  color:#000;
+  padding:10px 18px;
   border-radius:999px;
-  background:linear-gradient(135deg,#fde047,#facc15);
-  border:none;
   font-weight:700;
+  display:inline-block;
 }
 
-/* BOTTOM ROW (SUBIDA E SEM CORTE) */
 .bottom{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:14px;
-  height:260px;          /* ALTURA CONTROLADA */
-  margin-top:-10px;      /* SOBE UM POUCO */
+  gap:16px;
+  height:100%;
 }
 
-/* Iframes / media */
-.bottom iframe,
-.bottom video{
+.card{
+  background:rgba(255,255,255,.03);
+  border-radius:20px;
+  overflow:hidden;
+  position:relative;
+}
+
+.card iframe,
+.card video{
   width:100%;
   height:100%;
-  border:none;
-  border-radius:14px;
-  object-fit:contain;
-  background:#020617;
+  border:0;
+  object-fit:cover;
+}
+
+/* ESCONDER BASE44 */
+iframe{
+  pointer-events:auto;
+}
+iframe + div,
+iframe ~ div,
+div[class*="base44"],
+div[style*="Base44"]{
+  display:none!important;
 }
 </style>
 </head>
 
 <body>
-<div class="app">
 
-<!-- SIDEBAR -->
-<aside class="sidebar">
-  <div>
+<div class="wrapper">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
     <h1>ReflexCoin<br>2.0</h1>
-    <p>RFX2 • Solana</p>
+    <small>RFX2 • Solana</small>
 
-    <button onclick="window.open('https://raydium.io')">Comprar na Raydium</button>
-    <button onclick="window.open('https://t.me')">Telegram</button>
-    <button onclick="window.open('https://x.com')">X (Twitter)</button>
-    <button onclick="window.open('ReflexCoin2_Whitepaper_Pro.pdf')">Whitepaper</button>
-    <button onclick="window.open('ReflexCoin2_Litepaper.pdf')">Litepaper</button>
-  </div>
+    <a class="btn" href="#">Comprar na Raydium</a>
+    <a class="btn" href="#">Telegram</a>
+    <a class="btn" href="#">X (Twitter)</a>
+    <a class="btn" href="#">Whitepaper</a>
+    <a class="btn" href="#">Litepaper</a>
 
-  <small>Projeto experimental. Verifique sempre o mint oficial.</small>
-</aside>
+    <small>Projeto experimental.<br>Verifique sempre o mint oficial.</small>
+  </aside>
 
-<!-- MAIN -->
-<main class="main">
+  <!-- MAIN -->
+  <main class="main">
 
-<!-- HEADER -->
-<div class="header">
-  <h2>ReflexCoin 2.0 — RFX2</h2>
-  <div class="metrics">
-    <span>Preço $0</span>
-    <span>Market Cap $0</span>
-    <span>Supply 2,000,000</span>
-  </div>
+    <div class="header">
+      <h2>ReflexCoin 2.0 — RFX2</h2>
+      <div class="stats">
+        <span>Preço $0</span>
+        <span>Market Cap $0</span>
+        <span>Supply 2,000,000</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Sistema de Valores Emocionais</h3>
+      <p>Experimento simbólico. Sem promessas. Sem garantias.</p>
+
+      <div class="emotions">
+        <div class="emotion">😊 Feliz</div>
+        <div class="emotion">😡 Irritado</div>
+        <div class="emotion">😢 Triste</div>
+        <div class="emotion">🔥 Motivado</div>
+        <div class="emotion">❤️ Adorei</div>
+      </div>
+
+      <span class="primary">Registar emoção</span>
+    </div>
+
+    <!-- BLOCO INFERIOR -->
+    <div class="bottom">
+
+      <!-- JOGO (CANTO INFERIOR ESQUERDO) -->
+      <div class="card">
+        <iframe src="https://reflex-airdrop-rewards-effa2776.base44.app/"></iframe>
+      </div>
+
+      <!-- DEXSCREENER -->
+      <div class="card">
+        <iframe src="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z"></iframe>
+      </div>
+
+      <!-- VIDEO 1 -->
+      <div class="card">
+        <video autoplay muted loop>
+          <source src="rfx2-video.mp4" type="video/mp4">
+        </video>
+      </div>
+
+      <!-- VIDEO 2 -->
+      <div class="card">
+        <video autoplay muted loop>
+          <source src="rfx2-video.mp4" type="video/mp4">
+        </video>
+      </div>
+
+    </div>
+
+  </main>
 </div>
 
-<!-- CONTENT -->
-<div class="content">
-
-<!-- LEFT -->
-<div class="panel">
-  <h3>Sistema de Valores Emocionais</h3>
-  <p>Experimento simbólico. Sem promessas. Sem garantias.</p>
-
-  <div class="emotions">
-    <button>😊 Feliz</button>
-    <button>😡 Irritado</button>
-    <button>😢 Triste</button>
-    <button>🔥 Motivado</button>
-    <button>❤️ Adorei</button>
-  </div>
-
-  <button class="cta">Registar emoção</button>
-</div>
-
-<!-- RIGHT -->
-<div class="panel">
-  <h3>Verificar autenticidade</h3>
-  <p><a href="https://solscan.io" target="_blank">Solscan</a></p>
-  <p><a href="https://explorer.solana.com" target="_blank">Solana Explorer</a></p>
-  <p><a href="https://dexscreener.com" target="_blank">DexScreener</a></p>
-</div>
-
-<!-- BOTTOM ROW -->
-<div class="bottom">
-
-  <!-- JOGO -->
-  <div class="panel">
-    <iframe src="https://reflex-airdrop-rewards-effa2776.base44.app/"></iframe>
-  </div>
-
-  <!-- DEX -->
-  <div class="panel">
-    <iframe src="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z?embed=1"></iframe>
-  </div>
-
-  <!-- VIDEO -->
-  <div class="panel">
-    <video src="rfx2-video.mp4" autoplay muted loop></video>
-  </div>
-
-  <!-- VISUAL EXTRA -->
-  <div class="panel">
-    <video src="rfx2-video.mp4" autoplay muted loop></video>
-  </div>
-
-</div>
-</div>
-</main>
-</div>
 </body>
 </html>
