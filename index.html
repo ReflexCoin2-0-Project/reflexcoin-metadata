@@ -88,12 +88,25 @@ html,body{
   padding:22px;
 }
 
-.badges span{
+.badges{
+  margin-top:14px;
+}
+
+.badges button{
   background:#141c33;
   padding:8px 14px;
   border-radius:999px;
   margin-right:8px;
+  margin-bottom:8px;
   display:inline-block;
+  border:none;
+  color:var(--text);
+  cursor:pointer;
+}
+
+.badges button.active{
+  background:var(--accent);
+  color:#000;
 }
 
 .button{
@@ -105,6 +118,7 @@ html,body{
   border-radius:999px;
   font-weight:700;
   text-decoration:none;
+  cursor:pointer;
 }
 
 .grid-bottom{
@@ -207,15 +221,17 @@ html,body{
         Symbolic participation experiment. No promises. No guarantees.
       </p>
 
+      <!-- EMOJIS CORRIGIDOS -->
       <div class="badges">
-        <span>😊 Happy</span>
-        <span>😡 Angry</span>
-        <span>😢 Sad</span>
-        <span>🔥 Motivated</span>
-        <span>❤️ Loved</span>
+        <button data-emotion="happy">😊 Happy</button>
+        <button data-emotion="angry">😡 Angry</button>
+        <button data-emotion="sad">😢 Sad</button>
+        <button data-emotion="motivated">🔥 Motivated</button>
+        <button data-emotion="loved">❤️ Loved</button>
       </div>
 
-      <a class="button">Register Emotion</a>
+      <a class="button" id="registerEmotion">Register Emotion</a>
+      <p id="emotionResult" class="footer-note"></p>
     </section>
 
     <section class="grid-bottom">
@@ -266,6 +282,44 @@ html,body{
   </main>
 
 </div>
+
+<!-- JS SÓ PARA EMOJIS -->
+<script>
+const emotionButtons = document.querySelectorAll(".badges button");
+const registerBtn = document.getElementById("registerEmotion");
+const result = document.getElementById("emotionResult");
+
+let selectedEmotion = null;
+
+emotionButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    emotionButtons.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    selectedEmotion = btn.dataset.emotion;
+  });
+});
+
+registerBtn.addEventListener("click", () => {
+  if(!selectedEmotion){
+    result.textContent = "Please select an emotion first.";
+    return;
+  }
+
+  localStorage.setItem("rfx2_emotion", selectedEmotion);
+  result.textContent = "Emotion registered: " + selectedEmotion;
+});
+
+// restore
+const saved = localStorage.getItem("rfx2_emotion");
+if(saved){
+  emotionButtons.forEach(btn => {
+    if(btn.dataset.emotion === saved){
+      btn.classList.add("active");
+      result.textContent = "Emotion registered: " + saved;
+    }
+  });
+}
+</script>
 
 </body>
 </html>
