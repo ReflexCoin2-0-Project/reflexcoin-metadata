@@ -215,13 +215,16 @@ html,body{
       </div>
     </div>
 
+    <!-- JOGO / AIRDROP -->
     <section class="section">
-      <h3>Emotional Value System</h3>
+      <h3>Interactive Community Game</h3>
       <p class="footer-note">
-        Symbolic participation experiment. No promises. No guarantees.
+        Participate in the ReflexCoin 2.0 community game.
+        Actions generate symbolic points and active players may become
+        eligible for community airdrops over time.
+        This is an experimental game — not an investment.
       </p>
 
-      <!-- EMOJIS CORRIGIDOS -->
       <div class="badges">
         <button data-emotion="happy">😊 Happy</button>
         <button data-emotion="angry">😡 Angry</button>
@@ -230,27 +233,13 @@ html,body{
         <button data-emotion="loved">❤️ Loved</button>
       </div>
 
-      <a class="button" id="registerEmotion">Register Emotion</a>
-      <p id="emotionResult" class="footer-note"></p>
+      <a class="button" id="playGame">Play & Register Action</a>
+
+      <p id="gameStatus" class="footer-note"></p>
+      <p id="gamePoints" class="footer-note"></p>
     </section>
 
     <section class="grid-bottom">
-
-      <div class="card">
-        <h4>Interactive Experience (Optional)</h4>
-        <p class="footer-note">
-          ReflexCoin 2.0 includes an optional interactive experience hosted externally
-          to ensure security and stability. Participation does not guarantee rewards
-          and does not represent an investment mechanism.
-        </p>
-
-        <a class="button"
-           href="https://reflex-airdrop-rewards-effa2776.base44.app/"
-           target="_blank"
-           rel="noopener noreferrer">
-          👉 Open Interactive Experience
-        </a>
-      </div>
 
       <div class="card">
         <h4>Live Market Overview</h4>
@@ -283,11 +272,11 @@ html,body{
 
 </div>
 
-<!-- JS SÓ PARA EMOJIS -->
 <script>
 const emotionButtons = document.querySelectorAll(".badges button");
-const registerBtn = document.getElementById("registerEmotion");
-const result = document.getElementById("emotionResult");
+const playBtn = document.getElementById("playGame");
+const status = document.getElementById("gameStatus");
+const pointsEl = document.getElementById("gamePoints");
 
 let selectedEmotion = null;
 
@@ -299,26 +288,30 @@ emotionButtons.forEach(btn => {
   });
 });
 
-registerBtn.addEventListener("click", () => {
+let points = parseInt(localStorage.getItem("rfx2_points")) || 0;
+pointsEl.textContent = "Your points: " + points;
+
+playBtn.addEventListener("click", () => {
   if(!selectedEmotion){
-    result.textContent = "Please select an emotion first.";
+    status.textContent = "Select an emotion to play.";
     return;
   }
 
-  localStorage.setItem("rfx2_emotion", selectedEmotion);
-  result.textContent = "Emotion registered: " + selectedEmotion;
-});
+  const lastPlay = localStorage.getItem("rfx2_last_play");
+  const now = Date.now();
 
-// restore
-const saved = localStorage.getItem("rfx2_emotion");
-if(saved){
-  emotionButtons.forEach(btn => {
-    if(btn.dataset.emotion === saved){
-      btn.classList.add("active");
-      result.textContent = "Emotion registered: " + saved;
-    }
-  });
-}
+  if(lastPlay && now - lastPlay < 6 * 60 * 60 * 1000){
+    status.textContent = "You can play again later.";
+    return;
+  }
+
+  points += 10;
+  localStorage.setItem("rfx2_points", points);
+  localStorage.setItem("rfx2_last_play", now);
+
+  status.textContent = "Action registered. +10 points.";
+  pointsEl.textContent = "Your points: " + points;
+});
 </script>
 
 </body>
