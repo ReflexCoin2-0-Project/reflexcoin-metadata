@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -22,7 +22,6 @@ html,body{
   background:var(--bg);
   font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;
   color:var(--text);
-  overflow:hidden; /* IMPORTANTE: sem scroll */
 }
 
 .container{
@@ -30,10 +29,9 @@ html,body{
   grid-template-columns:260px 1fr;
   gap:20px;
   padding:20px;
-  height:100vh;
+  min-height:100vh;
 }
 
-/* SIDEBAR */
 .sidebar{
   background:linear-gradient(180deg,#0c1325,#070b17);
   border-radius:var(--radius);
@@ -60,12 +58,10 @@ html,body{
   font-weight:600;
 }
 
-/* MAIN */
 .main{
   display:flex;
   flex-direction:column;
   gap:18px;
-  overflow:hidden;
 }
 
 .header{
@@ -92,7 +88,7 @@ html,body{
   padding:22px;
 }
 
-/* BADGES – IGUAL AO ORIGINAL */
+/* BADGES — visual IGUAL, só interação */
 .badges span{
   background:#141c33;
   padding:8px 14px;
@@ -119,7 +115,6 @@ html,body{
   cursor:pointer;
 }
 
-/* GRID INFERIOR – IGUAL */
 .grid-bottom{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -172,8 +167,7 @@ html,body{
 
 /* MOBILE */
 @media(max-width:1024px){
-  html,body{overflow:auto;}
-  .container{grid-template-columns:1fr;height:auto;}
+  .container{grid-template-columns:1fr;}
   .grid-bottom{grid-template-columns:1fr;}
 }
 </style>
@@ -188,14 +182,14 @@ html,body{
     <h1>ReflexCoin<br/>2.0</h1>
     <small>RFX2 • Solana</small>
 
-    <a href="https://raydium.io" target="_blank">Compre na Raydium</a>
+    <a href="https://raydium.io" target="_blank">Buy on Raydium</a>
     <a href="https://t.me/" target="_blank">Telegram</a>
     <a href="https://x.com/" target="_blank">X (Twitter)</a>
     <a href="#">Whitepaper</a>
     <a href="#">Litepaper</a>
 
     <small class="footer-note">
-      Projeto experimental. Sempre verifique o endereço oficial.
+      Experimental project. Always verify the official mint address.
     </small>
   </aside>
 
@@ -205,46 +199,57 @@ html,body{
     <div class="header">
       <h2>ReflexCoin 2.0 — RFX2</h2>
       <div class="stats">
-        <span>Preço $0</span>
+        <span>Price $0</span>
         <span>Market Cap $0</span>
-        <span>Supply 2.000.000</span>
+        <span>Supply 2,000,000</span>
       </div>
     </div>
 
-    <!-- JOGO (MESMO TAMANHO DA SECÇÃO ANTIGA) -->
     <section class="section">
-      <h3>Jogo interativo da comunidade</h3>
+      <h3>Emotional Value System</h3>
       <p class="footer-note">
-        Escolha uma emoção e registre sua participação.
-        Jogadores ativos podem tornar-se elegíveis para airdrops comunitários.
-        Jogo experimental — não é investimento.
+        Symbolic participation experiment. No promises. No guarantees.
       </p>
 
       <div class="badges" id="emotionBadges">
-        <span data-emotion="feliz">😊 Feliz</span>
-        <span data-emotion="irritado">😡 Irritado</span>
-        <span data-emotion="triste">😢 Triste</span>
-        <span data-emotion="motivado">🔥 Motivado</span>
-        <span data-emotion="adorei">❤️ Adorei</span>
+        <span data-emotion="happy">😊 Happy</span>
+        <span data-emotion="angry">😡 Angry</span>
+        <span data-emotion="sad">😢 Sad</span>
+        <span data-emotion="motivated">🔥 Motivated</span>
+        <span data-emotion="loved">❤️ Loved</span>
       </div>
 
-      <a class="button" id="playBtn">Registrar jogada</a>
-
-      <p id="pointsText" class="footer-note">Seus pontos: 0</p>
-      <p id="gameMsg" class="footer-note"></p>
+      <a class="button" id="registerBtn">Register Emotion</a>
+      <p class="footer-note" id="emotionStatus">Your points: 0</p>
     </section>
 
     <section class="grid-bottom">
 
       <div class="card">
-        <h4>Visão geral do mercado ao vivo</h4>
+        <h4>Interactive Experience (Optional)</h4>
+        <p class="footer-note">
+          ReflexCoin 2.0 includes an optional interactive experience hosted externally
+          to ensure security and stability. Participation does not guarantee rewards
+          and does not represent an investment mechanism.
+        </p>
+
+        <a class="button"
+           href="https://reflex-airdrop-rewards-effa2776.base44.app/"
+           target="_blank"
+           rel="noopener noreferrer">
+          👉 Open Interactive Experience
+        </a>
+      </div>
+
+      <div class="card">
+        <h4>Live Market Overview</h4>
         <div class="dex">
           <iframe src="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z?embed=1&theme=dark"></iframe>
         </div>
       </div>
 
       <div class="card">
-        <h4>Visualização do projeto</h4>
+        <h4>Project Visualization</h4>
         <div class="embed">
           <video autoplay muted loop playsinline>
             <source src="rfx2-video.mp4" type="video/mp4">
@@ -253,17 +258,11 @@ html,body{
       </div>
 
       <div class="card">
-        <h4>O que é RFX2?</h4>
+        <h4>What is RFX2?</h4>
         <p class="footer-note">
-          Token experimental de oferta fixa construído na Solana.
-          Sem inflação. Sem mint. Sem insiders.
-        </p>
-      </div>
-
-      <div class="card">
-        <h4>Participação</h4>
-        <p class="footer-note">
-          A participação contínua pode gerar elegibilidade para distribuições futuras.
+          ReflexCoin 2.0 (RFX2) is a fixed-supply experimental token built on Solana.
+          It explores how emotion, narrative and collective attention can influence
+          perceived digital value. No inflation. No minting. No insiders.
         </p>
       </div>
 
@@ -275,43 +274,31 @@ html,body{
 
 <script>
 const badges = document.querySelectorAll("#emotionBadges span");
-const playBtn = document.getElementById("playBtn");
-const pointsText = document.getElementById("pointsText");
-const gameMsg = document.getElementById("gameMsg");
+const button = document.getElementById("registerBtn");
+const status = document.getElementById("emotionStatus");
 
 let selected = null;
 let points = parseInt(localStorage.getItem("rfx2_points")) || 0;
-pointsText.textContent = "Seus pontos: " + points;
+status.textContent = "Your points: " + points;
 
-badges.forEach(b=>{
-  b.onclick=()=>{
-    badges.forEach(x=>x.classList.remove("active"));
-    b.classList.add("active");
-    selected = b.dataset.emotion;
-  };
+badges.forEach(badge => {
+  badge.addEventListener("click", () => {
+    badges.forEach(b => b.classList.remove("active"));
+    badge.classList.add("active");
+    selected = badge.dataset.emotion;
+  });
 });
 
-playBtn.onclick=()=>{
+button.addEventListener("click", () => {
   if(!selected){
-    gameMsg.textContent="Escolha uma emoção primeiro.";
+    status.textContent = "Select an emotion first.";
     return;
   }
 
-  const last = localStorage.getItem("rfx2_last");
-  const now = Date.now();
-
-  if(last && now-last < 6*60*60*1000){
-    gameMsg.textContent="Você já jogou recentemente.";
-    return;
-  }
-
-  points += 10;
-  localStorage.setItem("rfx2_points",points);
-  localStorage.setItem("rfx2_last",now);
-
-  pointsText.textContent="Seus pontos: " + points;
-  gameMsg.textContent="Jogada registrada!";
-};
+  points += 1;
+  localStorage.setItem("rfx2_points", points);
+  status.textContent = "Your points: " + points;
+});
 </script>
 
 </body>
