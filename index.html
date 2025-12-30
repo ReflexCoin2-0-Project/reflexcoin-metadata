@@ -32,6 +32,7 @@ html,body{
   min-height:100vh;
 }
 
+/* SIDEBAR */
 .sidebar{
   background:linear-gradient(180deg,#0c1325,#070b17);
   border-radius:var(--radius);
@@ -58,6 +59,7 @@ html,body{
   font-weight:600;
 }
 
+/* MAIN */
 .main{
   display:flex;
   flex-direction:column;
@@ -88,19 +90,13 @@ html,body{
   padding:22px;
 }
 
-/* BADGES — visual IGUAL, só interação */
+/* BADGES */
 .badges span{
   background:#141c33;
   padding:8px 14px;
   border-radius:999px;
   margin-right:8px;
   display:inline-block;
-  cursor:pointer;
-}
-
-.badges span.active{
-  background:var(--accent);
-  color:#000;
 }
 
 .button{
@@ -112,9 +108,9 @@ html,body{
   border-radius:999px;
   font-weight:700;
   text-decoration:none;
-  cursor:pointer;
 }
 
+/* GRID */
 .grid-bottom{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -125,17 +121,17 @@ html,body{
 .card{
   background:#0e1630;
   border-radius:14px;
-  padding:16px;
+  padding:12px; /* ligeiramente reduzido */
 }
 
 .card h4{
   color:var(--accent);
-  margin-bottom:10px;
+  margin-bottom:6px;
 }
 
 .embed{
   width:100%;
-  height:170px;
+  height:150px; /* reduzido para caber tudo */
   border-radius:12px;
   overflow:hidden;
 }
@@ -160,9 +156,21 @@ html,body{
 
 .footer-note{
   color:var(--muted);
-  font-size:13px;
-  line-height:1.5;
+  font-size:12px;
+  line-height:1.2;
+  margin-top:4px;
+}
+
+/* ===== AJUSTE DO CARD DO JOGO ===== */
+.game-text{
+  font-size:12px;
+  line-height:1.2;
+}
+
+.game-btn{
   margin-top:8px;
+  padding:10px 16px;
+  font-size:14px;
 }
 
 /* MOBILE */
@@ -171,37 +179,6 @@ html,body{
   .grid-bottom{grid-template-columns:1fr;}
 }
 </style>
-  /* === AJUSTE DE ALTURA DOS CARDS (SEM SCROLL) === */
-
-/* reduzir padding interno dos cards */
-.card{
-  padding:12px;
-}
-
-/* compactar títulos dos cards */
-.card h4{
-  margin-bottom:6px;
-}
-
-/* compactar texto dos cards */
-.card .footer-note{
-  margin-top:4px;
-  line-height:1.25;
-  font-size:12.5px;
-}
-
-/* garantir que botões cabem */
-.card .button{
-  margin-top:10px;
-  padding:10px 18px;
-  font-size:14px;
-}
-
-/* impedir crescimento excessivo da grid */
-.grid-bottom{
-  align-items:start;
-}
-
 </head>
 
 <body>
@@ -236,49 +213,46 @@ html,body{
       </div>
     </div>
 
+    <!-- EMOTIONS -->
     <section class="section">
       <h3>Emotional Value System</h3>
       <p class="footer-note">
         Symbolic participation experiment. No promises. No guarantees.
       </p>
 
-      <div class="badges" id="emotionBadges">
-        <span data-emotion="happy">😊 Happy</span>
-        <span data-emotion="angry">😡 Angry</span>
-        <span data-emotion="sad">😢 Sad</span>
-        <span data-emotion="motivated">🔥 Motivated</span>
-        <span data-emotion="loved">❤️ Loved</span>
+      <div class="badges">
+        <span>😊 Happy</span>
+        <span>😡 Angry</span>
+        <span>😢 Sad</span>
+        <span>🔥 Motivated</span>
+        <span>❤️ Loved</span>
       </div>
 
-      <a class="button" id="registerBtn">Register Emotion</a>
-      <p class="footer-note" id="emotionStatus">Your points: 0</p>
+      <a class="button">Register Emotion</a>
+      <p class="footer-note">Your points: 0</p>
     </section>
 
+    <!-- GRID -->
     <section class="grid-bottom">
 
+      <!-- GAME CARD -->
       <div class="card">
-      <h4>Experiência interativa (jogo comunitário)</h4>
+        <h4>Experiência interativa (jogo comunitário)</h4>
 
-<p class="footer-note game-text">
-  ReflexCoin 2.0 inclui um jogo comunitário interativo.
-  Cada ação conta e cada participação deixa um rasto.<br><br>
+        <p class="footer-note game-text">
+          ReflexCoin 2.0 inclui um jogo comunitário interativo.
+          Cada ação conta e cada participação deixa um rasto.<br><br>
 
-  Jogadores ativos podem ser elegíveis para airdrops
-  e futuras distribuições comunitárias.<br><br>
+          Jogadores ativos podem ser elegíveis para airdrops
+          e futuras distribuições comunitárias.<br><br>
 
-  Sem promessas. Sem atalhos. Só participação real.
-</p>
+          Sem promessas. Sem atalhos. Só participação real.
+        </p>
 
-<a class="button" href="https://reflex-airdrop-rewards-effa2776.base44.app/" target="_blank">
-  🎮 Jogar agora
-</a>
-
-</p>
-        <a class="button"
+        <a class="button game-btn"
            href="https://reflex-airdrop-rewards-effa2776.base44.app/"
-           target="_blank"
-           rel="noopener noreferrer">
-          👉 Open Interactive Experience
+           target="_blank">
+          🎮 Jogar agora
         </a>
       </div>
 
@@ -302,8 +276,7 @@ html,body{
         <h4>What is RFX2?</h4>
         <p class="footer-note">
           ReflexCoin 2.0 (RFX2) is a fixed-supply experimental token built on Solana.
-          It explores how emotion, narrative and collective attention can influence
-          perceived digital value. No inflation. No minting. No insiders.
+          No inflation. No minting. No insiders.
         </p>
       </div>
 
@@ -313,38 +286,5 @@ html,body{
 
 </div>
 
-<script>
-const badges = document.querySelectorAll("#emotionBadges span");
-const button = document.getElementById("registerBtn");
-const status = document.getElementById("emotionStatus");
-
-let selected = null;
-let points = parseInt(localStorage.getItem("rfx2_points")) || 0;
-status.textContent = "Your points: " + points;
-
-badges.forEach(badge => {
-  badge.addEventListener("click", () => {
-    badges.forEach(b => b.classList.remove("active"));
-    badge.classList.add("active");
-    selected = badge.dataset.emotion;
-  });
-});
-
-button.addEventListener("click", () => {
-  if(!selected){
-    status.textContent = "Select an emotion first.";
-    return;
-  }
-
-  points += 1;
-  localStorage.setItem("rfx2_points", points);
-  status.textContent = "Your points: " + points;
-});
-</script>
-
 </body>
 </html>
-.embed{
-  height:150px;
-}
-
