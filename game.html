@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<title>RFX2 Community Game</title>
+
+<style>
+body{
+  background:#050914;
+  color:#e6e9f0;
+  font-family:Inter,system-ui,Arial;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+
+.card{
+  background:#0b1222;
+  padding:24px;
+  border-radius:18px;
+  width:320px;
+  box-shadow:0 0 40px rgba(0,0,0,.4);
+}
+
+h2{
+  color:#f5c400;
+  margin-bottom:6px;
+}
+
+p{
+  font-size:13px;
+  line-height:1.4;
+  color:#9aa4c7;
+}
+
+select,input{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:10px;
+  border:none;
+  background:#141c33;
+  color:#fff;
+}
+
+button{
+  width:100%;
+  margin-top:14px;
+  padding:14px;
+  border:none;
+  border-radius:999px;
+  background:#f5c400;
+  font-weight:700;
+  cursor:pointer;
+}
+
+button:hover{
+  opacity:.9;
+}
+
+.msg{
+  margin-top:10px;
+  font-size:13px;
+  color:#8cffb3;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h2>RFX2 Community Game</h2>
+  <p>
+    Escolhe uma emoção, regista a tua participação  
+    e junta-te ao ecossistema RFX2.
+  </p>
+
+  <select id="emotion">
+    <option>😊 Feliz</option>
+    <option>🔥 Motivado</option>
+    <option>😡 Irritado</option>
+    <option>😢 Triste</option>
+    <option>❤️ Adorei</option>
+  </select>
+
+  <input id="wallet" placeholder="Endereço Solana (Phantom / Solflare)" />
+
+  <button onclick="play()">🎮 Jogar</button>
+
+  <div class="msg" id="msg"></div>
+</div>
+
+<script>
+function play(){
+  const wallet = document.getElementById("wallet").value.trim();
+  if(wallet.length < 32){
+    alert("Endereço Solana inválido");
+    return;
+  }
+
+  let points = localStorage.getItem(wallet) || 0;
+  points++;
+  localStorage.setItem(wallet, points);
+
+  document.getElementById("msg").innerText =
+    "Participação registada! Pontos: " + points;
+}
+</script>
+
+</body>
+</html>
