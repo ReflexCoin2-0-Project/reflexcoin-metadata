@@ -171,6 +171,37 @@ html,body{
   .grid-bottom{grid-template-columns:1fr;}
 }
 </style>
+  /* === AJUSTE DE ALTURA DOS CARDS (SEM SCROLL) === */
+
+/* reduzir padding interno dos cards */
+.card{
+  padding:12px;
+}
+
+/* compactar títulos dos cards */
+.card h4{
+  margin-bottom:6px;
+}
+
+/* compactar texto dos cards */
+.card .footer-note{
+  margin-top:4px;
+  line-height:1.25;
+  font-size:12.5px;
+}
+
+/* garantir que botões cabem */
+.card .button{
+  margin-top:10px;
+  padding:10px 18px;
+  font-size:14px;
+}
+
+/* impedir crescimento excessivo da grid */
+.grid-bottom{
+  align-items:start;
+}
+
 </head>
 
 <body>
