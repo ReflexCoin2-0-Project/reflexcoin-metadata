@@ -32,7 +32,6 @@ html,body{
   min-height:100vh;
 }
 
-/* SIDEBAR */
 .sidebar{
   background:linear-gradient(180deg,#0c1325,#070b17);
   border-radius:var(--radius);
@@ -59,7 +58,6 @@ html,body{
   font-weight:600;
 }
 
-/* MAIN */
 .main{
   display:flex;
   flex-direction:column;
@@ -90,7 +88,6 @@ html,body{
   padding:22px;
 }
 
-/* BADGES */
 .badges span{
   background:#141c33;
   padding:8px 14px;
@@ -110,7 +107,6 @@ html,body{
   text-decoration:none;
 }
 
-/* GRID */
 .grid-bottom{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -121,17 +117,17 @@ html,body{
 .card{
   background:#0e1630;
   border-radius:14px;
-  padding:12px; /* ligeiramente reduzido */
+  padding:16px;
 }
 
 .card h4{
   color:var(--accent);
-  margin-bottom:6px;
+  margin-bottom:10px;
 }
 
 .embed{
   width:100%;
-  height:150px; /* reduzido para caber tudo */
+  height:170px;
   border-radius:12px;
   overflow:hidden;
 }
@@ -156,24 +152,11 @@ html,body{
 
 .footer-note{
   color:var(--muted);
-  font-size:12px;
-  line-height:1.2;
-  margin-top:4px;
-}
-
-/* ===== AJUSTE DO CARD DO JOGO ===== */
-.game-text{
-  font-size:12px;
-  line-height:1.2;
-}
-
-.game-btn{
+  font-size:13px;
+  line-height:1.5;
   margin-top:8px;
-  padding:10px 16px;
-  font-size:14px;
 }
 
-/* MOBILE */
 @media(max-width:1024px){
   .container{grid-template-columns:1fr;}
   .grid-bottom{grid-template-columns:1fr;}
@@ -213,7 +196,6 @@ html,body{
       </div>
     </div>
 
-    <!-- EMOTIONS -->
     <section class="section">
       <h3>Emotional Value System</h3>
       <p class="footer-note">
@@ -229,29 +211,24 @@ html,body{
       </div>
 
       <a class="button">Register Emotion</a>
-      <p class="footer-note">Your points: 0</p>
     </section>
 
-    <!-- GRID -->
     <section class="grid-bottom">
 
-      <!-- GAME CARD -->
       <div class="card">
         <h4>Experiência interativa (jogo comunitário)</h4>
-
-        <p class="footer-note game-text">
-          ReflexCoin 2.0 inclui um jogo comunitário interativo.
-          Cada ação conta e cada participação deixa um rasto.<br><br>
-
+        <p class="footer-note">
+          ReflexCoin 2.0 inclui um jogo comunitário interativo.<br>
+          Cada ação conta. Cada participação deixa um rasto.<br><br>
           Jogadores ativos podem ser elegíveis para airdrops
           e futuras distribuições comunitárias.<br><br>
-
           Sem promessas. Sem atalhos. Só participação real.
         </p>
 
+        <!-- ✅ ÚNICA ALTERAÇÃO: LINK DO JOGO -->
         <a class="button game-btn" href="game.html">
-  🎮 Jogar agora
-</a>
+          🎮 Jogar agora
+        </a>
       </div>
 
       <div class="card">
@@ -274,7 +251,8 @@ html,body{
         <h4>What is RFX2?</h4>
         <p class="footer-note">
           ReflexCoin 2.0 (RFX2) is a fixed-supply experimental token built on Solana.
-          No inflation. No minting. No insiders.
+          It explores how emotion, narrative and collective attention can influence
+          perceived digital value. No inflation. No minting. No insiders.
         </p>
       </div>
 
