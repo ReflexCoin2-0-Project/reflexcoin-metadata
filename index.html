@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,89 +10,174 @@
   --bg:#050914;
   --card:#0b1222;
   --accent:#f5c400;
+  --purple:#6b3fd6;
   --text:#e6e9f0;
   --muted:#9aa4c7;
   --radius:18px;
 }
-*{margin:0;padding:0;box-sizing:border-box}
-body{
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+html,body{
   background:var(--bg);
-  font-family:Inter,Arial,sans-serif;
+  font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;
   color:var(--text);
+  overflow:hidden;
 }
+
 .container{
   display:grid;
   grid-template-columns:260px 1fr;
   gap:20px;
   padding:20px;
+  height:100vh;
 }
+
+/* SIDEBAR */
 .sidebar{
   background:linear-gradient(180deg,#0c1325,#070b17);
-  border-radius:18px;
+  border-radius:var(--radius);
   padding:20px;
   display:flex;
   flex-direction:column;
   gap:14px;
 }
-.sidebar h1{color:var(--accent)}
+
+.sidebar h1{
+  color:var(--accent);
+  font-size:32px;
+}
+
+.sidebar small{color:var(--muted)}
+
 .sidebar a{
   background:linear-gradient(135deg,#7a4dff,#5a2fcf);
-  color:#fff;
+  color:white;
   padding:14px;
   border-radius:999px;
   text-align:center;
   text-decoration:none;
+  font-weight:600;
 }
-.main{display:flex;flex-direction:column;gap:18px}
+
+/* MAIN */
+.main{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+/* HEADER */
 .header{
   background:var(--card);
-  border-radius:18px;
-  padding:18px 22px;
+  border-radius:var(--radius);
+  padding:16px 22px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
 }
+
 .header-left{
   display:flex;
   align-items:center;
   gap:14px;
 }
-.header-left img{
-  height:42px;
+
+.header h2{
+  color:var(--accent);
 }
+
+.header-logo{
+  width:46px;
+  height:46px;
+}
+
 .stats{
-  display:flex;
-  gap:24px;
   color:var(--accent);
   font-weight:600;
+  display:flex;
+  gap:22px;
 }
+
+/* SECTIONS */
 .section{
   background:var(--card);
-  border-radius:18px;
-  padding:22px;
+  border-radius:var(--radius);
+  padding:18px;
 }
-.grid-bottom{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:16px;
+
+.badges span{
+  background:#141c33;
+  padding:8px 14px;
+  border-radius:999px;
+  margin-right:8px;
+  display:inline-block;
+  font-size:14px;
 }
-.card{
-  background:#0e1630;
-  border-radius:14px;
-  padding:16px;
-}
-.embed{height:170px;overflow:hidden;border-radius:12px}
-.embed video{width:100%;height:100%;object-fit:cover}
-.dex iframe{width:100%;height:150px;border:0}
+
 .button{
+  display:inline-block;
+  margin-top:14px;
   background:var(--accent);
   color:#000;
   padding:12px 22px;
   border-radius:999px;
-  text-decoration:none;
-  display:inline-block;
-  margin-top:14px;
   font-weight:700;
+  text-decoration:none;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  height:100%;
+}
+
+.card{
+  background:#0e1630;
+  border-radius:14px;
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
+.card h4{
+  color:var(--accent);
+  margin-bottom:6px;
+}
+
+.card p{
+  font-size:13px;
+  line-height:1.35;
+  color:var(--muted);
+}
+
+.game-btn{
+  margin-top:10px;
+}
+
+/* MEDIA */
+.embed video{
+  width:100%;
+  height:140px;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+.dex iframe{
+  width:100%;
+  height:140px;
+  border:0;
+  border-radius:10px;
+}
+
+/* MOBILE */
+@media(max-width:1024px){
+  html,body{overflow:auto}
+  .container{grid-template-columns:1fr}
+  .grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -101,75 +186,111 @@ body{
 
 <div class="container">
 
+<!-- SIDEBAR -->
 <aside class="sidebar">
-  <h1>ReflexCoin 2.0</h1>
-  <a href="#">Buy on Raydium</a>
-  <a href="#">Telegram</a>
-  <a href="#">X (Twitter)</a>
+  <h1>ReflexCoin<br>2.0</h1>
+  <small>RFX2 • Solana</small>
+
+  <a href="https://raydium.io" target="_blank">Buy on Raydium</a>
+  <a href="https://t.me/" target="_blank">Telegram</a>
+  <a href="https://x.com/" target="_blank">X (Twitter)</a>
+  <a href="#">Whitepaper</a>
+  <a href="#">Litepaper</a>
+
+  <small style="margin-top:auto;font-size:12px;color:var(--muted)">
+    Experimental project. Always verify the official mint address.
+  </small>
 </aside>
 
+<!-- MAIN -->
 <main class="main">
 
+<!-- HEADER -->
 <div class="header">
   <div class="header-left">
     <h2>ReflexCoin 2.0 — RFX2</h2>
-    <img src="logo-rfx2.png" alt="RFX2 Logo">
+    <img src="logo-rfx2.png" class="header-logo" alt="RFX2">
   </div>
+
   <div class="stats">
-    <span id="price">Price --</span>
-    <span id="marketcap">Market Cap --</span>
+    <span>Price <span id="price">$0</span></span>
+    <span>Market Cap <span id="mc">$0</span></span>
     <span>Supply 2,000,000</span>
   </div>
 </div>
 
+<!-- EMOTIONS -->
 <section class="section">
   <h3>Emotional Value System</h3>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:8px">
+    Symbolic participation experiment. No promises. No guarantees.
+  </p>
+
+  <div class="badges">
+    <span>😊 Happy</span>
+    <span>😡 Angry</span>
+    <span>😢 Sad</span>
+    <span>🔥 Motivated</span>
+    <span>❤️ Loved</span>
+  </div>
+
+  <a class="button">Register Emotion</a>
 </section>
 
-<section class="grid-bottom">
+<!-- GRID -->
+<section class="grid">
 
+<!-- GAME -->
 <div class="card">
   <h4>Experiência interativa</h4>
-  <p>Jogo comunitário com airdrops.</p>
-  <a class="button" href="game.html">🎮 Jogar agora</a>
+  <p>
+    Jogo comunitário interativo.<br>
+    Cada ação conta.<br>
+    Jogadores ativos podem ser elegíveis para airdrops.
+  </p>
+  <a class="button game-btn" href="game.html">🎮 Jogar agora</a>
 </div>
 
-<div class="card">
+<!-- DEX -->
+<div class="card dex">
   <h4>Live Market</h4>
-  <div class="dex">
-    <iframe src="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z?embed=1&theme=dark"></iframe>
-  </div>
+  <iframe src="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z?embed=1&theme=dark"></iframe>
 </div>
 
+<!-- VIDEO -->
 <div class="card">
-  <h4>Visualization</h4>
+  <h4>Visualização</h4>
   <div class="embed">
-    <video autoplay muted loop>
-      <source src="rfx2-video.mp4">
+    <video autoplay muted loop playsinline>
+      <source src="rfx2-video.mp4" type="video/mp4">
     </video>
   </div>
 </div>
 
+<!-- INFO -->
 <div class="card">
-  <h4>About</h4>
-  <p>Fixed supply Solana token.</p>
+  <h4>What is RFX2?</h4>
+  <p>
+    Fixed-supply experimental token on Solana.
+    No inflation. No minting. No insiders.
+  </p>
 </div>
 
 </section>
-
 </main>
 </div>
 
+<!-- JS MARKET DATA -->
 <script>
-(async()=>{
-  const SUPPLY=2000000;
-  const PAIR="43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z";
+(async ()=>{
   try{
-    const r=await fetch("https://api.dexscreener.com/latest/dex/pairs/solana/"+PAIR);
-    const d=await r.json();
-    const p=parseFloat(d.pair.priceUsd);
-    document.getElementById("price").innerText="Price $"+p.toFixed(6);
-    document.getElementById("marketcap").innerText="Market Cap $"+(p*SUPPLY).toLocaleString();
+    const res = await fetch("https://api.dexscreener.com/latest/dex/pairs/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z");
+    const data = await res.json();
+    const p = data.pair.priceUsd;
+    const mc = data.pair.fdv;
+
+    document.getElementById("price").textContent = "$" + Number(p).toFixed(6);
+    document.getElementById("mc").textContent = "$" + Number(mc).toLocaleString();
   }catch(e){}
 })();
 </script>
