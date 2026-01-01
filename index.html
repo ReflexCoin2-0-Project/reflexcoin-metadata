@@ -10,7 +10,6 @@
   --bg:#050914;
   --card:#0b1222;
   --accent:#f5c400;
-  --purple:#6b3fd6;
   --text:#e6e9f0;
   --muted:#9aa4c7;
   --radius:18px;
@@ -43,11 +42,7 @@ html,body{
   gap:14px;
 }
 
-.sidebar h1{
-  color:var(--accent);
-  font-size:32px;
-}
-
+.sidebar h1{color:var(--accent)}
 .sidebar small{color:var(--muted)}
 
 .sidebar a{
@@ -61,11 +56,7 @@ html,body{
 }
 
 /* MAIN */
-.main{
-  display:flex;
-  flex-direction:column;
-  gap:16px;
-}
+.main{display:flex;flex-direction:column;gap:16px}
 
 /* HEADER */
 .header{
@@ -73,22 +64,13 @@ html,body{
   border-radius:var(--radius);
   padding:16px 22px;
   display:flex;
-  align-items:center;
   justify-content:space-between;
-}
-
-.header-left{
-  display:flex;
   align-items:center;
-  gap:14px;
 }
 
-.header h2{ color:var(--accent); }
-
-.header-logo{
-  width:46px;
-  height:46px;
-}
+.header-left{display:flex;align-items:center;gap:14px}
+.header h2{color:var(--accent)}
+.header-logo{width:46px;height:46px}
 
 .stats{
   color:var(--accent);
@@ -98,28 +80,17 @@ html,body{
 }
 
 /* EMOTIONS */
+.section{
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:18px;
+}
+
 .emotion-grid{
   display:grid;
   grid-template-columns:1fr 200px;
   gap:20px;
   align-items:center;
-}
-
-.logo-box{
-  background:#ffffff;
-  border-radius:16px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  height:160px;
-}
-
-.logo-box img{ width:120px; }
-
-.section{
-  background:var(--card);
-  border-radius:var(--radius);
-  padding:18px;
 }
 
 .badges span{
@@ -139,15 +110,15 @@ html,body{
 }
 
 .button{
-  display:inline-block;
   margin-top:14px;
   background:var(--accent);
   color:#000;
   padding:12px 22px;
   border-radius:999px;
   font-weight:700;
-  text-decoration:none;
+  border:0;
   cursor:pointer;
+  text-decoration:none;
 }
 
 /* GRID */
@@ -166,16 +137,8 @@ html,body{
   justify-content:space-between;
 }
 
-.card h4{
-  color:var(--accent);
-  margin-bottom:6px;
-}
-
-.card p{
-  font-size:13px;
-  line-height:1.45;
-  color:var(--muted);
-}
+.card h4{color:var(--accent)}
+.card p{font-size:13px;color:var(--muted)}
 
 .embed video{
   width:100%;
@@ -205,7 +168,6 @@ html,body{
 
 <div class="container">
 
-<!-- SIDEBAR -->
 <aside class="sidebar">
   <h1>ReflexCoin<br>2.0</h1>
   <small>RFX2 • Solana</small>
@@ -216,13 +178,8 @@ html,body{
 
   <a href="ReflexCoin2_Whitepaper_Pro.pdf" target="_blank">Whitepaper</a>
   <a href="ReflexCoin2_Litepaper.pdf" target="_blank">Litepaper</a>
-
-  <small style="margin-top:auto;font-size:12px;color:var(--muted)">
-    Experimental project. Always verify the official mint address.
-  </small>
 </aside>
 
-<!-- MAIN -->
 <main class="main">
 
 <div class="header">
@@ -230,7 +187,6 @@ html,body{
     <h2>ReflexCoin 2.0 — RFX2</h2>
     <img src="logo-rfx2.png" class="header-logo" alt="RFX2">
   </div>
-
   <div class="stats">
     <span>Price <span id="price">$—</span></span>
     <span>Market Cap <span id="mc">$—</span></span>
@@ -258,8 +214,8 @@ html,body{
       <button class="button" id="registerEmotion">Register Emotion</button>
     </div>
 
-    <div class="logo-box">
-      <img src="logo-rfx2.png" alt="ReflexCoin Logo">
+    <div style="background:#fff;border-radius:16px;height:160px;display:flex;align-items:center;justify-content:center">
+      <img src="logo-rfx2.png" style="width:120px">
     </div>
 
   </div>
@@ -269,12 +225,7 @@ html,body{
 
 <div class="card">
   <h4>Experiência interativa</h4>
-  <p>
-    Jogo comunitário interativo.<br>
-    Cada ação conta.<br>
-    Jogadores ativos podem ser elegíveis para airdrops.
-  </p>
-  <!-- ABRE EM NOVA JANELA -->
+  <p>Jogo comunitário interativo.</p>
   <a class="button" href="game.html" target="_blank">🎮 Jogar agora</a>
 </div>
 
@@ -306,36 +257,28 @@ html,body{
 </div>
 
 <script>
-/* === EMOTIONS === */
-let selectedEmotion = null;
-const buttons = document.querySelectorAll("#emotionButtons span");
+document.addEventListener("DOMContentLoaded", () => {
 
-buttons.forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    buttons.forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active");
-    selectedEmotion = btn.dataset.emotion;
+  let selectedEmotion = null;
+  const buttons = document.querySelectorAll("#emotionButtons span");
+
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      buttons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      selectedEmotion = btn.dataset.emotion;
+    });
   });
-});
 
-document.getElementById("registerEmotion").addEventListener("click",()=>{
-  if(!selectedEmotion){
-    alert("Select an emotion first.");
-    return;
-  }
-  alert("Emotion registered: " + selectedEmotion);
-});
+  document.getElementById("registerEmotion").addEventListener("click", () => {
+    if (!selectedEmotion) {
+      alert("Select an emotion first.");
+      return;
+    }
+    alert("Emotion registered: " + selectedEmotion);
+  });
 
-/* === PRICE / MARKET CAP === */
-(async ()=>{
-  try{
-    const res = await fetch("https://api.dexscreener.com/latest/dex/pairs/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z");
-    const json = await res.json();
-    const p = json.pair;
-    if(p?.priceUsd) document.getElementById("price").textContent = "$"+Number(p.priceUsd).toFixed(6);
-    if(p?.marketCap) document.getElementById("mc").textContent = "$"+Number(p.marketCap).toLocaleString();
-  }catch(e){}
-})();
+});
 </script>
 
 </body>
