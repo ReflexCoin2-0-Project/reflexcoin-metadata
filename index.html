@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ReflexCoin 2.0 — RFX2</title>
 
 <style>
@@ -10,174 +10,89 @@
   --bg:#050914;
   --card:#0b1222;
   --accent:#f5c400;
-  --purple:#6b3fd6;
   --text:#e6e9f0;
   --muted:#9aa4c7;
   --radius:18px;
 }
-
-*{box-sizing:border-box;margin:0;padding:0}
-
-html,body{
+*{margin:0;padding:0;box-sizing:border-box}
+body{
   background:var(--bg);
-  font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;
+  font-family:Inter,Arial,sans-serif;
   color:var(--text);
 }
-
 .container{
   display:grid;
   grid-template-columns:260px 1fr;
   gap:20px;
   padding:20px;
-  min-height:100vh;
 }
-
 .sidebar{
   background:linear-gradient(180deg,#0c1325,#070b17);
-  border-radius:var(--radius);
+  border-radius:18px;
   padding:20px;
   display:flex;
   flex-direction:column;
   gap:14px;
 }
-
-.sidebar h1{
-  color:var(--accent);
-  font-size:32px;
-}
-
-.sidebar small{color:var(--muted)}
-
+.sidebar h1{color:var(--accent)}
 .sidebar a{
   background:linear-gradient(135deg,#7a4dff,#5a2fcf);
-  color:white;
+  color:#fff;
   padding:14px;
   border-radius:999px;
   text-align:center;
   text-decoration:none;
-  font-weight:600;
 }
-
-.main{
-  display:flex;
-  flex-direction:column;
-  gap:18px;
-}
-
+.main{display:flex;flex-direction:column;gap:18px}
 .header{
   background:var(--card);
-  border-radius:var(--radius);
+  border-radius:18px;
   padding:18px 22px;
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  gap:18px;
+  align-items:center;
 }
-
 .header-left{
   display:flex;
   align-items:center;
   gap:14px;
 }
-
-.header h2{
-  color:var(--accent);
-  white-space:nowrap;
+.header-left img{
+  height:42px;
 }
-
-.header-logo{
-  height:42px;            /* 🔑 NÃO aumenta o header */
-  width:auto;
-}
-
 .stats{
-  color:var(--accent);
-  font-weight:600;
   display:flex;
   gap:24px;
-  white-space:nowrap;
+  color:var(--accent);
+  font-weight:600;
 }
-
 .section{
   background:var(--card);
-  border-radius:var(--radius);
+  border-radius:18px;
   padding:22px;
 }
-
-.badges span{
-  background:#141c33;
-  padding:8px 14px;
-  border-radius:999px;
-  margin-right:8px;
-  display:inline-block;
-}
-
-.button{
-  display:inline-block;
-  margin-top:16px;
-  background:var(--accent);
-  color:#000;
-  padding:12px 22px;
-  border-radius:999px;
-  font-weight:700;
-  text-decoration:none;
-}
-
 .grid-bottom{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:16px;
-  margin-top:10px;
 }
-
 .card{
   background:#0e1630;
   border-radius:14px;
   padding:16px;
 }
-
-.card h4{
-  color:var(--accent);
-  margin-bottom:10px;
-}
-
-.embed{
-  width:100%;
-  height:170px;
-  border-radius:12px;
-  overflow:hidden;
-}
-
-.embed video{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.dex{
-  background:#111a36;
-  border-radius:12px;
-  padding:10px;
-}
-
-.dex iframe{
-  width:100%;
-  height:150px;
-  border:0;
-}
-
-.footer-note{
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.5;
-  margin-top:8px;
-}
-
-/* MOBILE */
-@media(max-width:1024px){
-  .container{grid-template-columns:1fr;}
-  .grid-bottom{grid-template-columns:1fr;}
-  .stats{flex-wrap:wrap;gap:12px;}
+.embed{height:170px;overflow:hidden;border-radius:12px}
+.embed video{width:100%;height:100%;object-fit:cover}
+.dex iframe{width:100%;height:150px;border:0}
+.button{
+  background:var(--accent);
+  color:#000;
+  padding:12px 22px;
+  border-radius:999px;
+  text-decoration:none;
+  display:inline-block;
+  margin-top:14px;
+  font-weight:700;
 }
 </style>
 </head>
@@ -186,117 +101,76 @@ html,body{
 
 <div class="container">
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <h1>ReflexCoin<br/>2.0</h1>
-    <small>RFX2 • Solana</small>
+<aside class="sidebar">
+  <h1>ReflexCoin 2.0</h1>
+  <a href="#">Buy on Raydium</a>
+  <a href="#">Telegram</a>
+  <a href="#">X (Twitter)</a>
+</aside>
 
-    <a href="https://raydium.io" target="_blank">Buy on Raydium</a>
-    <a href="https://t.me/" target="_blank">Telegram</a>
-    <a href="https://x.com/" target="_blank">X (Twitter)</a>
-    <a href="#">Whitepaper</a>
-    <a href="#">Litepaper</a>
+<main class="main">
 
-    <small class="footer-note">
-      Experimental project. Always verify the official mint address.
-    </small>
-  </aside>
-
-  <!-- MAIN -->
-  <main class="main">
-
-    <div class="header">
-      <div class="header-left">
-        <h2>ReflexCoin 2.0 — RFX2</h2>
-        <!-- ✅ LOGO NO ESPAÇO DA SETA VERDE -->
-        <img src="logo-rfx2.png" alt="RFX2 Logo" class="header-logo">
-      </div>
-
-      <div class="stats">
-        <span id="price">Price $0</span>
-        <span id="marketcap">Market Cap $0</span>
-        <span>Supply 2,000,000</span>
-      </div>
-    </div>
-
-    <section class="section">
-      <h3>Emotional Value System</h3>
-      <p class="footer-note">
-        Symbolic participation experiment. No promises. No guarantees.
-      </p>
-
-      <div class="badges">
-        <span>😊 Happy</span>
-        <span>😡 Angry</span>
-        <span>😢 Sad</span>
-        <span>🔥 Motivated</span>
-        <span>❤️ Loved</span>
-      </div>
-
-      <a class="button">Register Emotion</a>
-    </section>
-
-    <section class="grid-bottom">
-
-      <div class="card">
-        <h4>Experiência interativa (jogo comunitário)</h4>
-        <p class="footer-note">
-          ReflexCoin 2.0 inclui um jogo comunitário interativo.
-          Cada ação conta. Cada participação deixa um rasto.<br><br>
-          Jogadores ativos podem ser elegíveis para airdrops
-          e futuras distribuições comunitárias.<br><br>
-          Sem promessas. Sem atalhos. Só participação real.
-        </p>
-
-        <a class="button" href="game.html">🎮 Jogar agora</a>
-      </div>
-
-      <div class="card">
-        <h4>Live Market Overview</h4>
-        <div class="dex">
-          <iframe src="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z?embed=1&theme=dark"></iframe>
-        </div>
-      </div>
-
-      <div class="card">
-        <h4>Project Visualization</h4>
-        <div class="embed">
-          <video autoplay muted loop playsinline>
-            <source src="rfx2-video.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-
-      <div class="card">
-        <h4>What is RFX2?</h4>
-        <p class="footer-note">
-          ReflexCoin 2.0 (RFX2) is a fixed-supply experimental token built on Solana.
-          No inflation. No minting. No insiders.
-        </p>
-      </div>
-
-    </section>
-
-  </main>
-
+<div class="header">
+  <div class="header-left">
+    <h2>ReflexCoin 2.0 — RFX2</h2>
+    <img src="logo-rfx2.png" alt="RFX2 Logo">
+  </div>
+  <div class="stats">
+    <span id="price">Price --</span>
+    <span id="marketcap">Market Cap --</span>
+    <span>Supply 2,000,000</span>
+  </div>
 </div>
 
-<!-- JS LEVE – preços automáticos -->
+<section class="section">
+  <h3>Emotional Value System</h3>
+</section>
+
+<section class="grid-bottom">
+
+<div class="card">
+  <h4>Experiência interativa</h4>
+  <p>Jogo comunitário com airdrops.</p>
+  <a class="button" href="game.html">🎮 Jogar agora</a>
+</div>
+
+<div class="card">
+  <h4>Live Market</h4>
+  <div class="dex">
+    <iframe src="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z?embed=1&theme=dark"></iframe>
+  </div>
+</div>
+
+<div class="card">
+  <h4>Visualization</h4>
+  <div class="embed">
+    <video autoplay muted loop>
+      <source src="rfx2-video.mp4">
+    </video>
+  </div>
+</div>
+
+<div class="card">
+  <h4>About</h4>
+  <p>Fixed supply Solana token.</p>
+</div>
+
+</section>
+
+</main>
+</div>
+
 <script>
-(async () => {
-  const SUPPLY = 2000000;
-  const PAIR = "43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z";
-
-  try {
-    const r = await fetch(`https://api.dexscreener.com/latest/dex/pairs/solana/${PAIR}`);
-    const d = await r.json();
-    if (!d.pair) return;
-
-    const p = parseFloat(d.pair.priceUsd);
-    document.getElementById("price").textContent = `Price $${p.toFixed(6)}`;
-    document.getElementById("marketcap").textContent =
-      `Market Cap $${(p*SUPPLY).toLocaleString()}`;
-  } catch(e){}
+(async()=>{
+  const SUPPLY=2000000;
+  const PAIR="43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z";
+  try{
+    const r=await fetch("https://api.dexscreener.com/latest/dex/pairs/solana/"+PAIR);
+    const d=await r.json();
+    const p=parseFloat(d.pair.priceUsd);
+    document.getElementById("price").innerText="Price $"+p.toFixed(6);
+    document.getElementById("marketcap").innerText="Market Cap $"+(p*SUPPLY).toLocaleString();
+  }catch(e){}
 })();
 </script>
 
