@@ -69,17 +69,33 @@ html,body{
   border-radius:var(--radius);
   padding:18px 22px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
+  gap:18px;
 }
 
-.header h2{color:var(--accent)}
+.header-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.header h2{
+  color:var(--accent);
+  white-space:nowrap;
+}
+
+.header-logo{
+  height:42px;            /* 🔑 NÃO aumenta o header */
+  width:auto;
+}
 
 .stats{
   color:var(--accent);
   font-weight:600;
   display:flex;
   gap:24px;
+  white-space:nowrap;
 }
 
 .section{
@@ -159,12 +175,9 @@ html,body{
 
 /* MOBILE */
 @media(max-width:1024px){
-  .container{
-    grid-template-columns:1fr;
-  }
-  .grid-bottom{
-    grid-template-columns:1fr;
-  }
+  .container{grid-template-columns:1fr;}
+  .grid-bottom{grid-template-columns:1fr;}
+  .stats{flex-wrap:wrap;gap:12px;}
 }
 </style>
 </head>
@@ -193,7 +206,12 @@ html,body{
   <main class="main">
 
     <div class="header">
-      <h2>ReflexCoin 2.0 — RFX2</h2>
+      <div class="header-left">
+        <h2>ReflexCoin 2.0 — RFX2</h2>
+        <!-- ✅ LOGO NO ESPAÇO DA SETA VERDE -->
+        <img src="logo-rfx2.png" alt="RFX2 Logo" class="header-logo">
+      </div>
+
       <div class="stats">
         <span id="price">Price $0</span>
         <span id="marketcap">Market Cap $0</span>
@@ -230,7 +248,6 @@ html,body{
           Sem promessas. Sem atalhos. Só participação real.
         </p>
 
-        <!-- ÚNICA ALTERAÇÃO DE LINK -->
         <a class="button" href="game.html">🎮 Jogar agora</a>
       </div>
 
@@ -254,8 +271,7 @@ html,body{
         <h4>What is RFX2?</h4>
         <p class="footer-note">
           ReflexCoin 2.0 (RFX2) is a fixed-supply experimental token built on Solana.
-          It explores how emotion, narrative and collective attention can influence
-          perceived digital value. No inflation. No minting. No insiders.
+          No inflation. No minting. No insiders.
         </p>
       </div>
 
@@ -265,36 +281,22 @@ html,body{
 
 </div>
 
-<!-- JAVASCRIPT LEVE – SEM MEXER NO LAYOUT -->
+<!-- JS LEVE – preços automáticos -->
 <script>
 (async () => {
   const SUPPLY = 2000000;
   const PAIR = "43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z";
 
   try {
-    const res = await fetch(
-      `https://api.dexscreener.com/latest/dex/pairs/solana/${PAIR}`
-    );
-    const json = await res.json();
-    if (!json.pair) return;
+    const r = await fetch(`https://api.dexscreener.com/latest/dex/pairs/solana/${PAIR}`);
+    const d = await r.json();
+    if (!d.pair) return;
 
-    const price = parseFloat(json.pair.priceUsd);
-    const marketCap = price * SUPPLY;
-
-    document.getElementById("price").textContent =
-      `Price $${price.toFixed(6)}`;
-
+    const p = parseFloat(d.pair.priceUsd);
+    document.getElementById("price").textContent = `Price $${p.toFixed(6)}`;
     document.getElementById("marketcap").textContent =
-      `Market Cap $${format(marketCap)}`;
-  } catch (e) {
-    console.warn("DexScreener fetch failed");
-  }
-
-  function format(n){
-    if (n >= 1e6) return (n/1e6).toFixed(2)+"M";
-    if (n >= 1e3) return (n/1e3).toFixed(2)+"K";
-    return n.toFixed(2);
-  }
+      `Market Cap $${(p*SUPPLY).toLocaleString()}`;
+  } catch(e){}
 })();
 </script>
 
