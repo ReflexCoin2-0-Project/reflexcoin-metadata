@@ -99,7 +99,7 @@ html,body{
   gap:22px;
 }
 
-/* EMOTIONAL SECTION */
+/* EMOTIONS */
 .emotion-grid{
   display:grid;
   grid-template-columns: 1fr 200px;
@@ -118,7 +118,6 @@ html,body{
 
 .logo-box img{
   width:120px;
-  height:auto;
 }
 
 /* SECTIONS */
@@ -134,7 +133,6 @@ html,body{
   border-radius:999px;
   margin-right:8px;
   display:inline-block;
-  font-size:14px;
 }
 
 .button{
@@ -153,7 +151,6 @@ html,body{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:16px;
-  height:100%;
 }
 
 .card{
@@ -176,11 +173,6 @@ html,body{
   color:var(--muted);
 }
 
-.game-btn{
-  margin-top:10px;
-}
-
-/* MEDIA */
 .embed video{
   width:100%;
   height:140px;
@@ -215,10 +207,11 @@ html,body{
   <small>RFX2 • Solana</small>
 
   <a href="https://raydium.io" target="_blank">Buy on Raydium</a>
-  <a href="https://t.me/" target="_blank">Telegram</a>
+  <a href="https://t.me/ReflexCoinRFX2" target="_blank">Telegram</a>
   <a href="https://x.com/" target="_blank">X (Twitter)</a>
-  <a href="#">Whitepaper</a>
-  <a href="#">Litepaper</a>
+
+  <a href="ReflexCoin2_Whitepaper_Pro.pdf" target="_blank">Whitepaper</a>
+  <a href="ReflexCoin2_Litepaper.pdf" target="_blank">Litepaper</a>
 
   <small style="margin-top:auto;font-size:12px;color:var(--muted)">
     Experimental project. Always verify the official mint address.
@@ -228,7 +221,6 @@ html,body{
 <!-- MAIN -->
 <main class="main">
 
-<!-- HEADER -->
 <div class="header">
   <div class="header-left">
     <h2>ReflexCoin 2.0 — RFX2</h2>
@@ -236,19 +228,18 @@ html,body{
   </div>
 
   <div class="stats">
-    <span>Price <span id="price">$0</span></span>
-    <span>Market Cap <span id="mc">$0</span></span>
+    <span>Price <span id="price">$—</span></span>
+    <span>Market Cap <span id="mc">$—</span></span>
     <span>Supply 2,000,000</span>
   </div>
 </div>
 
-<!-- EMOTIONS -->
 <section class="section">
   <div class="emotion-grid">
 
     <div>
       <h3>Emotional Value System</h3>
-      <p style="font-size:13px;color:var(--muted);margin-bottom:8px">
+      <p style="font-size:13px;color:var(--muted)">
         Symbolic participation experiment. No promises. No guarantees.
       </p>
 
@@ -264,13 +255,12 @@ html,body{
     </div>
 
     <div class="logo-box">
-      <img src="logo-rfx2.png" alt="ReflexCoin 2.0 Logo">
+      <img src="logo-rfx2.png" alt="ReflexCoin Logo">
     </div>
 
   </div>
 </section>
 
-<!-- GRID -->
 <section class="grid">
 
 <div class="card">
@@ -280,7 +270,7 @@ html,body{
     Cada ação conta.<br>
     Jogadores ativos podem ser elegíveis para airdrops.
   </p>
-  <a class="button game-btn" href="game.html">🎮 Jogar agora</a>
+  <a class="button" href="game.html">🎮 Jogar agora</a>
 </div>
 
 <div class="card dex">
@@ -313,11 +303,24 @@ html,body{
 <script>
 (async ()=>{
   try{
-    const res = await fetch("https://api.dexscreener.com/latest/dex/pairs/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z");
-    const data = await res.json();
-    document.getElementById("price").textContent = "$" + Number(data.pair.priceUsd).toFixed(6);
-    document.getElementById("mc").textContent = "$" + Number(data.pair.fdv).toLocaleString();
-  }catch(e){}
+    const url = "https://api.dexscreener.com/latest/dex/pairs/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z";
+    const res = await fetch(url);
+    const json = await res.json();
+    const pair = json.pair;
+
+    if(pair?.priceUsd){
+      document.getElementById("price").textContent =
+        "$" + Number(pair.priceUsd).toFixed(6);
+    }
+
+    if(pair?.marketCap){
+      document.getElementById("mc").textContent =
+        "$" + Number(pair.marketCap).toLocaleString();
+    }
+
+  }catch(e){
+    console.error("DexScreener fetch failed", e);
+  }
 })();
 </script>
 
