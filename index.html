@@ -99,6 +99,28 @@ html,body{
   gap:22px;
 }
 
+/* EMOTIONAL SECTION */
+.emotion-grid{
+  display:grid;
+  grid-template-columns: 1fr 200px;
+  gap:20px;
+  align-items:center;
+}
+
+.logo-box{
+  background:#ffffff;
+  border-radius:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:160px;
+}
+
+.logo-box img{
+  width:120px;
+  height:auto;
+}
+
 /* SECTIONS */
 .section{
   background:var(--card);
@@ -150,7 +172,7 @@ html,body{
 
 .card p{
   font-size:13px;
-  line-height:1.35;
+  line-height:1.45;
   color:var(--muted);
 }
 
@@ -178,6 +200,7 @@ html,body{
   html,body{overflow:auto}
   .container{grid-template-columns:1fr}
   .grid{grid-template-columns:1fr}
+  .emotion-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -221,26 +244,35 @@ html,body{
 
 <!-- EMOTIONS -->
 <section class="section">
-  <h3>Emotional Value System</h3>
-  <p style="font-size:13px;color:var(--muted);margin-bottom:8px">
-    Symbolic participation experiment. No promises. No guarantees.
-  </p>
+  <div class="emotion-grid">
 
-  <div class="badges">
-    <span>😊 Happy</span>
-    <span>😡 Angry</span>
-    <span>😢 Sad</span>
-    <span>🔥 Motivated</span>
-    <span>❤️ Loved</span>
+    <div>
+      <h3>Emotional Value System</h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:8px">
+        Symbolic participation experiment. No promises. No guarantees.
+      </p>
+
+      <div class="badges">
+        <span>😊 Happy</span>
+        <span>😡 Angry</span>
+        <span>😢 Sad</span>
+        <span>🔥 Motivated</span>
+        <span>❤️ Loved</span>
+      </div>
+
+      <a class="button">Register Emotion</a>
+    </div>
+
+    <div class="logo-box">
+      <img src="logo-rfx2.png" alt="ReflexCoin 2.0 Logo">
+    </div>
+
   </div>
-
-  <a class="button">Register Emotion</a>
 </section>
 
 <!-- GRID -->
 <section class="grid">
 
-<!-- GAME -->
 <div class="card">
   <h4>Experiência interativa</h4>
   <p>
@@ -251,13 +283,11 @@ html,body{
   <a class="button game-btn" href="game.html">🎮 Jogar agora</a>
 </div>
 
-<!-- DEX -->
 <div class="card dex">
   <h4>Live Market</h4>
   <iframe src="https://dexscreener.com/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z?embed=1&theme=dark"></iframe>
 </div>
 
-<!-- VIDEO -->
 <div class="card">
   <h4>Visualização</h4>
   <div class="embed">
@@ -267,12 +297,12 @@ html,body{
   </div>
 </div>
 
-<!-- INFO -->
 <div class="card">
   <h4>What is RFX2?</h4>
   <p>
-    Fixed-supply experimental token on Solana.
-    No inflation. No minting. No insiders.
+    ReflexCoin 2.0 (RFX2) is a fixed-supply experimental token built on Solana.
+    It explores how emotion, narrative and collective attention can influence
+    perceived digital value. No inflation. No minting. No insiders.
   </p>
 </div>
 
@@ -280,17 +310,13 @@ html,body{
 </main>
 </div>
 
-<!-- JS MARKET DATA -->
 <script>
 (async ()=>{
   try{
     const res = await fetch("https://api.dexscreener.com/latest/dex/pairs/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z");
     const data = await res.json();
-    const p = data.pair.priceUsd;
-    const mc = data.pair.fdv;
-
-    document.getElementById("price").textContent = "$" + Number(p).toFixed(6);
-    document.getElementById("mc").textContent = "$" + Number(mc).toLocaleString();
+    document.getElementById("price").textContent = "$" + Number(data.pair.priceUsd).toFixed(6);
+    document.getElementById("mc").textContent = "$" + Number(data.pair.fdv).toLocaleString();
   }catch(e){}
 })();
 </script>
