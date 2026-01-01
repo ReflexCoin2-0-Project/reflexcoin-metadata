@@ -157,9 +157,14 @@ html,body{
   margin-top:8px;
 }
 
+/* MOBILE */
 @media(max-width:1024px){
-  .container{grid-template-columns:1fr;}
-  .grid-bottom{grid-template-columns:1fr;}
+  .container{
+    grid-template-columns:1fr;
+  }
+  .grid-bottom{
+    grid-template-columns:1fr;
+  }
 }
 </style>
 </head>
@@ -190,8 +195,8 @@ html,body{
     <div class="header">
       <h2>ReflexCoin 2.0 — RFX2</h2>
       <div class="stats">
-        <span>Price $0</span>
-        <span>Market Cap $0</span>
+        <span id="price">Price $0</span>
+        <span id="marketcap">Market Cap $0</span>
         <span>Supply 2,000,000</span>
       </div>
     </div>
@@ -218,17 +223,15 @@ html,body{
       <div class="card">
         <h4>Experiência interativa (jogo comunitário)</h4>
         <p class="footer-note">
-          ReflexCoin 2.0 inclui um jogo comunitário interativo.<br>
+          ReflexCoin 2.0 inclui um jogo comunitário interativo.
           Cada ação conta. Cada participação deixa um rasto.<br><br>
           Jogadores ativos podem ser elegíveis para airdrops
           e futuras distribuições comunitárias.<br><br>
           Sem promessas. Sem atalhos. Só participação real.
         </p>
 
-        <!-- ✅ ÚNICA ALTERAÇÃO: LINK DO JOGO -->
-        <a class="button game-btn" href="game.html">
-          🎮 Jogar agora
-        </a>
+        <!-- ÚNICA ALTERAÇÃO DE LINK -->
+        <a class="button" href="game.html">🎮 Jogar agora</a>
       </div>
 
       <div class="card">
@@ -261,6 +264,39 @@ html,body{
   </main>
 
 </div>
+
+<!-- JAVASCRIPT LEVE – SEM MEXER NO LAYOUT -->
+<script>
+(async () => {
+  const SUPPLY = 2000000;
+  const PAIR = "43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z";
+
+  try {
+    const res = await fetch(
+      `https://api.dexscreener.com/latest/dex/pairs/solana/${PAIR}`
+    );
+    const json = await res.json();
+    if (!json.pair) return;
+
+    const price = parseFloat(json.pair.priceUsd);
+    const marketCap = price * SUPPLY;
+
+    document.getElementById("price").textContent =
+      `Price $${price.toFixed(6)}`;
+
+    document.getElementById("marketcap").textContent =
+      `Market Cap $${format(marketCap)}`;
+  } catch (e) {
+    console.warn("DexScreener fetch failed");
+  }
+
+  function format(n){
+    if (n >= 1e6) return (n/1e6).toFixed(2)+"M";
+    if (n >= 1e3) return (n/1e3).toFixed(2)+"K";
+    return n.toFixed(2);
+  }
+})();
+</script>
 
 </body>
 </html>
