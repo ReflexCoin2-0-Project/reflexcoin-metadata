@@ -83,9 +83,7 @@ html,body{
   gap:14px;
 }
 
-.header h2{
-  color:var(--accent);
-}
+.header h2{ color:var(--accent); }
 
 .header-logo{
   width:46px;
@@ -102,7 +100,7 @@ html,body{
 /* EMOTIONS */
 .emotion-grid{
   display:grid;
-  grid-template-columns: 1fr 200px;
+  grid-template-columns:1fr 200px;
   gap:20px;
   align-items:center;
 }
@@ -116,11 +114,8 @@ html,body{
   height:160px;
 }
 
-.logo-box img{
-  width:120px;
-}
+.logo-box img{ width:120px; }
 
-/* SECTIONS */
 .section{
   background:var(--card);
   border-radius:var(--radius);
@@ -133,6 +128,14 @@ html,body{
   border-radius:999px;
   margin-right:8px;
   display:inline-block;
+  cursor:pointer;
+  transition:all .2s;
+}
+
+.badges span.active{
+  background:var(--accent);
+  color:#000;
+  font-weight:700;
 }
 
 .button{
@@ -144,6 +147,7 @@ html,body{
   border-radius:999px;
   font-weight:700;
   text-decoration:none;
+  cursor:pointer;
 }
 
 /* GRID */
@@ -243,15 +247,15 @@ html,body{
         Symbolic participation experiment. No promises. No guarantees.
       </p>
 
-      <div class="badges">
-        <span>😊 Happy</span>
-        <span>😡 Angry</span>
-        <span>😢 Sad</span>
-        <span>🔥 Motivated</span>
-        <span>❤️ Loved</span>
+      <div class="badges" id="emotionButtons">
+        <span data-emotion="Happy">😊 Happy</span>
+        <span data-emotion="Angry">😡 Angry</span>
+        <span data-emotion="Sad">😢 Sad</span>
+        <span data-emotion="Motivated">🔥 Motivated</span>
+        <span data-emotion="Loved">❤️ Loved</span>
       </div>
 
-      <a class="button">Register Emotion</a>
+      <button class="button" id="registerEmotion">Register Emotion</button>
     </div>
 
     <div class="logo-box">
@@ -270,7 +274,8 @@ html,body{
     Cada ação conta.<br>
     Jogadores ativos podem ser elegíveis para airdrops.
   </p>
-  <a class="button" href="game.html">🎮 Jogar agora</a>
+  <!-- ABRE EM NOVA JANELA -->
+  <a class="button" href="game.html" target="_blank">🎮 Jogar agora</a>
 </div>
 
 <div class="card dex">
@@ -301,26 +306,35 @@ html,body{
 </div>
 
 <script>
+/* === EMOTIONS === */
+let selectedEmotion = null;
+const buttons = document.querySelectorAll("#emotionButtons span");
+
+buttons.forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    buttons.forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    selectedEmotion = btn.dataset.emotion;
+  });
+});
+
+document.getElementById("registerEmotion").addEventListener("click",()=>{
+  if(!selectedEmotion){
+    alert("Select an emotion first.");
+    return;
+  }
+  alert("Emotion registered: " + selectedEmotion);
+});
+
+/* === PRICE / MARKET CAP === */
 (async ()=>{
   try{
-    const url = "https://api.dexscreener.com/latest/dex/pairs/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z";
-    const res = await fetch(url);
+    const res = await fetch("https://api.dexscreener.com/latest/dex/pairs/solana/43qV5jUhNEtsPeoLzEZyRLYA5tUSNTo2rgVv8mCJsx9z");
     const json = await res.json();
-    const pair = json.pair;
-
-    if(pair?.priceUsd){
-      document.getElementById("price").textContent =
-        "$" + Number(pair.priceUsd).toFixed(6);
-    }
-
-    if(pair?.marketCap){
-      document.getElementById("mc").textContent =
-        "$" + Number(pair.marketCap).toLocaleString();
-    }
-
-  }catch(e){
-    console.error("DexScreener fetch failed", e);
-  }
+    const p = json.pair;
+    if(p?.priceUsd) document.getElementById("price").textContent = "$"+Number(p.priceUsd).toFixed(6);
+    if(p?.marketCap) document.getElementById("mc").textContent = "$"+Number(p.marketCap).toLocaleString();
+  }catch(e){}
 })();
 </script>
 
