@@ -1,33 +1,96 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RFX2 Community Spin</title>
 
 <style>
+*{box-sizing:border-box;margin:0;padding:0}
+
 body{
-  margin:0;
   background:#050914;
   font-family:Inter,Arial,sans-serif;
   color:#e6e9f0;
+  height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  height:100vh;
 }
 
-.game{
+.wrapper{
+  width:900px;
+  max-width:95%;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+}
+
+/* LEFT PANEL */
+.left{
+  background:#0b1222;
+  border-radius:22px;
+  padding:28px;
+}
+
+.left h1{
+  color:#f5c400;
+  margin-bottom:12px;
+}
+
+.left p{
+  font-size:14px;
+  line-height:1.6;
+  color:#cfd5f0;
+  margin-bottom:14px;
+}
+
+.left ul{
+  margin-left:18px;
+  margin-bottom:16px;
+}
+
+.left li{
+  font-size:14px;
+  margin-bottom:6px;
+}
+
+.notice{
+  font-size:12px;
+  color:#9aa4c7;
+  border-top:1px solid #1a2240;
+  padding-top:12px;
+}
+
+/* RIGHT PANEL */
+.right{
   background:#0b1222;
   border-radius:22px;
   padding:22px;
-  width:380px;
   text-align:center;
-  position:relative;
 }
 
-h1{color:#f5c400;margin-bottom:8px}
+/* LOGO BLOCK */
+.logo-box{
+  background:#ffffff;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:16px;
+}
 
+.logo-box img{
+  width:140px;
+  display:block;
+  margin:0 auto 10px;
+}
+
+.logo-box p{
+  color:#b08d00;
+  font-weight:600;
+  font-size:13px;
+}
+
+/* GAME */
 input{
   width:100%;
   padding:10px;
@@ -38,9 +101,9 @@ input{
 
 #wheel-container{
   position:relative;
-  width:260px;
-  height:260px;
-  margin:18px auto;
+  width:240px;
+  height:240px;
+  margin:14px auto;
 }
 
 #wheel{
@@ -56,31 +119,28 @@ input{
     #6b3fd6 240deg 300deg,
     #141c33 300deg 360deg
   );
-  display:flex;
-  align-items:center;
-  justify-content:center;
   transition:transform 4s cubic-bezier(.17,.67,.2,1);
 }
 
 .pointer{
   position:absolute;
-  top:-10px;
+  top:-14px;
   left:50%;
   transform:translateX(-50%);
   font-size:28px;
 }
 
-#wheel span{
+.segment{
   position:absolute;
   font-size:22px;
 }
 
-.e1{top:18px;left:50%;transform:translateX(-50%)}
-.e2{top:90px;right:20px}
-.e3{bottom:40px;right:60px}
-.e4{bottom:40px;left:60px}
-.e5{top:90px;left:20px}
-.e6{top:120px;left:50%;transform:translateX(-50%)}
+.s1{top:16px;left:50%;transform:translateX(-50%)}
+.s2{top:80px;right:16px}
+.s3{bottom:40px;right:56px}
+.s4{bottom:40px;left:56px}
+.s5{top:80px;left:16px}
+.s6{top:118px;left:50%;transform:translateX(-50%)}
 
 button{
   background:#f5c400;
@@ -92,64 +152,85 @@ button{
 }
 
 .result{
-  margin-top:12px;
+  margin-top:10px;
   font-size:14px;
-  min-height:40px;
+  min-height:36px;
 }
 
 .stats{
-  margin-top:10px;
   font-size:12px;
   color:#9aa4c7;
+  margin-top:6px;
 }
 
-.admin{
-  display:none;
-  margin-top:14px;
-  font-size:12px;
-  color:#9aa4c7;
-  text-align:left;
-}
-
-small{
-  display:block;
-  margin-top:12px;
-  font-size:11px;
-  color:#9aa4c7;
+/* MOBILE */
+@media(max-width:900px){
+  .wrapper{grid-template-columns:1fr}
 }
 </style>
 </head>
 
 <body>
 
-<div class="game">
-<h1>🎡 RFX2 Spin</h1>
+<div class="wrapper">
 
-<input id="wallet" placeholder="Solana wallet (optional to try)">
+<!-- LEFT -->
+<div class="left">
+  <h1>🎡 RFX2 Community Spin</h1>
 
-<div id="wheel-container">
-  <div class="pointer">⬇️</div>
-  <div id="wheel">
-    <span class="e1">😊</span>
-    <span class="e2">😡</span>
-    <span class="e3">🔥</span>
-    <span class="e4">❤️</span>
-    <span class="e5">❌</span>
-    <span class="e6">💎</span>
+  <p>
+    This is a community-driven experiment built around participation,
+    emotion and on-chain culture.
+  </p>
+
+  <ul>
+    <li>Spin the wheel once every 24h</li>
+    <li>Each segment represents an outcome</li>
+    <li>💎 Airdrops are rare but real</li>
+    <li>Wallet required for real rewards</li>
+  </ul>
+
+  <p>
+    You can try the game without a wallet to see how it works.
+    Real airdrops are only recorded when a valid Solana wallet
+    is provided.
+  </p>
+
+  <div class="notice">
+    This is not gambling and involves no payment.<br>
+    Airdrops are discretionary and not guaranteed.<br>
+    Community experiment only.
   </div>
 </div>
 
-<button onclick="spin()">Spin the Wheel</button>
+<!-- RIGHT -->
+<div class="right">
 
-<div class="result" id="result"></div>
-<div class="stats" id="stats"></div>
+  <div class="logo-box">
+    <img src="logo-rfx2.png" alt="RFX2">
+    <p>Save your airdrops. Accumulate. Support the token.</p>
+  </div>
 
-<div class="admin" id="admin"></div>
+  <input id="wallet" placeholder="Solana wallet (optional demo)">
 
-<small>
-Community experiment.<br>
-You can try without wallet. Rewards only apply with wallet.
-</small>
+  <div id="wheel-container">
+    <div class="pointer">⬇️</div>
+    <div id="wheel">
+      <div class="segment s1">😊</div>
+      <div class="segment s2">😡</div>
+      <div class="segment s3">🔥</div>
+      <div class="segment s4">❤️</div>
+      <div class="segment s5">❌</div>
+      <div class="segment s6">💎</div>
+    </div>
+  </div>
+
+  <button onclick="spin()">Spin the Wheel</button>
+
+  <div class="result" id="result"></div>
+  <div class="stats" id="stats"></div>
+
+</div>
 </div>
 
 <script>
@@ -169,19 +250,21 @@ function spin(){
  spinning=true;
 
  const wallet=document.getElementById("wallet").value.trim();
- const angle=360*4 + Math.random()*360;
- document.getElementById("wheel").style.transform=`rotate(${angle}deg)`;
+
+ let roll=Math.random()*100, acc=0, index=0;
+ for(let i=0;i<segments.length;i++){
+  acc+=segments[i].chance;
+  if(roll<=acc){index=i;break;}
+ }
+
+ const baseAngle=index*60;
+ const finalAngle=360*4+(360-baseAngle-30);
+ document.getElementById("wheel").style.transform=`rotate(${finalAngle}deg)`;
 
  setTimeout(()=>{
-  const roll=Math.random()*100;
-  let acc=0,res;
-  for(let s of segments){
-    acc+=s.chance;
-    if(roll<=acc){res=s.label;break;}
-  }
+  let msg=segments[index].label;
 
-  let msg=res;
-  if(res.includes("AIRDROP")){
+  if(msg.includes("AIRDROP")){
     if(wallet){
       msg+=" 🎉 (wallet recorded)";
       let list=JSON.parse(localStorage.getItem("airdrops")||"[]");
@@ -193,7 +276,6 @@ function spin(){
   }
 
   document.getElementById("result").innerText=msg;
-
   localStorage.setItem("spins",(Number(localStorage.getItem("spins")||0)+1));
   updateStats();
   spinning=false;
@@ -204,12 +286,6 @@ function updateStats(){
  document.getElementById("stats").innerText=
   "Total spins: "+(localStorage.getItem("spins")||0)+
   " | Airdrops: "+(JSON.parse(localStorage.getItem("airdrops")||"[]").length);
-}
-
-if(location.hash==="#admin"){
- const a=document.getElementById("admin");
- a.style.display="block";
- a.innerHTML="<b>Admin panel</b><br>"+JSON.stringify(JSON.parse(localStorage.getItem("airdrops")||"[]"),null,2);
 }
 
 updateStats();
