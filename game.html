@@ -1,111 +1,175 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>RFX2 Community Game</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RFX2 Community Spin</title>
 
 <style>
 body{
+  margin:0;
   background:#050914;
+  font-family:Inter,Arial,sans-serif;
   color:#e6e9f0;
-  font-family:Inter,system-ui,Arial;
   display:flex;
   justify-content:center;
   align-items:center;
-  min-height:100vh;
+  height:100vh;
 }
 
-.card{
+.game{
   background:#0b1222;
+  border-radius:20px;
   padding:24px;
-  border-radius:18px;
-  width:320px;
-  box-shadow:0 0 40px rgba(0,0,0,.4);
+  width:360px;
+  text-align:center;
 }
 
-h2{
+h1{
   color:#f5c400;
-  margin-bottom:6px;
+  margin-bottom:10px;
 }
 
-p{
-  font-size:13px;
-  line-height:1.4;
-  color:#9aa4c7;
-}
-
-select,input{
+input{
   width:100%;
-  padding:12px;
-  margin-top:10px;
+  padding:10px;
   border-radius:10px;
-  border:none;
-  background:#141c33;
-  color:#fff;
+  border:0;
+  margin-bottom:12px;
+}
+
+#wheel{
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  margin:20px auto;
+  border:8px solid #f5c400;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:22px;
+  background:conic-gradient(
+    #6b3fd6 0deg 90deg,
+    #141c33 90deg 180deg,
+    #6b3fd6 180deg 270deg,
+    #141c33 270deg 360deg
+  );
 }
 
 button{
-  width:100%;
-  margin-top:14px;
-  padding:14px;
-  border:none;
-  border-radius:999px;
   background:#f5c400;
+  border:0;
+  border-radius:999px;
+  padding:12px 22px;
   font-weight:700;
   cursor:pointer;
 }
 
-button:hover{
-  opacity:.9;
+.result{
+  margin-top:16px;
+  font-size:14px;
+  min-height:40px;
 }
 
-.msg{
-  margin-top:10px;
-  font-size:13px;
-  color:#8cffb3;
+.stats{
+  margin-top:12px;
+  font-size:12px;
+  color:#9aa4c7;
+}
+
+small{
+  display:block;
+  margin-top:14px;
+  font-size:11px;
+  color:#9aa4c7;
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-  <h2>RFX2 Community Game</h2>
-  <p>
-    Escolhe uma emoção, regista a tua participação  
-    e junta-te ao ecossistema RFX2.
-  </p>
+<div class="game">
+  <h1>🎡 RFX2 Spin</h1>
 
-  <select id="emotion">
-    <option>😊 Feliz</option>
-    <option>🔥 Motivado</option>
-    <option>😡 Irritado</option>
-    <option>😢 Triste</option>
-    <option>❤️ Adorei</option>
-  </select>
+  <input id="wallet" placeholder="Solana wallet address">
 
-  <input id="wallet" placeholder="Endereço Solana (Phantom / Solflare)" />
+  <div id="wheel">SPIN</div>
 
-  <button onclick="play()">🎮 Jogar</button>
+  <button onclick="spin()">Spin the Wheel</button>
 
-  <div class="msg" id="msg"></div>
+  <div class="result" id="result"></div>
+
+  <div class="stats" id="stats"></div>
+
+  <small>
+    Community experiment.  
+    Airdrops are discretionary and not guaranteed.
+  </small>
 </div>
 
 <script>
-function play(){
+const results = [
+  {label:"😊 Happy +1", chance:25},
+  {label:"😡 Angry +1", chance:20},
+  {label:"🔥 Motivated +2", chance:15},
+  {label:"❤️ Loved +3", chance:10},
+  {label:"❌ Try again", chance:25},
+  {label:"💎 AIRDROP WIN", chance:5}
+];
+
+function spin(){
   const wallet = document.getElementById("wallet").value.trim();
-  if(wallet.length < 32){
-    alert("Endereço Solana inválido");
+  if(!wallet){
+    alert("Insert your Solana wallet");
     return;
   }
 
-  let points = localStorage.getItem(wallet) || 0;
-  points++;
-  localStorage.setItem(wallet, points);
+  const last = localStorage.getItem("lastSpin_"+wallet);
+  if(last && Date.now() - last < 86400000){
+    alert("You can spin once every 24h");
+    return;
+  }
 
-  document.getElementById("msg").innerText =
-    "Participação registada! Pontos: " + points;
+  const roll = Math.random()*100;
+  let acc = 0;
+  let outcome;
+
+  for(let r of results){
+    acc += r.chance;
+    if(roll <= acc){
+      outcome = r.label;
+      break;
+    }
+  }
+
+  document.getElementById("result").innerText =
+    "Result: " + outcome;
+
+  localStorage.setItem("lastSpin_"+wallet, Date.now());
+
+  // GLOBAL STATS
+  let totalSpins = Number(localStorage.getItem("totalSpins")||0)+1;
+  localStorage.setItem("totalSpins", totalSpins);
+
+  if(outcome.includes("AIRDROP")){
+    let wins = Number(localStorage.getItem("airdrops")||0)+1;
+    localStorage.setItem("airdrops", wins);
+
+    let list = JSON.parse(localStorage.getItem("airdropWallets")||"[]");
+    list.push({wallet, date:new Date().toISOString()});
+    localStorage.setItem("airdropWallets", JSON.stringify(list));
+  }
+
+  updateStats();
 }
+
+function updateStats(){
+  document.getElementById("stats").innerText =
+    "Total spins: " + (localStorage.getItem("totalSpins")||0) +
+    " | Airdrops won: " + (localStorage.getItem("airdrops")||0);
+}
+
+updateStats();
 </script>
 
 </body>
