@@ -2,293 +2,245 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RFX2 Community Spin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
 
 <style>
+/* === BASE === */
 *{box-sizing:border-box;margin:0;padding:0}
-
 body{
   background:#050914;
   font-family:Inter,Arial,sans-serif;
   color:#e6e9f0;
-  height:100vh;
+  min-height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
 }
-
-.wrapper{
-  width:900px;
-  max-width:95%;
+.container{
+  width:1200px;
+  max-width:96%;
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:1fr 1fr 1fr;
   gap:24px;
 }
 
-/* LEFT PANEL */
-.left{
+/* === PANELS === */
+.panel{
   background:#0b1222;
   border-radius:22px;
-  padding:28px;
+  padding:24px;
 }
+h1,h2{color:#f5c400;margin-bottom:12px}
+p,li{font-size:14px;line-height:1.6;color:#cfd5f0}
 
-.left h1{
-  color:#f5c400;
-  margin-bottom:12px;
-}
+/* LEFT */
+.notice{font-size:12px;color:#9aa4c7;margin-top:12px}
 
-.left p{
-  font-size:14px;
-  line-height:1.6;
-  color:#cfd5f0;
-  margin-bottom:14px;
-}
-
-.left ul{
-  margin-left:18px;
-  margin-bottom:16px;
-}
-
-.left li{
-  font-size:14px;
-  margin-bottom:6px;
-}
-
-.notice{
-  font-size:12px;
-  color:#9aa4c7;
-  border-top:1px solid #1a2240;
-  padding-top:12px;
-}
-
-/* RIGHT PANEL */
-.right{
-  background:#0b1222;
-  border-radius:22px;
-  padding:22px;
-  text-align:center;
-}
-
-/* LOGO BLOCK */
-.logo-box{
-  background:#ffffff;
-  border-radius:18px;
-  padding:18px;
-  margin-bottom:16px;
-}
-
-.logo-box img{
-  width:140px;
-  display:block;
-  margin:0 auto 10px;
-}
-
-.logo-box p{
-  color:#b08d00;
-  font-weight:600;
-  font-size:13px;
-}
-
-/* GAME */
+/* CENTER */
+.center{text-align:center}
 input{
-  width:100%;
-  padding:10px;
-  border-radius:10px;
-  border:0;
-  margin-bottom:10px;
+  width:100%;padding:10px;border-radius:10px;border:0;margin-bottom:8px
 }
-
-#wheel-container{
-  position:relative;
-  width:240px;
-  height:240px;
-  margin:14px auto;
+button{
+  background:#f5c400;border:0;border-radius:999px;
+  padding:10px 18px;font-weight:700;cursor:pointer;margin:6px
 }
-
+#wheel-wrap{position:relative;width:260px;height:260px;margin:20px auto}
 #wheel{
-  width:100%;
-  height:100%;
-  border-radius:50%;
+  width:100%;height:100%;border-radius:50%;
   border:8px solid #f5c400;
   background:conic-gradient(
-    #6b3fd6 0deg 60deg,
-    #141c33 60deg 120deg,
-    #6b3fd6 120deg 180deg,
-    #141c33 180deg 240deg,
-    #6b3fd6 240deg 300deg,
-    #141c33 300deg 360deg
+    #6b3fd6 0deg 60deg,#141c33 60deg 120deg,
+    #6b3fd6 120deg 180deg,#141c33 180deg 240deg,
+    #6b3fd6 240deg 300deg,#141c33 300deg 360deg
   );
   transition:transform 4s cubic-bezier(.17,.67,.2,1);
 }
+.pointer{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:28px}
+.emoji{position:absolute;font-size:26px}
+.e1{top:20px;left:50%;transform:translateX(-50%)}
+.e2{top:75px;right:25px}
+.e3{bottom:55px;right:60px}
+.e4{bottom:55px;left:60px}
+.e5{top:75px;left:25px}
+.e6{top:120px;left:50%;transform:translateX(-50%)}
 
-.pointer{
-  position:absolute;
-  top:-14px;
-  left:50%;
-  transform:translateX(-50%);
-  font-size:28px;
+/* RIGHT */
+.logo-box{
+  background:#fff;border-radius:18px;padding:18px;text-align:center
+}
+.logo-box img{width:150px;margin-bottom:10px}
+.logo-box p{color:#b08d00;font-size:13px;font-weight:600}
+
+/* ADMIN */
+#admin{display:none;margin-top:20px}
+.admin-box{
+  background:#141c33;border-radius:14px;padding:12px;font-size:13px
+}
+.admin-box pre{
+  background:#050914;padding:8px;border-radius:8px;max-height:160px;overflow:auto
 }
 
-.segment{
-  position:absolute;
-  font-size:22px;
-}
-
-.s1{top:16px;left:50%;transform:translateX(-50%)}
-.s2{top:80px;right:16px}
-.s3{bottom:40px;right:56px}
-.s4{bottom:40px;left:56px}
-.s5{top:80px;left:16px}
-.s6{top:118px;left:50%;transform:translateX(-50%)}
-
-button{
-  background:#f5c400;
-  border:0;
-  border-radius:999px;
-  padding:12px 22px;
-  font-weight:700;
-  cursor:pointer;
-}
-
-.result{
-  margin-top:10px;
-  font-size:14px;
-  min-height:36px;
-}
-
-.stats{
-  font-size:12px;
-  color:#9aa4c7;
-  margin-top:6px;
-}
-
-/* MOBILE */
-@media(max-width:900px){
-  .wrapper{grid-template-columns:1fr}
+@media(max-width:1000px){
+  .container{grid-template-columns:1fr}
 }
 </style>
 </head>
 
 <body>
 
-<div class="wrapper">
+<div class="container">
 
 <!-- LEFT -->
-<div class="left">
-  <h1>🎡 RFX2 Community Spin</h1>
+<div class="panel">
+<h1>🎡 RFX2 Community Spin</h1>
+<p>Community-driven experiment built around emotion and attention.</p>
+<ul>
+<li>One spin every 24 hours</li>
+<li>💎 Rare real airdrops</li>
+<li>Wallet required for real rewards</li>
+</ul>
+<div class="notice">
+No payment. No guarantees. Experimental only.
+</div>
+</div>
 
-  <p>
-    This is a community-driven experiment built around participation,
-    emotion and on-chain culture.
-  </p>
+<!-- CENTER -->
+<div class="panel center">
+<button onclick="connectPhantom()">🔗 Connect Phantom</button>
+<div id="walletStatus"></div>
 
-  <ul>
-    <li>Spin the wheel once every 24h</li>
-    <li>Each segment represents an outcome</li>
-    <li>💎 Airdrops are rare but real</li>
-    <li>Wallet required for real rewards</li>
-  </ul>
+<div id="wheel-wrap">
+<div class="pointer">⬇️</div>
+<div id="wheel">
+  <div class="emoji e1">😊</div>
+  <div class="emoji e2">😡</div>
+  <div class="emoji e3">🔥</div>
+  <div class="emoji e4">❤️</div>
+  <div class="emoji e5">❌</div>
+  <div class="emoji e6">💎</div>
+</div>
+</div>
 
-  <p>
-    You can try the game without a wallet to see how it works.
-    Real airdrops are only recorded when a valid Solana wallet
-    is provided.
-  </p>
+<button onclick="spin()">Spin</button>
+<button onclick="share()">Share on X</button>
 
-  <div class="notice">
-    This is not gambling and involves no payment.<br>
-    Airdrops are discretionary and not guaranteed.<br>
-    Community experiment only.
-  </div>
+<div id="result"></div>
+<div id="stats"></div>
+
+<!-- ADMIN -->
+<div id="admin">
+<h2>Admin Panel</h2>
+<div class="admin-box">
+<button onclick="exportCSV()">Export CSV</button>
+<button onclick="clearData()">Clear Data</button>
+<pre id="adminData"></pre>
+</div>
+</div>
+
 </div>
 
 <!-- RIGHT -->
-<div class="right">
-
-  <div class="logo-box">
-    <img src="logo-rfx2.png" alt="RFX2">
-    <p>Save your airdrops. Accumulate. Support the token.</p>
-  </div>
-
-  <input id="wallet" placeholder="Solana wallet (optional demo)">
-
-  <div id="wheel-container">
-    <div class="pointer">⬇️</div>
-    <div id="wheel">
-      <div class="segment s1">😊</div>
-      <div class="segment s2">😡</div>
-      <div class="segment s3">🔥</div>
-      <div class="segment s4">❤️</div>
-      <div class="segment s5">❌</div>
-      <div class="segment s6">💎</div>
-    </div>
-  </div>
-
-  <button onclick="spin()">Spin the Wheel</button>
-
-  <div class="result" id="result"></div>
-  <div class="stats" id="stats"></div>
-
+<div class="panel">
+<div class="logo-box">
+<img src="logo-rfx2.png">
+<p>Save airdrops. Accumulate. Support RFX2.</p>
 </div>
+</div>
+
 </div>
 
 <script>
-const segments = [
- {label:"😊 Happy +1", chance:25},
- {label:"😡 Angry +1", chance:20},
- {label:"🔥 Motivated +2", chance:15},
- {label:"❤️ Loved +3", chance:10},
- {label:"❌ Try again", chance:27},
- {label:"💎 AIRDROP WIN", chance:3}
+let wallet=null;
+const ADMIN_PASS="rfx2admin";
+
+/* === PHANTOM === */
+async function connectPhantom(){
+ if(!window.solana||!window.solana.isPhantom){
+  alert("Phantom not found");
+  return;
+ }
+ const res=await window.solana.connect();
+ wallet=res.publicKey.toString();
+ document.getElementById("walletStatus").innerText="Connected: "+wallet;
+}
+
+/* === GAME === */
+const segments=[
+ {label:"😊 +1",chance:22},
+ {label:"😡 +1",chance:20},
+ {label:"🔥 +2",chance:15},
+ {label:"❤️ +3",chance:10},
+ {label:"❌",chance:30},
+ {label:"💎 AIRDROP",chance:3}
 ];
 
-let spinning=false;
-
 function spin(){
- if(spinning) return;
- spinning=true;
-
- const wallet=document.getElementById("wallet").value.trim();
-
- let roll=Math.random()*100, acc=0, index=0;
+ let roll=Math.random()*100,acc=0,idx=0;
  for(let i=0;i<segments.length;i++){
   acc+=segments[i].chance;
-  if(roll<=acc){index=i;break;}
+  if(roll<=acc){idx=i;break;}
  }
-
- const baseAngle=index*60;
- const finalAngle=360*4+(360-baseAngle-30);
- document.getElementById("wheel").style.transform=`rotate(${finalAngle}deg)`;
+ const angle=360*4+(360-(idx*60)-30);
+ wheel.style.transform=`rotate(${angle}deg)`;
 
  setTimeout(()=>{
-  let msg=segments[index].label;
-
-  if(msg.includes("AIRDROP")){
-    if(wallet){
-      msg+=" 🎉 (wallet recorded)";
-      let list=JSON.parse(localStorage.getItem("airdrops")||"[]");
-      list.push({wallet,date:new Date().toISOString()});
-      localStorage.setItem("airdrops",JSON.stringify(list));
-    }else{
-      msg+=" (demo only)";
-    }
+  let msg=segments[idx].label;
+  if(msg.includes("AIRDROP")&&wallet){
+   let data=JSON.parse(localStorage.getItem("airdrops")||"[]");
+   data.push({wallet,time:new Date().toISOString()});
+   localStorage.setItem("airdrops",JSON.stringify(data));
   }
-
   document.getElementById("result").innerText=msg;
-  localStorage.setItem("spins",(Number(localStorage.getItem("spins")||0)+1));
   updateStats();
-  spinning=false;
  },4200);
 }
 
 function updateStats(){
+ const spins=+localStorage.getItem("spins")||0;
+ localStorage.setItem("spins",spins+1);
+ const airdrops=JSON.parse(localStorage.getItem("airdrops")||"[]").length;
  document.getElementById("stats").innerText=
-  "Total spins: "+(localStorage.getItem("spins")||0)+
-  " | Airdrops: "+(JSON.parse(localStorage.getItem("airdrops")||"[]").length);
+  `Spins: ${spins+1} | Airdrops: ${airdrops}`;
 }
 
-updateStats();
+/* === ADMIN === */
+function admin(){
+ const p=prompt("Admin password");
+ if(p===ADMIN_PASS){
+  admin.style.display="block";
+  adminData.innerText=localStorage.getItem("airdrops");
+ }
+}
+
+function exportCSV(){
+ const data=JSON.parse(localStorage.getItem("airdrops")||"[]");
+ let csv="wallet,time\n"+data.map(d=>`${d.wallet},${d.time}`).join("\n");
+ const a=document.createElement("a");
+ a.href=URL.createObjectURL(new Blob([csv]));
+ a.download="airdrops.csv";
+ a.click();
+}
+
+function clearData(){
+ if(confirm("Clear all data?")){
+  localStorage.clear();location.reload();
+ }
+}
+
+/* === SHARE === */
+function share(){
+ const t=encodeURIComponent(
+ "I just played the RFX2 Community Spin 🎡 Join 👉 https://reflexcoin2-0-project.github.io/reflexcoin-metadata/"
+ );
+ window.open("https://twitter.com/intent/tweet?text="+t,"_blank");
+}
+
+document.addEventListener("keydown",e=>{
+ if(e.key==="A")admin();
+});
 </script>
 
 </body>
