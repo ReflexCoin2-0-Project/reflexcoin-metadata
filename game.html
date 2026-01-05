@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,42 +19,68 @@ body{
 
 .game{
   background:#0b1222;
-  border-radius:20px;
-  padding:24px;
-  width:360px;
+  border-radius:22px;
+  padding:22px;
+  width:380px;
   text-align:center;
+  position:relative;
 }
 
-h1{
-  color:#f5c400;
-  margin-bottom:10px;
-}
+h1{color:#f5c400;margin-bottom:8px}
 
 input{
   width:100%;
   padding:10px;
   border-radius:10px;
   border:0;
-  margin-bottom:12px;
+  margin-bottom:10px;
+}
+
+#wheel-container{
+  position:relative;
+  width:260px;
+  height:260px;
+  margin:18px auto;
 }
 
 #wheel{
-  width:260px;
-  height:260px;
+  width:100%;
+  height:100%;
   border-radius:50%;
-  margin:20px auto;
   border:8px solid #f5c400;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:22px;
   background:conic-gradient(
-    #6b3fd6 0deg 90deg,
-    #141c33 90deg 180deg,
-    #6b3fd6 180deg 270deg,
-    #141c33 270deg 360deg
+    #6b3fd6 0deg 60deg,
+    #141c33 60deg 120deg,
+    #6b3fd6 120deg 180deg,
+    #141c33 180deg 240deg,
+    #6b3fd6 240deg 300deg,
+    #141c33 300deg 360deg
   );
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:transform 4s cubic-bezier(.17,.67,.2,1);
 }
+
+.pointer{
+  position:absolute;
+  top:-10px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:28px;
+}
+
+#wheel span{
+  position:absolute;
+  font-size:22px;
+}
+
+.e1{top:18px;left:50%;transform:translateX(-50%)}
+.e2{top:90px;right:20px}
+.e3{bottom:40px;right:60px}
+.e4{bottom:40px;left:60px}
+.e5{top:90px;left:20px}
+.e6{top:120px;left:50%;transform:translateX(-50%)}
 
 button{
   background:#f5c400;
@@ -66,20 +92,28 @@ button{
 }
 
 .result{
-  margin-top:16px;
+  margin-top:12px;
   font-size:14px;
   min-height:40px;
 }
 
 .stats{
-  margin-top:12px;
+  margin-top:10px;
   font-size:12px;
   color:#9aa4c7;
 }
 
+.admin{
+  display:none;
+  margin-top:14px;
+  font-size:12px;
+  color:#9aa4c7;
+  text-align:left;
+}
+
 small{
   display:block;
-  margin-top:14px;
+  margin-top:12px;
   font-size:11px;
   color:#9aa4c7;
 }
@@ -89,84 +123,93 @@ small{
 <body>
 
 <div class="game">
-  <h1>🎡 RFX2 Spin</h1>
+<h1>🎡 RFX2 Spin</h1>
 
-  <input id="wallet" placeholder="Solana wallet address">
+<input id="wallet" placeholder="Solana wallet (optional to try)">
 
-  <div id="wheel">SPIN</div>
+<div id="wheel-container">
+  <div class="pointer">⬇️</div>
+  <div id="wheel">
+    <span class="e1">😊</span>
+    <span class="e2">😡</span>
+    <span class="e3">🔥</span>
+    <span class="e4">❤️</span>
+    <span class="e5">❌</span>
+    <span class="e6">💎</span>
+  </div>
+</div>
 
-  <button onclick="spin()">Spin the Wheel</button>
+<button onclick="spin()">Spin the Wheel</button>
 
-  <div class="result" id="result"></div>
+<div class="result" id="result"></div>
+<div class="stats" id="stats"></div>
 
-  <div class="stats" id="stats"></div>
+<div class="admin" id="admin"></div>
 
-  <small>
-    Community experiment.  
-    Airdrops are discretionary and not guaranteed.
-  </small>
+<small>
+Community experiment.<br>
+You can try without wallet. Rewards only apply with wallet.
+</small>
 </div>
 
 <script>
-const results = [
-  {label:"😊 Happy +1", chance:25},
-  {label:"😡 Angry +1", chance:20},
-  {label:"🔥 Motivated +2", chance:15},
-  {label:"❤️ Loved +3", chance:10},
-  {label:"❌ Try again", chance:25},
-  {label:"💎 AIRDROP WIN", chance:5}
+const segments = [
+ {label:"😊 Happy +1", chance:25},
+ {label:"😡 Angry +1", chance:20},
+ {label:"🔥 Motivated +2", chance:15},
+ {label:"❤️ Loved +3", chance:10},
+ {label:"❌ Try again", chance:27},
+ {label:"💎 AIRDROP WIN", chance:3}
 ];
 
+let spinning=false;
+
 function spin(){
-  const wallet = document.getElementById("wallet").value.trim();
-  if(!wallet){
-    alert("Insert your Solana wallet");
-    return;
+ if(spinning) return;
+ spinning=true;
+
+ const wallet=document.getElementById("wallet").value.trim();
+ const angle=360*4 + Math.random()*360;
+ document.getElementById("wheel").style.transform=`rotate(${angle}deg)`;
+
+ setTimeout(()=>{
+  const roll=Math.random()*100;
+  let acc=0,res;
+  for(let s of segments){
+    acc+=s.chance;
+    if(roll<=acc){res=s.label;break;}
   }
 
-  const last = localStorage.getItem("lastSpin_"+wallet);
-  if(last && Date.now() - last < 86400000){
-    alert("You can spin once every 24h");
-    return;
-  }
-
-  const roll = Math.random()*100;
-  let acc = 0;
-  let outcome;
-
-  for(let r of results){
-    acc += r.chance;
-    if(roll <= acc){
-      outcome = r.label;
-      break;
+  let msg=res;
+  if(res.includes("AIRDROP")){
+    if(wallet){
+      msg+=" 🎉 (wallet recorded)";
+      let list=JSON.parse(localStorage.getItem("airdrops")||"[]");
+      list.push({wallet,date:new Date().toISOString()});
+      localStorage.setItem("airdrops",JSON.stringify(list));
+    }else{
+      msg+=" (demo only)";
     }
   }
 
-  document.getElementById("result").innerText =
-    "Result: " + outcome;
+  document.getElementById("result").innerText=msg;
 
-  localStorage.setItem("lastSpin_"+wallet, Date.now());
-
-  // GLOBAL STATS
-  let totalSpins = Number(localStorage.getItem("totalSpins")||0)+1;
-  localStorage.setItem("totalSpins", totalSpins);
-
-  if(outcome.includes("AIRDROP")){
-    let wins = Number(localStorage.getItem("airdrops")||0)+1;
-    localStorage.setItem("airdrops", wins);
-
-    let list = JSON.parse(localStorage.getItem("airdropWallets")||"[]");
-    list.push({wallet, date:new Date().toISOString()});
-    localStorage.setItem("airdropWallets", JSON.stringify(list));
-  }
-
+  localStorage.setItem("spins",(Number(localStorage.getItem("spins")||0)+1));
   updateStats();
+  spinning=false;
+ },4200);
 }
 
 function updateStats(){
-  document.getElementById("stats").innerText =
-    "Total spins: " + (localStorage.getItem("totalSpins")||0) +
-    " | Airdrops won: " + (localStorage.getItem("airdrops")||0);
+ document.getElementById("stats").innerText=
+  "Total spins: "+(localStorage.getItem("spins")||0)+
+  " | Airdrops: "+(JSON.parse(localStorage.getItem("airdrops")||"[]").length);
+}
+
+if(location.hash==="#admin"){
+ const a=document.getElementById("admin");
+ a.style.display="block";
+ a.innerHTML="<b>Admin panel</b><br>"+JSON.stringify(JSON.parse(localStorage.getItem("airdrops")||"[]"),null,2);
 }
 
 updateStats();
