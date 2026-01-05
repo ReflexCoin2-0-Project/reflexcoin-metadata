@@ -1,97 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <title>RFX2 Community Spin</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <style>
-body{
-  margin:0;
-  font-family:Inter,Arial,sans-serif;
-  background:radial-gradient(circle at top,#0c1426,#060b18);
-  color:#fff;
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: radial-gradient(circle at top, #0b1220, #050914);
+  color: #fff;
 }
-.container{
-  max-width:1200px;
-  margin:auto;
-  padding:40px;
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:30px;
-}
-.card{
-  background:linear-gradient(180deg,#0f1a33,#0a1226);
-  border-radius:20px;
-  padding:30px;
-}
-h1,h2{color:#f5c400;margin-top:0}
-ul{padding-left:20px}
 
-.logo-box{
+.container {
+  max-width: 1300px;
+  margin: auto;
+  padding: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 30px;
+}
+
+.card {
+  background: linear-gradient(180deg,#0f1a30,#0a1224);
+  border-radius: 18px;
+  padding: 30px;
+}
+
+h1,h2 {
+  color: #f6c400;
+}
+
+ul {
+  padding-left: 18px;
+}
+
+.logo-box {
   background:#fff;
-  border-radius:20px;
-  padding:30px;
+  border-radius:16px;
+  padding:25px;
   text-align:center;
 }
-.logo-box img{max-width:180px}
-.logo-box p{color:#c9a300;font-weight:600}
 
-.center{text-align:center}
+.logo-box img {
+  max-width:120px;
+}
 
-#wheel{
-  width:320px;
-  height:320px;
-  border-radius:50%;
-  margin:20px auto;
-  position:relative;
-  border:8px solid #f5c400;
-  background:conic-gradient(
-    #6d4bd3 0deg 51.4deg,
-    #0e1a33 51.4deg 102.8deg,
-    #6d4bd3 102.8deg 154.2deg,
-    #0e1a33 154.2deg 205.6deg,
-    #6d4bd3 205.6deg 257deg,
-    #0e1a33 257deg 308.4deg,
-    #6d4bd3 308.4deg 360deg
-  );
-}
-.pointer{
-  width:0;height:0;
-  border-left:10px solid transparent;
-  border-right:10px solid transparent;
-  border-bottom:20px solid #4fc3ff;
-  margin:auto;
-}
-.emoji{
-  position:absolute;
-  font-size:28px;
-  transform:translate(-50%,-50%);
-}
-button{
-  background:#f5c400;
+.button {
+  background:#f6c400;
+  color:#000;
+  padding:12px 18px;
   border:none;
-  padding:12px 24px;
-  border-radius:20px;
+  border-radius:30px;
   font-weight:700;
   cursor:pointer;
+  margin-top:10px;
 }
-button:disabled{opacity:.5;cursor:not-allowed}
-input{
+
+.button:disabled {
+  opacity:.4;
+}
+
+.center {
+  text-align:center;
+}
+
+canvas {
+  display:block;
+  margin:20px auto;
+}
+
+input {
   width:100%;
   padding:12px;
-  border-radius:12px;
+  border-radius:10px;
   border:none;
-  margin-bottom:10px;
+  margin-top:10px;
 }
-.admin{
-  background:#111;
-  border:1px solid #333;
-  margin:30px;
-  padding:20px;
-  border-radius:12px;
+
+.result {
+  margin-top:10px;
+  font-size:18px;
 }
-a{color:#4fc3ff}
+.small {
+  opacity:.7;
+  font-size:13px;
+}
 </style>
 </head>
 
@@ -99,134 +94,166 @@ a{color:#4fc3ff}
 
 <div class="container">
 
-<!-- LEFT -->
-<div class="card">
-<h1>🎡 RFX2 Community Spin</h1>
-<p>This is a community-driven experiment built around participation, emotion and attention.</p>
-<ul>
-<li>⏱️ 1 spin every <strong>6 hours</strong></li>
-<li>💎 Airdrop slice = real reward</li>
-<li>🔐 Wallet required for real eligibility</li>
-</ul>
-<p><small>No payments. No guarantees. Experimental only.</small></p>
-</div>
+  <!-- LEFT -->
+  <div class="card">
+    <h1>🎡 RFX2 Community Spin</h1>
+    <p>
+      This is a community-driven experiment built around emotion,
+      participation and on-chain culture.
+    </p>
+    <ul>
+      <li>1 spin every 6 hours</li>
+      <li>💎 Airdrop slice = real reward</li>
+      <li>Wallet required for eligibility</li>
+    </ul>
+    <p class="small">
+      No payments. No guarantees. Experimental only.
+    </p>
+  </div>
 
-<!-- CENTER -->
-<div class="card center">
-<div class="pointer"></div>
-<div id="wheel"></div>
+  <!-- CENTER -->
+  <div class="card center">
+    <canvas id="wheel" width="360" height="360"></canvas>
+    <button class="button" id="spinBtn">Spin</button>
+    <div class="result" id="result">Result: —</div>
 
-<button id="spinBtn">Spin</button>
-<p id="result"></p>
+    <input id="wallet" placeholder="Solana wallet (optional)">
+    <button class="button" onclick="connectPhantom()">Connect Phantom</button>
 
-<input id="wallet" placeholder="Solana wallet (optional)">
-<button onclick="connectPhantom()">Connect Phantom</button>
+    <button class="button" onclick="shareX()">Share your win on X</button>
+  </div>
 
-<div id="share"></div>
-</div>
-
-<!-- RIGHT -->
-<div class="card logo-box">
-<img src="logo-rfx2.png">
-<p>Hold your airdrops. Accumulate. Support RFX2.</p>
-</div>
+  <!-- RIGHT -->
+  <div class="logo-box">
+    <img src="logo-rfx2.png" alt="RFX2">
+    <p style="color:#b89000;font-weight:600">
+      Hold your airdrops.<br>
+      Accumulate. Support RFX2.
+    </p>
+  </div>
 
 </div>
 
 <script>
-const EMOJIS=[
-  {e:"😊",p:15.83},
-  {e:"😡",p:15.83},
-  {e:"🔥",p:15.83},
-  {e:"❤️",p:15.83},
-  {e:"⭐",p:15.83},
-  {e:"❌",p:15.83},
-  {e:"💎",p:5}
+/* === DATA === */
+const slices = [
+  { label:"Happy", emoji:"😊", weight:25 },
+  { label:"Angry", emoji:"😡", weight:25 },
+  { label:"Motivated", emoji:"🔥", weight:25 },
+  { label:"Loved", emoji:"❤️", weight:20 },
+  { label:"Airdrop", emoji:"💎", weight:5 }
 ];
 
-const COOLDOWN = 21600000; // 6 hours
+const canvas = document.getElementById("wheel");
+const ctx = canvas.getContext("2d");
+const center = canvas.width/2;
+const radius = center - 10;
+let angle = 0;
 
-const wheel=document.getElementById("wheel");
-const result=document.getElementById("result");
-const btn=document.getElementById("spinBtn");
-const share=document.getElementById("share");
-const wallet=document.getElementById("wallet");
+/* === DRAW === */
+function drawWheel() {
+  const total = slices.reduce((a,b)=>a+b.weight,0);
+  let start = 0;
 
-let lastSpin=parseInt(localStorage.getItem("lastSpin")||0);
+  slices.forEach(s=>{
+    const sliceAngle = (s.weight/total) * Math.PI*2;
+    ctx.beginPath();
+    ctx.moveTo(center,center);
+    ctx.arc(center,center,radius,start,start+sliceAngle);
+    ctx.fillStyle = "#6d4bd4";
+    ctx.fill();
+    ctx.strokeStyle="#f6c400";
+    ctx.lineWidth=6;
+    ctx.stroke();
 
-function placeEmojis(){
-  const r=135;
-  EMOJIS.forEach((o,i)=>{
-    const angle=(360/EMOJIS.length)*i+360/EMOJIS.length/2;
-    const rad=angle*Math.PI/180;
-    const x=160+r*Math.cos(rad);
-    const y=160+r*Math.sin(rad);
-    const d=document.createElement("div");
-    d.className="emoji";
-    d.textContent=o.e;
-    d.style.left=x+"px";
-    d.style.top=y+"px";
-    wheel.appendChild(d);
+    const mid = start + sliceAngle/2;
+    ctx.save();
+    ctx.translate(
+      center + Math.cos(mid)*radius*0.6,
+      center + Math.sin(mid)*radius*0.6
+    );
+    ctx.font="26px serif";
+    ctx.fillText(s.emoji,-12,10);
+    ctx.restore();
+
+    start+=sliceAngle;
   });
-}
-placeEmojis();
 
-function spin(){
-  const now=Date.now();
-  if(now-lastSpin<COOLDOWN){
-    const wait=Math.ceil((COOLDOWN-(now-lastSpin))/3600000);
-    alert("Come back in "+wait+" hour(s)");
+  // pointer
+  ctx.fillStyle="#6cf";
+  ctx.beginPath();
+  ctx.moveTo(center-10,10);
+  ctx.lineTo(center+10,10);
+  ctx.lineTo(center,30);
+  ctx.fill();
+}
+
+drawWheel();
+
+/* === SPIN === */
+function spin() {
+  const last = localStorage.getItem("lastSpin");
+  if(last && Date.now()-last < 21600000){
+    alert("Spin available every 6 hours.");
     return;
   }
 
-  lastSpin=now;
-  localStorage.setItem("lastSpin",now);
+  const total = slices.reduce((a,b)=>a+b.weight,0);
+  let rand = Math.random()*total;
+  let selected;
 
-  let rnd=Math.random()*100,sum=0,res;
-  for(const o of EMOJIS){
-    sum+=o.p;
-    if(rnd<=sum){res=o;break;}
+  for(const s of slices){
+    rand -= s.weight;
+    if(rand<=0){ selected=s; break;}
   }
 
-  const angle=Math.random()*360+1440;
-  wheel.style.transition="transform 4s ease-out";
-  wheel.style.transform=`rotate(${angle}deg)`;
+  angle += Math.PI*6 + Math.random()*Math.PI*2;
+  canvas.style.transition="transform 4s ease-out";
+  canvas.style.transform=`rotate(${angle}rad)`;
 
   setTimeout(()=>{
-    result.textContent="Result: "+res.e;
-    if(res.e==="💎"){
-      saveWinner();
-      share.innerHTML=`<a target="_blank" href="https://twitter.com/intent/tweet?text=I just won an airdrop on RFX2 🎉💎">Share your win on X</a>`;
-    } else {
-      share.innerHTML="";
-    }
+    document.getElementById("result").innerText =
+      "Result: " + selected.emoji + " " + selected.label;
+
+    saveWinner(selected);
+    localStorage.setItem("lastSpin",Date.now());
   },4000);
 }
 
-btn.onclick=spin;
+document.getElementById("spinBtn").onclick=spin;
 
-function saveWinner(){
-  const winners=JSON.parse(localStorage.getItem("winners")||"[]");
-  winners.push({
-    wallet:wallet.value||"anonymous",
-    date:new Date().toISOString()
+/* === STORAGE === */
+function saveWinner(res){
+  const data = JSON.parse(localStorage.getItem("rfx2Wins")||"[]");
+  data.push({
+    time:new Date().toISOString(),
+    wallet:document.getElementById("wallet").value || "anonymous",
+    result:res.label
   });
-  localStorage.setItem("winners",JSON.stringify(winners));
+  localStorage.setItem("rfx2Wins",JSON.stringify(data));
 }
 
+/* === PHANTOM === */
 async function connectPhantom(){
   if(window.solana?.isPhantom){
-    const r=await solana.connect();
-    wallet.value=r.publicKey.toString();
-  } else alert("Phantom Wallet not installed");
+    const r = await window.solana.connect();
+    document.getElementById("wallet").value = r.publicKey.toString();
+  } else {
+    alert("Phantom not found");
+  }
 }
 
-// ADMIN PANEL
+/* === SHARE === */
+function shareX(){
+  const text = encodeURIComponent(
+    "I just played the RFX2 Community Spin 🎡\nJoin the experiment 👇"
+  );
+  window.open("https://twitter.com/intent/tweet?text="+text,"_blank");
+}
+
+/* === ADMIN === */
 if(location.search.includes("admin")){
-  const a=document.createElement("div");
-  a.className="admin";
-  a.innerHTML="<h2>Admin Panel</h2><pre>"+JSON.stringify(JSON.parse(localStorage.getItem('winners')||'[]'),null,2)+"</pre>";
-  document.body.appendChild(a);
+  console.table(JSON.parse(localStorage.getItem("rfx2Wins")||"[]"));
 }
 </script>
 
