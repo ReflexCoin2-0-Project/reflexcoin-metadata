@@ -1,112 +1,97 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>RFX2 Community Spin</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
 body{
-  background:#050914;
+  margin:0;
   font-family:Inter,Arial,sans-serif;
-  color:#e6e9f0;
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  background:radial-gradient(circle at top,#0c1426,#060b18);
+  color:#fff;
 }
-
 .container{
-  width:1200px;
-  max-width:96%;
+  max-width:1200px;
+  margin:auto;
+  padding:40px;
   display:grid;
   grid-template-columns:1fr 1fr 1fr;
-  gap:24px;
+  gap:30px;
 }
-
-.panel{
-  background:#0b1222;
-  border-radius:22px;
-  padding:24px;
+.card{
+  background:linear-gradient(180deg,#0f1a33,#0a1226);
+  border-radius:20px;
+  padding:30px;
 }
+h1,h2{color:#f5c400;margin-top:0}
+ul{padding-left:20px}
 
-h1{color:#f5c400;margin-bottom:12px}
-p,li{font-size:14px;line-height:1.6;color:#cfd5f0}
+.logo-box{
+  background:#fff;
+  border-radius:20px;
+  padding:30px;
+  text-align:center;
+}
+.logo-box img{max-width:180px}
+.logo-box p{color:#c9a300;font-weight:600}
 
 .center{text-align:center}
 
-button{
-  background:#f5c400;
-  border:0;
-  border-radius:999px;
-  padding:12px 22px;
-  font-weight:700;
-  cursor:pointer;
-  margin-top:14px;
-}
-
-/* ===== WHEEL ===== */
-
-#wheel-wrap{
-  position:relative;
-  width:300px;
-  height:300px;
-  margin:10px auto;
-}
-
 #wheel{
-  width:100%;
-  height:100%;
+  width:320px;
+  height:320px;
   border-radius:50%;
-  border:8px solid #f5c400;
+  margin:20px auto;
   position:relative;
-  transition:transform 4s cubic-bezier(.17,.67,.2,1);
+  border:8px solid #f5c400;
   background:conic-gradient(
-    #6b3fd6 0deg 51.43deg,
-    #141c33 51.43deg 102.86deg,
-    #6b3fd6 102.86deg 154.29deg,
-    #141c33 154.29deg 205.72deg,
-    #6b3fd6 205.72deg 257.15deg,
-    #141c33 257.15deg 308.58deg,
-    #6b3fd6 308.58deg 360deg
+    #6d4bd3 0deg 51.4deg,
+    #0e1a33 51.4deg 102.8deg,
+    #6d4bd3 102.8deg 154.2deg,
+    #0e1a33 154.2deg 205.6deg,
+    #6d4bd3 205.6deg 257deg,
+    #0e1a33 257deg 308.4deg,
+    #6d4bd3 308.4deg 360deg
   );
 }
-
 .pointer{
-  position:absolute;
-  top:-22px;
-  left:50%;
-  transform:translateX(-50%);
-  font-size:28px;
+  width:0;height:0;
+  border-left:10px solid transparent;
+  border-right:10px solid transparent;
+  border-bottom:20px solid #4fc3ff;
+  margin:auto;
 }
-
-/* EMOJIS PERFEITAMENTE CENTRADOS */
-.slice-emoji{
+.emoji{
   position:absolute;
-  top:50%;
-  left:50%;
   font-size:28px;
-  transform-origin:0 0;
+  transform:translate(-50%,-50%);
 }
-
-/* RIGHT */
-.logo-box{
-  background:#fff;
-  border-radius:18px;
+button{
+  background:#f5c400;
+  border:none;
+  padding:12px 24px;
+  border-radius:20px;
+  font-weight:700;
+  cursor:pointer;
+}
+button:disabled{opacity:.5;cursor:not-allowed}
+input{
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:none;
+  margin-bottom:10px;
+}
+.admin{
+  background:#111;
+  border:1px solid #333;
+  margin:30px;
   padding:20px;
-  text-align:center;
+  border-radius:12px;
 }
-.logo-box img{width:150px;margin-bottom:12px}
-.logo-box p{
-  color:#b08d00;
-  font-size:13px;
-  font-weight:600;
-}
-
-@media(max-width:1000px){
-  .container{grid-template-columns:1fr}
-}
+a{color:#4fc3ff}
 </style>
 </head>
 
@@ -115,85 +100,133 @@ button{
 <div class="container">
 
 <!-- LEFT -->
-<div class="panel">
-<h1>🎡 Giro da Comunidade RFX2</h1>
-
-<p>
-Este é um experimento conduzido pela comunidade, construído em torno da
-participação, da emoção e da cultura on-chain.
-</p>
-
+<div class="card">
+<h1>🎡 RFX2 Community Spin</h1>
+<p>This is a community-driven experiment built around participation, emotion and attention.</p>
 <ul>
-<li>Gire a roleta uma vez a cada 24 horas</li>
-<li>Cada fatia representa um resultado</li>
-<li>💎 Airdrops são raros, mas reais</li>
-<li>Carteira necessária para recompensas reais</li>
+<li>⏱️ 1 spin every <strong>6 hours</strong></li>
+<li>💎 Airdrop slice = real reward</li>
+<li>🔐 Wallet required for real eligibility</li>
 </ul>
-
-<p style="margin-top:10px">
-Você pode experimentar o jogo sem carteira para ver como funciona.
-Airdrops reais só são registados quando uma carteira Solana válida é fornecida.
-</p>
-
-<p style="font-size:12px;color:#9aa4c7;margin-top:12px">
-Isto não é jogo de azar e não envolve pagamentos.
-Apenas experimentação comunitária.
-</p>
+<p><small>No payments. No guarantees. Experimental only.</small></p>
 </div>
 
 <!-- CENTER -->
-<div class="panel center">
+<div class="card center">
+<div class="pointer"></div>
+<div id="wheel"></div>
 
-<div id="wheel-wrap">
-  <div class="pointer">⬇️</div>
+<button id="spinBtn">Spin</button>
+<p id="result"></p>
 
-  <div id="wheel">
-    <!-- 7 FATIAS = 51.43° CADA | EMOJIS NO CENTRO EXATO -->
-    <div class="slice-emoji" style="transform:rotate(25.7deg) translate(95px) rotate(-25.7deg)">😊</div>
-    <div class="slice-emoji" style="transform:rotate(77.1deg) translate(95px) rotate(-77.1deg)">😡</div>
-    <div class="slice-emoji" style="transform:rotate(128.6deg) translate(95px) rotate(-128.6deg)">🔥</div>
-    <div class="slice-emoji" style="transform:rotate(180deg) translate(95px) rotate(-180deg)">❤️</div>
-    <div class="slice-emoji" style="transform:rotate(231.4deg) translate(95px) rotate(-231.4deg)">❌</div>
-    <div class="slice-emoji" style="transform:rotate(282.9deg) translate(95px) rotate(-282.9deg)">⭐</div>
-    <div class="slice-emoji" style="transform:rotate(334.3deg) translate(95px) rotate(-334.3deg)">💎</div>
-  </div>
-</div>
+<input id="wallet" placeholder="Solana wallet (optional)">
+<button onclick="connectPhantom()">Connect Phantom</button>
 
-<button onclick="spin()">Rodar</button>
-<div id="result" style="margin-top:10px;font-weight:600"></div>
-
+<div id="share"></div>
 </div>
 
 <!-- RIGHT -->
-<div class="panel">
-<div class="logo-box">
+<div class="card logo-box">
 <img src="logo-rfx2.png">
-<p>Guarde seus airdrops.<br>Acumule. Apoie o token.</p>
-</div>
+<p>Hold your airdrops. Accumulate. Support RFX2.</p>
 </div>
 
 </div>
 
 <script>
-const segments=[
- {label:"😊 +1"},
- {label:"😡 +1"},
- {label:"🔥 +2"},
- {label:"❤️ +3"},
- {label:"❌"},
- {label:"⭐ Bonus"},
- {label:"💎 AIRDROP"}
+const EMOJIS=[
+  {e:"😊",p:15.83},
+  {e:"😡",p:15.83},
+  {e:"🔥",p:15.83},
+  {e:"❤️",p:15.83},
+  {e:"⭐",p:15.83},
+  {e:"❌",p:15.83},
+  {e:"💎",p:5}
 ];
 
-function spin(){
- const slice=360/segments.length;
- const idx=Math.floor(Math.random()*segments.length);
- const angle=360*4+(360-(idx*slice)-slice/2);
- wheel.style.transform=`rotate(${angle}deg)`;
+const COOLDOWN = 21600000; // 6 hours
 
- setTimeout(()=>{
-  document.getElementById("result").innerText=segments[idx].label;
- },4200);
+const wheel=document.getElementById("wheel");
+const result=document.getElementById("result");
+const btn=document.getElementById("spinBtn");
+const share=document.getElementById("share");
+const wallet=document.getElementById("wallet");
+
+let lastSpin=parseInt(localStorage.getItem("lastSpin")||0);
+
+function placeEmojis(){
+  const r=135;
+  EMOJIS.forEach((o,i)=>{
+    const angle=(360/EMOJIS.length)*i+360/EMOJIS.length/2;
+    const rad=angle*Math.PI/180;
+    const x=160+r*Math.cos(rad);
+    const y=160+r*Math.sin(rad);
+    const d=document.createElement("div");
+    d.className="emoji";
+    d.textContent=o.e;
+    d.style.left=x+"px";
+    d.style.top=y+"px";
+    wheel.appendChild(d);
+  });
+}
+placeEmojis();
+
+function spin(){
+  const now=Date.now();
+  if(now-lastSpin<COOLDOWN){
+    const wait=Math.ceil((COOLDOWN-(now-lastSpin))/3600000);
+    alert("Come back in "+wait+" hour(s)");
+    return;
+  }
+
+  lastSpin=now;
+  localStorage.setItem("lastSpin",now);
+
+  let rnd=Math.random()*100,sum=0,res;
+  for(const o of EMOJIS){
+    sum+=o.p;
+    if(rnd<=sum){res=o;break;}
+  }
+
+  const angle=Math.random()*360+1440;
+  wheel.style.transition="transform 4s ease-out";
+  wheel.style.transform=`rotate(${angle}deg)`;
+
+  setTimeout(()=>{
+    result.textContent="Result: "+res.e;
+    if(res.e==="💎"){
+      saveWinner();
+      share.innerHTML=`<a target="_blank" href="https://twitter.com/intent/tweet?text=I just won an airdrop on RFX2 🎉💎">Share your win on X</a>`;
+    } else {
+      share.innerHTML="";
+    }
+  },4000);
+}
+
+btn.onclick=spin;
+
+function saveWinner(){
+  const winners=JSON.parse(localStorage.getItem("winners")||"[]");
+  winners.push({
+    wallet:wallet.value||"anonymous",
+    date:new Date().toISOString()
+  });
+  localStorage.setItem("winners",JSON.stringify(winners));
+}
+
+async function connectPhantom(){
+  if(window.solana?.isPhantom){
+    const r=await solana.connect();
+    wallet.value=r.publicKey.toString();
+  } else alert("Phantom Wallet not installed");
+}
+
+// ADMIN PANEL
+if(location.search.includes("admin")){
+  const a=document.createElement("div");
+  a.className="admin";
+  a.innerHTML="<h2>Admin Panel</h2><pre>"+JSON.stringify(JSON.parse(localStorage.getItem('winners')||'[]'),null,2)+"</pre>";
+  document.body.appendChild(a);
 }
 </script>
 
