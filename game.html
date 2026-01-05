@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
 <meta charset="UTF-8">
 <title>RFX2 Community Spin</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -32,22 +31,28 @@ body{
   padding:24px;
 }
 
-h1,h2{color:#f5c400;margin-bottom:12px}
+h1{color:#f5c400;margin-bottom:12px}
 p,li{font-size:14px;line-height:1.6;color:#cfd5f0}
 
-/* CENTER */
 .center{text-align:center}
 
 button{
-  background:#f5c400;border:0;border-radius:999px;
-  padding:10px 18px;font-weight:700;cursor:pointer;margin:6px
+  background:#f5c400;
+  border:0;
+  border-radius:999px;
+  padding:12px 22px;
+  font-weight:700;
+  cursor:pointer;
+  margin-top:14px;
 }
+
+/* ===== WHEEL ===== */
 
 #wheel-wrap{
   position:relative;
-  width:280px;
-  height:280px;
-  margin:20px auto;
+  width:300px;
+  height:300px;
+  margin:10px auto;
 }
 
 #wheel{
@@ -70,13 +75,13 @@ button{
 
 .pointer{
   position:absolute;
-  top:-18px;
+  top:-22px;
   left:50%;
   transform:translateX(-50%);
   font-size:28px;
 }
 
-/* EMOJIS CENTRADOS NAS FATIAS */
+/* EMOJIS PERFEITAMENTE CENTRADOS */
 .slice-emoji{
   position:absolute;
   top:50%;
@@ -89,11 +94,15 @@ button{
 .logo-box{
   background:#fff;
   border-radius:18px;
-  padding:18px;
-  text-align:center
+  padding:20px;
+  text-align:center;
 }
-.logo-box img{width:150px;margin-bottom:10px}
-.logo-box p{color:#b08d00;font-size:13px;font-weight:600}
+.logo-box img{width:150px;margin-bottom:12px}
+.logo-box p{
+  color:#b08d00;
+  font-size:13px;
+  font-weight:600;
+}
 
 @media(max-width:1000px){
   .container{grid-template-columns:1fr}
@@ -107,15 +116,28 @@ button{
 
 <!-- LEFT -->
 <div class="panel">
-<h1>🎡 RFX2 Community Spin</h1>
-<p>Spin the wheel. Explore emotion. Rare real airdrops.</p>
+<h1>🎡 Giro da Comunidade RFX2</h1>
+
+<p>
+Este é um experimento conduzido pela comunidade, construído em torno da
+participação, da emoção e da cultura on-chain.
+</p>
+
 <ul>
-<li>1 spin per 24h</li>
-<li>💎 Real airdrop slice</li>
-<li>Wallet required for real rewards</li>
+<li>Gire a roleta uma vez a cada 24 horas</li>
+<li>Cada fatia representa um resultado</li>
+<li>💎 Airdrops são raros, mas reais</li>
+<li>Carteira necessária para recompensas reais</li>
 </ul>
-<p style="font-size:12px;color:#9aa4c7;margin-top:10px">
-No payment. Experimental community feature.
+
+<p style="margin-top:10px">
+Você pode experimentar o jogo sem carteira para ver como funciona.
+Airdrops reais só são registados quando uma carteira Solana válida é fornecida.
+</p>
+
+<p style="font-size:12px;color:#9aa4c7;margin-top:12px">
+Isto não é jogo de azar e não envolve pagamentos.
+Apenas experimentação comunitária.
 </p>
 </div>
 
@@ -126,19 +148,19 @@ No payment. Experimental community feature.
   <div class="pointer">⬇️</div>
 
   <div id="wheel">
-    <!-- 7 EMOJIS, 1 POR FATIA -->
-    <div class="slice-emoji" style="transform:rotate(0deg) translate(90px) rotate(0deg)">😊</div>
-    <div class="slice-emoji" style="transform:rotate(51.43deg) translate(90px) rotate(-51.43deg)">😡</div>
-    <div class="slice-emoji" style="transform:rotate(102.86deg) translate(90px) rotate(-102.86deg)">🔥</div>
-    <div class="slice-emoji" style="transform:rotate(154.29deg) translate(90px) rotate(-154.29deg)">❤️</div>
-    <div class="slice-emoji" style="transform:rotate(205.72deg) translate(90px) rotate(-205.72deg)">❌</div>
-    <div class="slice-emoji" style="transform:rotate(257.15deg) translate(90px) rotate(-257.15deg)">⭐</div>
-    <div class="slice-emoji" style="transform:rotate(308.58deg) translate(90px) rotate(-308.58deg)">💎</div>
+    <!-- 7 FATIAS = 51.43° CADA | EMOJIS NO CENTRO EXATO -->
+    <div class="slice-emoji" style="transform:rotate(25.7deg) translate(95px) rotate(-25.7deg)">😊</div>
+    <div class="slice-emoji" style="transform:rotate(77.1deg) translate(95px) rotate(-77.1deg)">😡</div>
+    <div class="slice-emoji" style="transform:rotate(128.6deg) translate(95px) rotate(-128.6deg)">🔥</div>
+    <div class="slice-emoji" style="transform:rotate(180deg) translate(95px) rotate(-180deg)">❤️</div>
+    <div class="slice-emoji" style="transform:rotate(231.4deg) translate(95px) rotate(-231.4deg)">❌</div>
+    <div class="slice-emoji" style="transform:rotate(282.9deg) translate(95px) rotate(-282.9deg)">⭐</div>
+    <div class="slice-emoji" style="transform:rotate(334.3deg) translate(95px) rotate(-334.3deg)">💎</div>
   </div>
 </div>
 
-<button onclick="spin()">Spin</button>
-<div id="result"></div>
+<button onclick="spin()">Rodar</button>
+<div id="result" style="margin-top:10px;font-weight:600"></div>
 
 </div>
 
@@ -146,7 +168,7 @@ No payment. Experimental community feature.
 <div class="panel">
 <div class="logo-box">
 <img src="logo-rfx2.png">
-<p>Save airdrops. Accumulate. Support RFX2.</p>
+<p>Guarde seus airdrops.<br>Acumule. Apoie o token.</p>
 </div>
 </div>
 
@@ -154,22 +176,18 @@ No payment. Experimental community feature.
 
 <script>
 const segments=[
- {label:"😊 +1",chance:18},
- {label:"😡 +1",chance:18},
- {label:"🔥 +2",chance:14},
- {label:"❤️ +3",chance:10},
- {label:"❌",chance:28},
- {label:"⭐ Bonus",chance:9},
- {label:"💎 AIRDROP",chance:3}
+ {label:"😊 +1"},
+ {label:"😡 +1"},
+ {label:"🔥 +2"},
+ {label:"❤️ +3"},
+ {label:"❌"},
+ {label:"⭐ Bonus"},
+ {label:"💎 AIRDROP"}
 ];
 
 function spin(){
- let roll=Math.random()*100,acc=0,idx=0;
- for(let i=0;i<segments.length;i++){
-  acc+=segments[i].chance;
-  if(roll<=acc){idx=i;break;}
- }
  const slice=360/segments.length;
+ const idx=Math.floor(Math.random()*segments.length);
  const angle=360*4+(360-(idx*slice)-slice/2);
  wheel.style.transform=`rotate(${angle}deg)`;
 
