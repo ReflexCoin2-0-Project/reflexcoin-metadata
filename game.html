@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
 <meta charset="UTF-8">
 <title>RFX2 Community Spin</title>
@@ -36,7 +36,7 @@ button{
   padding:12px 26px;
   font-weight:bold;
   cursor:pointer;
-  margin-top:15px;
+  margin-top:12px;
 }
 .logo-box{
   background:#fff;
@@ -44,12 +44,20 @@ button{
   padding:30px;
   text-align:center;
 }
-.logo-box img{width:140px;}
+.logo-box img{width:130px;}
 .logo-box p{
   color:#c9a300;
   font-weight:bold;
   margin-top:12px;
 }
+input{
+  width:100%;
+  padding:10px;
+  border-radius:20px;
+  border:none;
+  margin-top:10px;
+}
+.small{font-size:13px;opacity:.8;margin-top:8px;}
 </style>
 </head>
 
@@ -59,45 +67,55 @@ button{
 
 <!-- LEFT -->
 <div class="card">
-  <h1>🎡 RFX2 Community Spin</h1>
-  <p>Community-driven experiment built around emotion and participation.</p>
+  <h1>🎡 Giro da Comunidade RFX2</h1>
+  <p>Experimento conduzido pela comunidade, baseado em emoção e participação.</p>
   <ul>
-    <li>⏱ 1 spin every 6 hours</li>
-    <li>💎 Airdrop slice included</li>
-    <li>🎯 Equal probability for all emojis</li>
+    <li>⏱ 1 giro a cada 6 horas</li>
+    <li>💎 Fatia de airdrop incluída</li>
+    <li>🎯 Probabilidade igual para todos os emojis</li>
   </ul>
 </div>
 
 <!-- CENTER -->
 <div class="card center">
   <canvas id="wheel" width="320" height="320"></canvas>
-  <button onclick="spin()">Spin</button>
+
+  <button onclick="spin()">Rodar</button>
+
+  <input id="wallet" placeholder="Carteira Solana (opcional)">
+  <button onclick="connectPhantom()">Conectar Phantom</button>
+
+  <button onclick="shareX()">Compartilhar vitória no X</button>
+
+  <div class="small" id="status"></div>
 </div>
 
 <!-- RIGHT -->
 <div class="logo-box">
   <img src="logo-rfx2.png">
-  <p>Hold your airdrops.<br>Accumulate. Support RFX2.</p>
+  <p>Guarde seus airdrops.<br>Acumule. Apoie o RFX2.</p>
 </div>
 
 </div>
 
 <script>
+// -------- RODA --------
 const canvas=document.getElementById("wheel");
 const ctx=canvas.getContext("2d");
 const slices=["😊","😡","🔥","❤️","⭐","💎"];
-const c=canvas.width/2;
-const r=c-10;
-const angle=(Math.PI*2)/slices.length;
+const center=canvas.width/2;
+const radius=center-10;
+const sliceAngle=(Math.PI*2)/slices.length;
 let rotation=0;
+let lastSpin=0;
 
-function draw(){
+function drawWheel(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
-  slices.forEach((e,i)=>{
-    const a=rotation+i*angle;
+  slices.forEach((emoji,i)=>{
+    const start=rotation+i*sliceAngle;
     ctx.beginPath();
-    ctx.moveTo(c,c);
-    ctx.arc(c,c,r,a,a+angle);
+    ctx.moveTo(center,center);
+    ctx.arc(center,center,radius,start,start+sliceAngle);
     ctx.fillStyle=i%2?"#6d4bd3":"#4c37a6";
     ctx.fill();
     ctx.strokeStyle="#f5c400";
@@ -105,36 +123,81 @@ function draw(){
     ctx.stroke();
 
     ctx.save();
-    ctx.translate(c,c);
-    ctx.rotate(a+angle/2);
+    ctx.translate(center,center);
+    ctx.rotate(start+sliceAngle/2);
     ctx.font="28px serif";
     ctx.textAlign="center";
     ctx.fillStyle="#fff";
-    ctx.fillText(e,r*0.65,10);
+    ctx.fillText(emoji,radius*0.65,10);
     ctx.restore();
   });
 
+  // seta
   ctx.fillStyle="#4db5ff";
   ctx.beginPath();
-  ctx.moveTo(c,0);
-  ctx.lineTo(c-10,20);
-  ctx.lineTo(c+10,20);
+  ctx.moveTo(center,0);
+  ctx.lineTo(center-10,20);
+  ctx.lineTo(center+10,20);
   ctx.fill();
 }
-draw();
+
+drawWheel();
 
 function spin(){
+  const now=Date.now();
+  if(now-lastSpin<6*60*60*1000){
+    alert("Aguarde 6 horas para novo giro.");
+    return;
+  }
+  lastSpin=now;
+
   const target=Math.floor(Math.random()*slices.length);
-  const spins=8+Math.random()*4;
+  let spins=8+Math.random()*4;
   let start=null;
 
-  function anim(t){
+  function animate(t){
     if(!start) start=t;
-    rotation+=0.15;
-    draw();
-    if(t-start<3000) requestAnimationFrame(anim);
+    rotation+=0.18;
+    drawWheel();
+    if(t-start<3000){
+      requestAnimationFrame(animate);
+    }else{
+      const result=slices[target];
+      document.getElementById("status").innerText="Resultado: "+result;
+      window.lastResult=result;
+    }
   }
-  requestAnimationFrame(anim);
+  requestAnimationFrame(animate);
+}
+
+// -------- PHANTOM --------
+async function connectPhantom(){
+  if(window.solana && window.solana.isPhantom){
+    try{
+      const res=await window.solana.connect();
+      document.getElementById("wallet").value=res.publicKey.toString();
+      document.getElementById("status").innerText="Phantom conectado ✔";
+    }catch(e){
+      alert("Conexão cancelada");
+    }
+  }else{
+    alert("Phantom Wallet não encontrada");
+  }
+}
+
+// -------- X SHARE --------
+function shareX(){
+  if(!window.lastResult){
+    alert("Gire a roleta primeiro");
+    return;
+  }
+  const text=`I just spun the RFX2 Community Wheel and got ${window.lastResult} 🎡💎
+
+Join the experiment on Solana 👇
+https://reflexcoin2-0-project.github.io/reflexcoin-metadata/`;
+
+  const url="https://twitter.com/intent/tweet?text="+encodeURIComponent(text);
+  window.open(url,"_blank");
 }
 </script>
 
