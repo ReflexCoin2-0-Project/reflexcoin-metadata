@@ -1,235 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <title>RFX2 Community Spin</title>
-
-<!-- =====================
-  RFX2 COMMUNITY SPIN
-  FRONTEND + BACKEND (Supabase)
-  SINGLE FILE VERSION
-===================== -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-body {
-  margin: 0;
-  background: radial-gradient(circle at top, #111a33, #050814);
-  font-family: Arial, sans-serif;
-  color: #fff;
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:radial-gradient(circle at top,#0b1220,#05080f);
+  color:#fff;
 }
-
-.wrapper {
-  max-width: 1400px;
-  margin: auto;
-  padding: 40px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 40px;
-  align-items: center;
+.container{
+  max-width:1400px;
+  margin:auto;
+  padding:40px;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:30px;
 }
-
-.card {
-  background: linear-gradient(180deg, #0f1730, #0a1022);
-  border-radius: 18px;
-  padding: 30px;
+.card{
+  background:linear-gradient(180deg,#0e1628,#0a1020);
+  border-radius:20px;
+  padding:30px;
 }
-
-h1 { color: #f5c400; margin-top: 0; }
-
-canvas { display:block; margin:auto; }
-
-button {
+h1{color:#f5c400;}
+ul{padding-left:18px;}
+.center{text-align:center;}
+canvas{display:block;margin:auto;}
+button{
   background:#f5c400;
   border:none;
-  padding:14px 26px;
   border-radius:30px;
+  padding:12px 24px;
   font-weight:bold;
   cursor:pointer;
-  margin-top:14px;
+  margin-top:15px;
 }
-
-.logo-box {
-  background:#fff;
-  border-radius:18px;
-  padding:30px;
-  text-align:center;
-}
-.logo-box img { width:170px; }
-.logo-box p { color:#c49a00; font-weight:bold; }
-
-input {
-  width:80%;
+input{
+  width:100%;
   padding:12px;
   border-radius:20px;
   border:none;
-  margin-top:14px;
+  margin-top:12px;
 }
-
-.result { margin-top:10px; font-size:18px; }
+.logo-box{
+  background:#fff;
+  border-radius:20px;
+  padding:30px;
+  text-align:center;
+}
+.logo-box img{width:140px;}
+.logo-box p{
+  color:#c9a300;
+  font-weight:bold;
+  margin-top:12px;
+}
+.hidden{display:none;}
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:20px;
+}
+td,th{
+  border:1px solid #444;
+  padding:8px;
+  font-size:13px;
+}
 </style>
 </head>
+
 <body>
 
-<div class="wrapper">
+<div class="container" id="gameUI">
 
 <!-- LEFT -->
 <div class="card">
-<h1>🎡 RFX2 Community Spin</h1>
-<p>Community-driven experiment around emotion, participation and attention.</p>
-<ul>
-<li>⏱️ 1 spin every 6 hours</li>
-<li>💎 Equal probability (airdrop included)</li>
-<li>👛 Wallet required for eligibility</li>
-</ul>
+  <h1>🎡 RFX2 Community Spin</h1>
+  <p>Community-driven experiment built around emotion and participation.</p>
+  <ul>
+    <li>⏱ 1 spin every 6 hours</li>
+    <li>💎 Airdrop slice included</li>
+    <li>🎯 Equal probability for all emojis</li>
+    <li>🔐 Wallet required for eligibility</li>
+  </ul>
 </div>
 
 <!-- CENTER -->
-<div style="text-align:center">
-<canvas id="wheel" width="420" height="420"></canvas>
-<button onclick="spin()">Spin</button>
-<div class="result" id="result">Result: —</div>
-<input id="wallet" placeholder="Solana wallet">
-<button onclick="connectPhantom()">Connect Phantom</button>
-<button onclick="shareWin()">Share your win on X</button>
+<div class="card center">
+  <canvas id="wheel" width="320" height="320"></canvas>
+  <button onclick="spin()">Spin</button>
+  <input id="wallet" placeholder="Solana wallet" />
+  <button onclick="connectPhantom()">Connect Phantom</button>
+  <button onclick="shareWin()">Share your win on X</button>
 </div>
 
 <!-- RIGHT -->
 <div class="logo-box">
-<img src="logo-rfx2.png">
-<p>Hold your airdrops. Support RFX2.</p>
+  <img src="logo-rfx2.png">
+  <p>Hold your airdrops.<br>Accumulate. Support RFX2.</p>
 </div>
 
+</div>
+
+<!-- ADMIN -->
+<div class="container hidden" id="adminUI">
+  <div class="card" style="grid-column:1/4">
+    <h1>📊 Admin Panel — RFX2</h1>
+    <table id="adminTable">
+      <thead>
+        <tr>
+          <th>Wallet</th>
+          <th>Result</th>
+          <th>Airdrop</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
 </div>
 
 <script>
-// =====================
-// SUPABASE CONFIG
-// =====================
-const supabase = supabase.createClient(
-  "https://YOUR_PROJECT_ID.supabase.co",
-  "YOUR_PUBLIC_ANON_KEY"
-);
+/* ======================
+   SUPABASE CONFIG
+====================== */
+const SUPABASE_URL = "PASTE_SUPABASE_PROJECT_URL";
+const SUPABASE_KEY = "PASTE_SUPABASE_ANON_KEY";
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// =====================
-// WHEEL CONFIG
-// =====================
-const slices = [
- {emoji:"😊",label:"Happy"},
- {emoji:"😡",label:"Angry"},
- {emoji:"🔥",label:"Motivated"},
- {emoji:"❤️",label:"Loved"},
- {emoji:"⭐",label:"Star"},
- {emoji:"💎",label:"Airdrop"}
-];
-
-const canvas = document.getElementById("wheel");
-const ctx = canvas.getContext("2d");
-const cx=210, cy=210, r=170;
-let rotation=0;
-const angle=2*Math.PI/slices.length;
-
-function draw(){
- ctx.clearRect(0,0,420,420);
- slices.forEach((s,i)=>{
-  const a=rotation+i*angle;
-  ctx.beginPath();
-  ctx.moveTo(cx,cy);
-  ctx.arc(cx,cy,r,a,a+angle);
-  ctx.fillStyle=i%2?"#6b3fd6":"#1a2140";
-  ctx.fill();
-  const m=a+angle/2;
-  ctx.font="32px serif";
-  ctx.fillStyle="#fff";
-  ctx.textAlign="center";
-  ctx.textBaseline="middle";
-  ctx.fillText(s.emoji,cx+Math.cos(m)*r*0.65,cy+Math.sin(m)*r*0.65);
- });
- ctx.beginPath();ctx.arc(cx,cy,r,0,2*Math.PI);
- ctx.strokeStyle="#f5c400";ctx.lineWidth=8;ctx.stroke();
- ctx.fillStyle="#6bb6ff";
- ctx.beginPath();
- ctx.moveTo(cx,cy-r-12);
- ctx.lineTo(cx-12,cy-r+8);
- ctx.lineTo(cx+12,cy-r+8);
- ctx.fill();
+/* ======================
+   ADMIN MODE
+====================== */
+if (location.search.includes("admin=1")) {
+  document.getElementById("gameUI").classList.add("hidden");
+  document.getElementById("adminUI").classList.remove("hidden");
+  loadAdmin();
 }
 
+/* ======================
+   WHEEL CONFIG
+====================== */
+const slices = ["😊","😡","🔥","❤️","⭐","💎"];
+const canvas = document.getElementById("wheel");
+const ctx = canvas.getContext("2d");
+const c = canvas.width/2;
+const r = c-10;
+const angle = (Math.PI*2)/slices.length;
+let rotation = 0;
+
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  slices.forEach((e,i)=>{
+    const a = rotation+i*angle;
+    ctx.beginPath();
+    ctx.moveTo(c,c);
+    ctx.arc(c,c,r,a,a+angle);
+    ctx.fillStyle=i%2?"#6d4bd3":"#4c37a6";
+    ctx.fill();
+    ctx.strokeStyle="#f5c400";
+    ctx.lineWidth=3;
+    ctx.stroke();
+
+    ctx.save();
+    ctx.translate(c,c);
+    ctx.rotate(a+angle/2);
+    ctx.font="28px serif";
+    ctx.textAlign="center";
+    ctx.fillStyle="#fff";
+    ctx.fillText(e,r*0.65,10);
+    ctx.restore();
+  });
+
+  ctx.fillStyle="#4db5ff";
+  ctx.beginPath();
+  ctx.moveTo(c,0);
+  ctx.lineTo(c-10,20);
+  ctx.lineTo(c+10,20);
+  ctx.fill();
+}
 draw();
 
-// =====================
-// SPIN LOGIC + BACKEND
-// =====================
+/* ======================
+   SPIN
+====================== */
 async function spin(){
- const wallet=document.getElementById("wallet").value.trim();
- if(!wallet){ alert("Wallet required"); return; }
+  const wallet = document.getElementById("wallet").value.trim();
+  if(!wallet){ alert("Wallet required"); return; }
 
- const {data:last}=await supabase
-  .from("spins")
-  .select("created_at")
-  .eq("wallet",wallet)
-  .order("created_at",{ascending:false})
-  .limit(1);
+  const {data:last} = await supabase
+    .from("spins")
+    .select("created_at")
+    .eq("wallet",wallet)
+    .order("created_at",{ascending:false})
+    .limit(1);
 
- if(last?.length){
-  const diff=Date.now()-new Date(last[0].created_at).getTime();
-  if(diff<6*60*60*1000){ alert("Spin cooldown active"); return; }
- }
+  if(last && last.length){
+    const diff = Date.now()-new Date(last[0].created_at).getTime();
+    if(diff < 6*60*60*1000){
+      alert("Spin cooldown active");
+      return;
+    }
+  }
 
- const win=Math.floor(Math.random()*slices.length);
- const turns=6+Math.random()*4;
- const end=turns*2*Math.PI+(slices.length-win)*angle;
- const start=rotation;
- const t0=performance.now();
+  const target = Math.floor(Math.random()*slices.length);
+  const spins = 6+Math.random()*4;
+  const final = spins*2*Math.PI + (slices.length-target)*angle;
+  let start=null;
 
- function anim(t){
-  const p=Math.min((t-t0)/2500,1);
-  rotation=start+(end-start)*p;
-  draw();
-  if(p<1) requestAnimationFrame(anim);
-  else finish(win,wallet);
- }
- requestAnimationFrame(anim);
+  function anim(t){
+    if(!start) start=t;
+    rotation += 0.12;
+    draw();
+    if(t-start < 3500) requestAnimationFrame(anim);
+    else finish(target,wallet);
+  }
+  requestAnimationFrame(anim);
 }
 
 async function finish(i,wallet){
- const res=slices[i];
- document.getElementById("result").innerText=
-  "Result: "+res.emoji+" "+res.label;
+  const emoji = slices[i];
+  const isAirdrop = emoji==="💎";
 
- await supabase.from("spins").insert({
-  wallet:wallet,
-  result:res.label,
-  is_airdrop:res.label==="Airdrop"
- });
+  alert(isAirdrop ? "💎 AIRDROP!" : "Emotion: "+emoji);
+
+  await supabase.from("spins").insert({
+    wallet:wallet,
+    result:emoji,
+    is_airdrop:isAirdrop
+  });
 }
 
-// =====================
-// PHANTOM
-// =====================
+/* ======================
+   ADMIN LOAD
+====================== */
+async function loadAdmin(){
+  const {data} = await supabase
+    .from("spins")
+    .select("*")
+    .order("created_at",{ascending:false});
+
+  const tbody = document.querySelector("#adminTable tbody");
+  tbody.innerHTML="";
+  data.forEach(r=>{
+    const tr=document.createElement("tr");
+    tr.innerHTML=`
+      <td>${r.wallet}</td>
+      <td>${r.result}</td>
+      <td>${r.is_airdrop}</td>
+      <td>${new Date(r.created_at).toLocaleString()}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+/* ======================
+   PHANTOM
+====================== */
 async function connectPhantom(){
- if(!window.solana){ alert("Phantom not found"); return; }
- const r=await window.solana.connect();
- document.getElementById("wallet").value=r.publicKey.toString();
+  if(window.solana && window.solana.isPhantom){
+    const r = await window.solana.connect();
+    document.getElementById("wallet").value = r.publicKey.toString();
+  } else alert("Phantom not installed");
 }
 
+/* ======================
+   SHARE
+====================== */
 function shareWin(){
- window.open("https://twitter.com/intent/tweet?text="+
-  encodeURIComponent("I just played the RFX2 Community Spin 🎡"),"_blank");
+  const t = encodeURIComponent("I just played the RFX2 Community Spin 🎡");
+  window.open("https://x.com/intent/tweet?text="+t,"_blank");
 }
 </script>
-
-<!-- =====================
-SUPABASE TABLES
-
-spins:
-- id uuid
-- wallet text
-- result text
-- is_airdrop boolean
-- created_at timestamp
-===================== -->
 
 </body>
 </html>
