@@ -2,8 +2,8 @@
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
-<title>RFX2 Community Spin</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RFX2 Community Spin</title>
 
 <style>
 body{
@@ -16,16 +16,16 @@ body{
 .container{
   max-width:1200px;
   margin:auto;
-  padding:30px;
-  display:flex;
+  padding:40px 20px;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
   gap:30px;
 }
 
 .card{
-  background:linear-gradient(180deg,#0e1630,#080c18);
-  border-radius:20px;
-  padding:25px;
-  flex:1;
+  background:linear-gradient(180deg,#0f1b34,#070c18);
+  border-radius:18px;
+  padding:30px;
 }
 
 h1{
@@ -34,81 +34,87 @@ h1{
 }
 
 ul{
-  padding-left:20px;
+  padding-left:18px;
 }
 
-.center{
-  text-align:center;
+.wheel-card{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
 }
 
-#wheelWrapper{
+.wheel-wrapper{
   position:relative;
   width:360px;
   height:360px;
-  margin:0 auto;
 }
 
-#pointer{
+canvas{
+  width:360px;
+  height:360px;
+}
+
+/* ✅ SETA CORRETA */
+.pointer{
   position:absolute;
-  bottom:-18px;
+  bottom:-20px;
   left:50%;
-  transform:translateX(-50%);
+  transform:translateX(-50%) rotate(180deg);
   width:0;
   height:0;
   border-left:14px solid transparent;
   border-right:14px solid transparent;
-  border-top:24px solid #4cc3ff;
-}
-
-canvas{
-  display:block;
-  margin:auto;
+  border-top:22px solid #4da3ff;
+  z-index:10;
 }
 
 button{
+  margin-top:18px;
   background:#f5c400;
   border:none;
   border-radius:999px;
-  padding:12px 20px;
+  padding:12px 26px;
+  font-size:15px;
   font-weight:bold;
   cursor:pointer;
-  margin-top:12px;
 }
 
 input{
-  width:100%;
+  margin-top:12px;
+  width:90%;
   padding:10px;
   border-radius:999px;
   border:none;
-  margin-top:10px;
+  text-align:center;
 }
 
-.result{
-  margin-top:10px;
+.logo-card{
+  background:#fff;
+  color:#c9a227;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+.logo-card img{
+  width:140px;
+}
+
+.logo-card p{
+  margin-top:14px;
+  text-align:center;
   font-weight:bold;
 }
 
-.logoBox{
-  background:#fff;
-  border-radius:20px;
-  padding:25px;
-  text-align:center;
-  color:#c9a23a;
-}
-
-.logoBox img{
-  width:120px;
-}
-
-/* Mobile only */
+/* MOBILE – só ajustes de centragem */
 @media(max-width:900px){
   .container{
-    flex-direction:column;
-    align-items:center;
+    grid-template-columns:1fr;
   }
-  #wheelWrapper{
-    width:300px;
-    height:300px;
+  .wheel-wrapper{
+    margin:auto;
   }
 }
 </style>
@@ -118,6 +124,7 @@ input{
 
 <div class="container">
 
+  <!-- ESQUERDA -->
   <div class="card">
     <h1>🎡 Giro da Comunidade RFX2</h1>
     <p>Experimento conduzido pela comunidade, baseado em emoção e participação.</p>
@@ -128,25 +135,28 @@ input{
     </ul>
   </div>
 
-  <div class="card center">
-    <div id="wheelWrapper">
+  <!-- CENTRO -->
+  <div class="card wheel-card">
+
+    <div class="wheel-wrapper">
+      <div class="pointer"></div>
       <canvas id="wheel" width="360" height="360"></canvas>
-      <div id="pointer"></div>
     </div>
 
-    <button id="spinBtn">Rodar</button>
+    <button onclick="spin()">Rodar</button>
 
-    <input id="walletInput" placeholder="Carteira Solana (opcional)">
+    <input type="text" placeholder="Carteira Solana (opcional)">
 
-    <button onclick="connectPhantom()">Conectar Phantom</button>
-    <button onclick="shareX()">Compartilhar vitória no X</button>
+    <button>Conectar Phantom</button>
+    <button>Compartilhar vitória no X</button>
 
-    <div class="result" id="result">Resultado: —</div>
+    <div id="result" style="margin-top:10px;"></div>
   </div>
 
-  <div class="logoBox">
-    <img src="logo-rfx2.png">
-    <p><strong>Guarde seus airdrops.<br>Acumule. Apoie o RFX2.</strong></p>
+  <!-- DIREITA -->
+  <div class="card logo-card">
+    <img src="logo-rfx2.png" alt="RFX2">
+    <p>Guarde seus airdrops.<br>Acumule. Apoie o RFX2.</p>
   </div>
 
 </div>
@@ -154,100 +164,83 @@ input{
 <script>
 const canvas = document.getElementById("wheel");
 const ctx = canvas.getContext("2d");
-const size = canvas.width;
-const center = size / 2;
 
-const emojis = ["❤️","🔥","😡","😊","⭐","💎"];
-const slices = emojis.length;
-const sliceAngle = (Math.PI * 2) / slices;
+const slices = [
+  {emoji:"❤️"},
+  {emoji:"⭐"},
+  {emoji:"💎"},
+  {emoji:"😊"},
+  {emoji:"😡"},
+  {emoji:"🔥"}
+];
 
-let angle = 0;
+const sliceAngle = (2 * Math.PI) / slices.length;
+let rotation = 0;
 let spinning = false;
 
 function drawWheel(){
-  ctx.clearRect(0,0,size,size);
+  ctx.clearRect(0,0,360,360);
 
-  for(let i=0;i<slices;i++){
-    const start = angle + i * sliceAngle;
-    const end = start + sliceAngle;
+  slices.forEach((slice,i)=>{
+    const angle = rotation + i * sliceAngle;
 
     ctx.beginPath();
-    ctx.moveTo(center,center);
-    ctx.arc(center,center,center-6,start,end);
+    ctx.moveTo(180,180);
+    ctx.arc(180,180,170,angle,angle+sliceAngle);
     ctx.closePath();
-    ctx.fillStyle = "#6b4bd6";
+
+    ctx.fillStyle = i % 2 === 0 ? "#6d4bd4" : "#5b3fc4";
     ctx.fill();
     ctx.strokeStyle = "#f5c400";
     ctx.lineWidth = 3;
     ctx.stroke();
 
+    // emoji centrado
     ctx.save();
-    ctx.translate(center,center);
-    ctx.rotate(start + sliceAngle/2);
-    ctx.textAlign="right";
-    ctx.font="28px Arial";
-    ctx.fillText(emojis[i],center-40,10);
+    ctx.translate(180,180);
+    ctx.rotate(angle + sliceAngle/2);
+    ctx.textAlign="center";
+    ctx.font="26px Arial";
+    ctx.fillStyle="#fff";
+    ctx.fillText(slice.emoji,100,10);
     ctx.restore();
-  }
+  });
 }
 
 drawWheel();
 
-document.getElementById("spinBtn").onclick = () => {
+function spin(){
   if(spinning) return;
-
-  const last = localStorage.getItem("lastSpin");
-  if(last && Date.now() - last < 6*60*60*1000){
-    alert("Aguarda 6 horas entre giros.");
-    return;
-  }
-
   spinning = true;
-  localStorage.setItem("lastSpin",Date.now());
 
-  const spins = Math.random()*10 + 10;
-  const target = angle + spins * Math.PI*2 + Math.random()*sliceAngle;
-  const start = angle;
+  const spins = Math.random()*5 + 5;
+  const targetRotation = rotation + spins * 2 * Math.PI;
+
+  const start = performance.now();
   const duration = 4000;
-  const startTime = performance.now();
 
-  function animate(t){
-    const p = Math.min((t-startTime)/duration,1);
-    angle = start + (target-start)*easeOut(p);
+  function animate(time){
+    const progress = Math.min((time-start)/duration,1);
+    const ease = 1 - Math.pow(1-progress,3);
+    rotation = rotation + (targetRotation - rotation) * ease;
     drawWheel();
-    if(p<1){
+
+    if(progress < 1){
       requestAnimationFrame(animate);
     }else{
-      spinning=false;
-      angle %= Math.PI*2;
-
-      const index = Math.floor(
-        ( (Math.PI*2 - angle + Math.PI/2) % (Math.PI*2) ) / sliceAngle
-      );
-      const result = emojis[index];
-      document.getElementById("result").innerText = "Resultado: " + result;
+      rotation = targetRotation % (2*Math.PI);
+      spinning = false;
+      showResult();
     }
   }
   requestAnimationFrame(animate);
-};
-
-function easeOut(t){
-  return 1-Math.pow(1-t,3);
 }
 
-function connectPhantom(){
-  if(window.solana?.isPhantom){
-    window.solana.connect().then(r=>{
-      walletInput.value = r.publicKey.toString();
-    });
-  }else{
-    alert("Phantom não encontrado");
-  }
-}
-
-function shareX(){
-  const text = encodeURIComponent("Acabei de girar a roleta RFX2 🎡💎");
-  window.open(`https://twitter.com/intent/tweet?text=${text}`,"_blank");
+function showResult(){
+  const normalized = (2*Math.PI - rotation + Math.PI/2) % (2*Math.PI);
+  const index = Math.floor(normalized / sliceAngle);
+  document.getElementById("result").innerText =
+    "Resultado: " + slices[index].emoji;
 }
 </script>
 
