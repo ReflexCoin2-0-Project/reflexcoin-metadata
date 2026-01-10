@@ -12,52 +12,105 @@ body{
   background:radial-gradient(circle at top,#0b1220,#05080f);
   color:#fff;
 }
+
 .container{
-  max-width:1400px;
+  max-width:1200px;
   margin:auto;
-  padding:40px;
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
+  padding:30px;
+  display:flex;
   gap:30px;
 }
+
 .card{
-  background:linear-gradient(180deg,#0e1628,#0a1020);
+  background:linear-gradient(180deg,#0e1630,#080c18);
   border-radius:20px;
-  padding:30px;
+  padding:25px;
+  flex:1;
 }
-h1{color:#f5c400;}
-ul{padding-left:18px;}
-.center{text-align:center;}
-canvas{display:block;margin:auto;}
+
+h1{
+  color:#f5c400;
+  margin-top:0;
+}
+
+ul{
+  padding-left:20px;
+}
+
+.center{
+  text-align:center;
+}
+
+#wheelWrapper{
+  position:relative;
+  width:360px;
+  height:360px;
+  margin:0 auto;
+}
+
+#pointer{
+  position:absolute;
+  bottom:-18px;
+  left:50%;
+  transform:translateX(-50%);
+  width:0;
+  height:0;
+  border-left:14px solid transparent;
+  border-right:14px solid transparent;
+  border-top:24px solid #4cc3ff;
+}
+
+canvas{
+  display:block;
+  margin:auto;
+}
+
 button{
   background:#f5c400;
   border:none;
-  border-radius:30px;
-  padding:12px 26px;
+  border-radius:999px;
+  padding:12px 20px;
   font-weight:bold;
   cursor:pointer;
   margin-top:12px;
 }
-.logo-box{
-  background:#fff;
-  border-radius:20px;
-  padding:30px;
-  text-align:center;
-}
-.logo-box img{width:130px;}
-.logo-box p{
-  color:#c9a300;
-  font-weight:bold;
-  margin-top:12px;
-}
+
 input{
   width:100%;
   padding:10px;
-  border-radius:20px;
+  border-radius:999px;
   border:none;
   margin-top:10px;
 }
-.small{font-size:13px;opacity:.8;margin-top:8px;}
+
+.result{
+  margin-top:10px;
+  font-weight:bold;
+}
+
+.logoBox{
+  background:#fff;
+  border-radius:20px;
+  padding:25px;
+  text-align:center;
+  color:#c9a23a;
+}
+
+.logoBox img{
+  width:120px;
+}
+
+/* Mobile only */
+@media(max-width:900px){
+  .container{
+    flex-direction:column;
+    align-items:center;
+  }
+  #wheelWrapper{
+    width:300px;
+    height:300px;
+  }
+}
 </style>
 </head>
 
@@ -65,139 +118,136 @@ input{
 
 <div class="container">
 
-<!-- LEFT -->
-<div class="card">
-  <h1>🎡 Giro da Comunidade RFX2</h1>
-  <p>Experimento conduzido pela comunidade, baseado em emoção e participação.</p>
-  <ul>
-    <li>⏱ 1 giro a cada 6 horas</li>
-    <li>💎 Fatia de airdrop incluída</li>
-    <li>🎯 Probabilidade igual para todos os emojis</li>
-  </ul>
-</div>
+  <div class="card">
+    <h1>🎡 Giro da Comunidade RFX2</h1>
+    <p>Experimento conduzido pela comunidade, baseado em emoção e participação.</p>
+    <ul>
+      <li>⏱ 1 giro a cada 6 horas</li>
+      <li>💎 Fatia de airdrop incluída</li>
+      <li>🎯 Probabilidade igual para todos os emojis</li>
+    </ul>
+  </div>
 
-<!-- CENTER -->
-<div class="card center">
-  <canvas id="wheel" width="320" height="320"></canvas>
+  <div class="card center">
+    <div id="wheelWrapper">
+      <canvas id="wheel" width="360" height="360"></canvas>
+      <div id="pointer"></div>
+    </div>
 
-  <button onclick="spin()">Rodar</button>
+    <button id="spinBtn">Rodar</button>
 
-  <input id="wallet" placeholder="Carteira Solana (opcional)">
-  <button onclick="connectPhantom()">Conectar Phantom</button>
+    <input id="walletInput" placeholder="Carteira Solana (opcional)">
 
-  <button onclick="shareX()">Compartilhar vitória no X</button>
+    <button onclick="connectPhantom()">Conectar Phantom</button>
+    <button onclick="shareX()">Compartilhar vitória no X</button>
 
-  <div class="small" id="status"></div>
-</div>
+    <div class="result" id="result">Resultado: —</div>
+  </div>
 
-<!-- RIGHT -->
-<div class="logo-box">
-  <img src="logo-rfx2.png">
-  <p>Guarde seus airdrops.<br>Acumule. Apoie o RFX2.</p>
-</div>
+  <div class="logoBox">
+    <img src="logo-rfx2.png">
+    <p><strong>Guarde seus airdrops.<br>Acumule. Apoie o RFX2.</strong></p>
+  </div>
 
 </div>
 
 <script>
-// -------- RODA --------
-const canvas=document.getElementById("wheel");
-const ctx=canvas.getContext("2d");
-const slices=["😊","😡","🔥","❤️","⭐","💎"];
-const center=canvas.width/2;
-const radius=center-10;
-const sliceAngle=(Math.PI*2)/slices.length;
-let rotation=0;
-let lastSpin=0;
+const canvas = document.getElementById("wheel");
+const ctx = canvas.getContext("2d");
+const size = canvas.width;
+const center = size / 2;
+
+const emojis = ["❤️","🔥","😡","😊","⭐","💎"];
+const slices = emojis.length;
+const sliceAngle = (Math.PI * 2) / slices;
+
+let angle = 0;
+let spinning = false;
 
 function drawWheel(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  slices.forEach((emoji,i)=>{
-    const start=rotation+i*sliceAngle;
+  ctx.clearRect(0,0,size,size);
+
+  for(let i=0;i<slices;i++){
+    const start = angle + i * sliceAngle;
+    const end = start + sliceAngle;
+
     ctx.beginPath();
     ctx.moveTo(center,center);
-    ctx.arc(center,center,radius,start,start+sliceAngle);
-    ctx.fillStyle=i%2?"#6d4bd3":"#4c37a6";
+    ctx.arc(center,center,center-6,start,end);
+    ctx.closePath();
+    ctx.fillStyle = "#6b4bd6";
     ctx.fill();
-    ctx.strokeStyle="#f5c400";
-    ctx.lineWidth=3;
+    ctx.strokeStyle = "#f5c400";
+    ctx.lineWidth = 3;
     ctx.stroke();
 
     ctx.save();
     ctx.translate(center,center);
-    ctx.rotate(start+sliceAngle/2);
-    ctx.font="28px serif";
-    ctx.textAlign="center";
-    ctx.fillStyle="#fff";
-    ctx.fillText(emoji,radius*0.65,10);
+    ctx.rotate(start + sliceAngle/2);
+    ctx.textAlign="right";
+    ctx.font="28px Arial";
+    ctx.fillText(emojis[i],center-40,10);
     ctx.restore();
-  });
-
-  // seta
-  ctx.fillStyle="#4db5ff";
-  ctx.beginPath();
-  ctx.moveTo(center,0);
-  ctx.lineTo(center-10,20);
-  ctx.lineTo(center+10,20);
-  ctx.fill();
+  }
 }
 
 drawWheel();
 
-function spin(){
-  const now=Date.now();
-  if(now-lastSpin<6*60*60*1000){
-    alert("Aguarde 6 horas para novo giro.");
+document.getElementById("spinBtn").onclick = () => {
+  if(spinning) return;
+
+  const last = localStorage.getItem("lastSpin");
+  if(last && Date.now() - last < 6*60*60*1000){
+    alert("Aguarda 6 horas entre giros.");
     return;
   }
-  lastSpin=now;
 
-  const target=Math.floor(Math.random()*slices.length);
-  let spins=8+Math.random()*4;
-  let start=null;
+  spinning = true;
+  localStorage.setItem("lastSpin",Date.now());
+
+  const spins = Math.random()*10 + 10;
+  const target = angle + spins * Math.PI*2 + Math.random()*sliceAngle;
+  const start = angle;
+  const duration = 4000;
+  const startTime = performance.now();
 
   function animate(t){
-    if(!start) start=t;
-    rotation+=0.18;
+    const p = Math.min((t-startTime)/duration,1);
+    angle = start + (target-start)*easeOut(p);
     drawWheel();
-    if(t-start<3000){
+    if(p<1){
       requestAnimationFrame(animate);
     }else{
-      const result=slices[target];
-      document.getElementById("status").innerText="Resultado: "+result;
-      window.lastResult=result;
+      spinning=false;
+      angle %= Math.PI*2;
+
+      const index = Math.floor(
+        ( (Math.PI*2 - angle + Math.PI/2) % (Math.PI*2) ) / sliceAngle
+      );
+      const result = emojis[index];
+      document.getElementById("result").innerText = "Resultado: " + result;
     }
   }
   requestAnimationFrame(animate);
+};
+
+function easeOut(t){
+  return 1-Math.pow(1-t,3);
 }
 
-// -------- PHANTOM --------
-async function connectPhantom(){
-  if(window.solana && window.solana.isPhantom){
-    try{
-      const res=await window.solana.connect();
-      document.getElementById("wallet").value=res.publicKey.toString();
-      document.getElementById("status").innerText="Phantom conectado ✔";
-    }catch(e){
-      alert("Conexão cancelada");
-    }
+function connectPhantom(){
+  if(window.solana?.isPhantom){
+    window.solana.connect().then(r=>{
+      walletInput.value = r.publicKey.toString();
+    });
   }else{
-    alert("Phantom Wallet não encontrada");
+    alert("Phantom não encontrado");
   }
 }
 
-// -------- X SHARE --------
 function shareX(){
-  if(!window.lastResult){
-    alert("Gire a roleta primeiro");
-    return;
-  }
-  const text=`I just spun the RFX2 Community Wheel and got ${window.lastResult} 🎡💎
-
-Join the experiment on Solana 👇
-https://reflexcoin2-0-project.github.io/reflexcoin-metadata/`;
-
-  const url="https://twitter.com/intent/tweet?text="+encodeURIComponent(text);
-  window.open(url,"_blank");
+  const text = encodeURIComponent("Acabei de girar a roleta RFX2 🎡💎");
+  window.open(`https://twitter.com/intent/tweet?text=${text}`,"_blank");
 }
 </script>
 
