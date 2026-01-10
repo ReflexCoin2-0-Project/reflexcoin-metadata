@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -107,11 +107,56 @@ input{
   font-weight:bold;
 }
 
-/* MOBILE – só centragem */
+/* MOBILE – apenas centragem */
 @media(max-width:900px){
   .container{
     grid-template-columns:1fr;
   }
+}
+
+/* ===== POP-UP AIRDROP ===== */
+.modal-overlay{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+}
+
+.modal{
+  background:linear-gradient(180deg,#0f1b34,#070c18);
+  border-radius:18px;
+  padding:28px 24px;
+  max-width:360px;
+  width:90%;
+  text-align:center;
+  box-shadow:0 0 40px rgba(0,0,0,0.6);
+}
+
+.modal h2{
+  color:#f5c400;
+  margin-top:0;
+}
+
+.modal p{
+  font-size:14px;
+  line-height:1.5;
+  color:#e6e9f0;
+}
+
+.modal button{
+  margin-top:18px;
+  background:#f5c400;
+  border:none;
+  border-radius:999px;
+  padding:10px 24px;
+  font-weight:bold;
+  cursor:pointer;
 }
 </style>
 </head>
@@ -120,18 +165,18 @@ input{
 
 <div class="container">
 
-  <!-- ESQUERDA -->
+  <!-- LEFT -->
   <div class="card">
-    <h1>🎡 Giro da Comunidade RFX2</h1>
-    <p>Experimento conduzido pela comunidade, baseado em emoção e participação.</p>
+    <h1>🎡 RFX2 Community Spin</h1>
+    <p>Community-driven experiment built around emotion and participation.</p>
     <ul>
-      <li>⏱ 1 giro a cada 6 horas</li>
-      <li>💎 Fatia de airdrop incluída</li>
-      <li>🎯 Probabilidade igual para todos os emojis</li>
+      <li>⏱ 1 spin every 6 hours</li>
+      <li>💎 Airdrop slice included</li>
+      <li>🎯 Equal probability for all emojis</li>
     </ul>
   </div>
 
-  <!-- CENTRO -->
+  <!-- CENTER -->
   <div class="card wheel-card">
 
     <div class="wheel-wrapper">
@@ -139,26 +184,40 @@ input{
       <canvas id="wheel" width="360" height="360"></canvas>
     </div>
 
-    <button onclick="spin()">Rodar</button>
+    <button onclick="spin()">Spin</button>
 
-    <input id="walletInput" type="text" placeholder="Carteira Solana (opcional)">
+    <input id="walletInput" type="text" placeholder="Solana wallet (optional)">
 
-    <button onclick="connectPhantom()">Conectar Phantom</button>
-    <button onclick="shareOnX()">Compartilhar vitória no X</button>
+    <button onclick="connectPhantom()">Connect Phantom</button>
+    <button onclick="shareOnX()">Share your win on X</button>
 
     <div id="result" style="margin-top:10px;font-weight:bold;"></div>
   </div>
 
-  <!-- DIREITA -->
+  <!-- RIGHT -->
   <div class="card logo-card">
     <img src="logo-rfx2.png" alt="RFX2">
-    <p>Guarde seus airdrops.<br>Acumule. Apoie o RFX2.</p>
+    <p>Hold your airdrops.<br>Accumulate. Support RFX2.</p>
   </div>
 
 </div>
 
+<!-- POP-UP AIRDROP -->
+<div class="modal-overlay" id="airdropModal">
+  <div class="modal">
+    <h2>💎 Airdrop unlocked</h2>
+    <p>
+      Your wallet is now <strong>eligible</strong> for a RFX2 airdrop.<br><br>
+      Airdrops are distributed <strong>later in secure batches</strong>
+      to avoid errors.<br><br>
+      <strong>No SOL is ever taken</strong> from your wallet.
+    </p>
+    <button onclick="closeAirdropModal()">OK</button>
+  </div>
+</div>
+
 <script>
-/* ====== RODA ====== */
+/* ===== ROULETTE ===== */
 const canvas = document.getElementById("wheel");
 const ctx = canvas.getContext("2d");
 
@@ -172,11 +231,11 @@ function drawWheel(){
   ctx.clearRect(0,0,360,360);
 
   slices.forEach((emoji,i)=>{
-    const angle = rotation + i * sliceAngle;
+    const a = rotation + i * sliceAngle;
 
     ctx.beginPath();
     ctx.moveTo(180,180);
-    ctx.arc(180,180,170,angle,angle + sliceAngle);
+    ctx.arc(180,180,170,a,a + sliceAngle);
     ctx.closePath();
 
     ctx.fillStyle = i % 2 === 0 ? "#6d4bd4" : "#5b3fc4";
@@ -187,7 +246,7 @@ function drawWheel(){
 
     ctx.save();
     ctx.translate(180,180);
-    ctx.rotate(angle + sliceAngle / 2);
+    ctx.rotate(a + sliceAngle/2);
     ctx.textAlign = "center";
     ctx.font = "26px Arial";
     ctx.fillStyle = "#fff";
@@ -202,8 +261,8 @@ function spin(){
   if(spinning) return;
 
   const lastSpin = localStorage.getItem("rfx2_last_spin");
-  if(lastSpin && Date.now() - lastSpin < 6 * 60 * 60 * 1000){
-    alert("Aguarda 6 horas para novo giro.");
+  if(lastSpin && Date.now() - lastSpin < 6*60*60*1000){
+    alert("Please wait 6 hours between spins.");
     return;
   }
 
@@ -211,61 +270,64 @@ function spin(){
   localStorage.setItem("rfx2_last_spin", Date.now());
 
   const winnerIndex = Math.floor(Math.random() * slices.length);
-  const targetAngle =
+
+  const targetRotation =
     8 * Math.PI * 2 +
     (Math.PI * 2 - (winnerIndex * sliceAngle + sliceAngle / 2));
 
-  const startAngle = rotation;
+  const startRotation = rotation;
   const startTime = performance.now();
   const duration = 4000;
 
   function animate(t){
     const progress = Math.min((t - startTime) / duration, 1);
     const ease = 1 - Math.pow(1 - progress, 3);
-    rotation = startAngle + (targetAngle - startAngle) * ease;
+    rotation = startRotation + (targetRotation - startRotation) * ease;
     drawWheel();
 
     if(progress < 1){
       requestAnimationFrame(animate);
     } else {
-      rotation = targetAngle % (2 * Math.PI);
+      rotation = targetRotation % (2 * Math.PI);
       spinning = false;
       lastResult = slices[winnerIndex];
       document.getElementById("result").innerText =
-        "Resultado: " + lastResult;
+        "Result: " + lastResult;
+
+      if(lastResult === "💎"){
+        openAirdropModal();
+      }
     }
   }
 
   requestAnimationFrame(animate);
 }
 
-/* ====== PHANTOM ====== */
+/* ===== PHANTOM ===== */
 async function connectPhantom(){
   if(!window.solana || !window.solana.isPhantom){
-    alert("Phantom Wallet não encontrada.");
+    alert("Phantom Wallet not found.");
     return;
   }
-
   try{
     const res = await window.solana.connect();
     document.getElementById("walletInput").value =
       res.publicKey.toString();
   }catch(e){
-    alert("Conexão cancelada.");
+    alert("Connection cancelled.");
   }
 }
 
-/* ====== X SHARE ====== */
+/* ===== SHARE X ===== */
 function shareOnX(){
   if(!lastResult){
-    alert("Roda a roleta primeiro.");
+    alert("Spin first.");
     return;
   }
 
   const text =
     `I just played the RFX2 Community Spin 🎡\n` +
-    `Result: ${lastResult}\n\n` +
-    `Try it here 👇`;
+    `Result: ${lastResult}\n\nTry it here 👇`;
 
   const url =
     "https://reflexcoin2-0-project.github.io/reflexcoin-metadata/game.html";
@@ -277,6 +339,15 @@ function shareOnX(){
     encodeURIComponent(url);
 
   window.open(shareUrl,"_blank");
+}
+
+/* ===== MODAL ===== */
+function openAirdropModal(){
+  document.getElementById("airdropModal").style.display = "flex";
+}
+
+function closeAirdropModal(){
+  document.getElementById("airdropModal").style.display = "none";
 }
 </script>
 
