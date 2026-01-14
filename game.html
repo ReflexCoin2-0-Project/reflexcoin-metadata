@@ -5,174 +5,227 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>RFX2 Community Spin</title>
 <style>
-  body{
-    margin:0;
-    font-family:Arial,Helvetica,sans-serif;
-    background:radial-gradient(circle at top,#0b1220,#05080f);
-    color:#fff;
-    display:flex;
-    justify-content:center;
-  }
-  .container{
-    max-width:420px;
-    width:100%;
-    padding:20px 16px 40px;
-    box-sizing:border-box;
-  }
-  h1{
-    color:#f5c400;
-    font-size:28px;
-    margin-bottom:10px;
-  }
-  ul{padding-left:18px;}
-  li{margin-bottom:6px;}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:radial-gradient(circle at top,#0b1220,#05080f);
+  color:#fff;
+}
 
-  .wheel-wrapper{
-    position:relative;
-    width:100%;
-    aspect-ratio:1/1;
-    margin:30px auto 10px;
-  }
+.wrapper{
+  max-width:1200px;
+  margin:auto;
+  padding:20px;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:20px;
+}
 
-  .wheel{
-    width:100%;
-    height:100%;
-    border-radius:50%;
-    border:6px solid #f5c400;
-    background:#6a4fd3;
-    position:relative;
-    transition:transform 4s cubic-bezier(0.17,0.67,0.14,0.99);
-  }
+.card{
+  background:linear-gradient(180deg,#0e1730,#070c18);
+  border-radius:18px;
+  padding:24px;
+}
 
-  .slice-line{
-    position:absolute;
-    width:50%;
-    height:4px;
-    background:#f5c400;
-    top:50%;
-    left:50%;
-    transform-origin:left center;
-  }
+h1{
+  color:#f5c400;
+  margin-top:0;
+}
 
-  .emoji{
-    position:absolute;
-    font-size:28px;
-    transform:translate(-50%,-50%);
-  }
+ul{padding-left:18px;}
 
-  /* seta fixa EM BAIXO, apontada para cima */
-  .pointer{
-    position:absolute;
-    bottom:-18px;
-    left:50%;
-    transform:translateX(-50%);
-    width:0;height:0;
-    border-left:14px solid transparent;
-    border-right:14px solid transparent;
-    border-top:22px solid #6fd0ff;
-    z-index:5;
-  }
+/* wheel */
+.wheel-box{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
 
-  button{
-    width:100%;
-    margin-top:16px;
-    padding:14px;
-    font-size:16px;
-    border:none;
-    border-radius:999px;
-    background:#f5c400;
-    color:#000;
-    font-weight:bold;
-    cursor:pointer;
-  }
+.wheel-container{
+  position:relative;
+  width:320px;
+  height:320px;
+}
 
-  input{
-    width:100%;
-    padding:12px;
-    margin-top:14px;
-    border-radius:999px;
-    border:none;
-  }
+canvas{
+  width:320px;
+  height:320px;
+}
 
-  .result{
-    text-align:center;
-    margin-top:14px;
-    font-size:18px;
+/* pointer FIXED BOTTOM */
+.pointer{
+  position:absolute;
+  bottom:-14px;
+  left:50%;
+  transform:translateX(-50%) rotate(180deg);
+  width:0;
+  height:0;
+  border-left:14px solid transparent;
+  border-right:14px solid transparent;
+  border-top:22px solid #5bbcff;
+}
+
+button{
+  margin-top:18px;
+  padding:12px 28px;
+  border:none;
+  border-radius:999px;
+  background:#f5c400;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+input{
+  width:100%;
+  margin-top:14px;
+  padding:10px;
+  border-radius:999px;
+  border:none;
+}
+
+.result{
+  margin-top:14px;
+  font-size:18px;
+}
+
+.logo-card{
+  background:#fff;
+  color:#c8a100;
+  text-align:center;
+}
+
+.logo-card img{
+  max-width:140px;
+}
+
+@media(max-width:900px){
+  .wrapper{
+    grid-template-columns:1fr;
   }
+}
 </style>
 </head>
 <body>
-<div class="container">
 
-  <h1>🎡 RFX2 Community Spin</h1>
-  <ul>
-    <li>1 spin every 6 hours</li>
-    <li>Airdrop slice included</li>
-    <li>Equal probability for all emojis</li>
-  </ul>
+<div class="wrapper">
 
-  <div class="wheel-wrapper">
-    <div class="wheel" id="wheel"></div>
-    <div class="pointer"></div>
+  <div class="card">
+    <h1>🎡 RFX2 Community Spin</h1>
+    <p>Community-driven experiment built around emotion and participation.</p>
+    <ul>
+      <li>⏱ 1 spin every 6 hours</li>
+      <li>💎 Airdrop slice included</li>
+      <li>🎯 Equal probability for all emojis</li>
+    </ul>
   </div>
 
-  <button id="spinBtn">Spin</button>
+  <div class="card wheel-box">
+    <div class="wheel-container">
+      <canvas id="wheel" width="320" height="320"></canvas>
+      <div class="pointer"></div>
+    </div>
 
-  <input type="text" placeholder="Solana wallet (optional)" />
+    <button onclick="spin()">Spin</button>
+    <input id="wallet" placeholder="Solana wallet (optional)" />
+    <button onclick="connectPhantom()">Connect Phantom</button>
+    <button onclick="shareX()">Share your win on X</button>
+    <div class="result" id="result">Result: —</div>
+  </div>
 
-  <button>Connect Phantom</button>
-  <button>Share your win on X</button>
-
-  <div class="result" id="result">Result: —</div>
+  <div class="card logo-card">
+    <img src="logo-rfx2.png" alt="RFX2" />
+    <p><strong>Save your airdrops.<br/>Accumulate. Support RFX2.</strong></p>
+  </div>
 
 </div>
 
 <script>
-  const emojis = ["🔥","❤️","⭐","💎","🙂","😡"];
-  const wheel = document.getElementById("wheel");
-  const resultEl = document.getElementById("result");
+const canvas = document.getElementById('wheel');
+const ctx = canvas.getContext('2d');
 
-  const sliceCount = emojis.length;
-  const sliceAngle = 360 / sliceCount;
+const emojis = ['🔥','❤️','⭐','💎','🙂','😡'];
+const sliceCount = emojis.length;
+const sliceAngle = (2*Math.PI)/sliceCount;
 
-  /* desenhar linhas e emojis */
-  emojis.forEach((emoji, i) => {
-    const line = document.createElement("div");
-    line.className = "slice-line";
-    line.style.transform = `rotate(${i * sliceAngle}deg)`;
-    wheel.appendChild(line);
+let currentRotation = 0;
+let spinning = false;
 
-    const angle = (i * sliceAngle + sliceAngle / 2) * Math.PI / 180;
-    const r = 35; // %
-    const x = 50 + r * Math.cos(angle);
-    const y = 50 + r * Math.sin(angle);
+function drawWheel(rotation=0){
+  ctx.clearRect(0,0,320,320);
+  ctx.save();
+  ctx.translate(160,160);
+  ctx.rotate(rotation);
 
-    const e = document.createElement("div");
-    e.className = "emoji";
-    e.style.left = x + "%";
-    e.style.top = y + "%";
-    e.textContent = emoji;
-    wheel.appendChild(e);
-  });
+  for(let i=0;i<sliceCount;i++){
+    ctx.beginPath();
+    ctx.moveTo(0,0);
+    ctx.arc(0,0,150,i*sliceAngle,(i+1)*sliceAngle);
+    ctx.fillStyle = '#6b4dd6';
+    ctx.fill();
+    ctx.strokeStyle = '#f5c400';
+    ctx.lineWidth = 3;
+    ctx.stroke();
 
-  let currentRotation = 0;
+    ctx.save();
+    ctx.rotate(i*sliceAngle + sliceAngle/2);
+    ctx.textAlign='center';
+    ctx.font='26px serif';
+    ctx.fillStyle='#fff';
+    ctx.fillText(emojis[i],90,10);
+    ctx.restore();
+  }
+  ctx.restore();
+}
 
-  document.getElementById("spinBtn").onclick = () => {
-    const winnerIndex = Math.floor(Math.random() * sliceCount);
+drawWheel();
 
-    /*
-      A seta está em baixo (270°).
-      Queremos que o centro da fatia vencedora alinhe com 270°.
-    */
-    const targetAngle = 270 - (winnerIndex * sliceAngle + sliceAngle / 2);
+function spin(){
+  if(spinning) return;
+  spinning=true;
 
-    currentRotation += 360 * 5 + targetAngle;
-    wheel.style.transform = `rotate(${currentRotation}deg)`;
+  // fair random slice
+  const winnerIndex = Math.floor(Math.random()*sliceCount);
 
-    setTimeout(() => {
-      resultEl.textContent = "Result: " + emojis[winnerIndex];
-    }, 4200);
-  };
+  // pointer is at BOTTOM (270deg)
+  const pointerAngle = 1.5*Math.PI;
+
+  const targetAngle = pointerAngle - (winnerIndex*sliceAngle + sliceAngle/2);
+
+  const spins = 5*2*Math.PI;
+  const finalRotation = spins + targetAngle;
+
+  let start=null;
+  const duration=3500;
+
+  function animate(ts){
+    if(!start) start=ts;
+    const p = Math.min((ts-start)/duration,1);
+    const ease = 1-Math.pow(1-p,3);
+    currentRotation = ease*finalRotation;
+    drawWheel(currentRotation);
+    if(p<1){
+      requestAnimationFrame(animate);
+    } else {
+      spinning=false;
+      document.getElementById('result').innerText = 'Result: '+emojis[winnerIndex];
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+
+function connectPhantom(){
+  if(window.solana && window.solana.isPhantom){
+    window.solana.connect().then(r=>{
+      document.getElementById('wallet').value = r.publicKey.toString();
+    });
+  } else alert('Phantom not found');
+}
+
+function shareX(){
+  const text = encodeURIComponent('I just spun the RFX2 Community Spin 🎡');
+  window.open('https://twitter.com/intent/tweet?text='+text,'_blank');
+}
 </script>
 
 </body>
