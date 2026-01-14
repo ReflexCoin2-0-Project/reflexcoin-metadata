@@ -4,154 +4,175 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>RFX2 Community Spin</title>
-
 <style>
-/* ⚠️ Layout e gráfico mantidos. Só correções lógicas e seta */
-body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:radial-gradient(circle at top,#0b1220,#05080f);
-  color:#fff;
-}
+  body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:radial-gradient(circle at top,#0b1220,#05080f);
+    color:#fff;
+    display:flex;
+    justify-content:center;
+  }
+  .container{
+    max-width:420px;
+    width:100%;
+    padding:20px 16px 40px;
+    box-sizing:border-box;
+  }
+  h1{
+    color:#f5c400;
+    font-size:28px;
+    margin-bottom:10px;
+  }
+  ul{padding-left:18px;}
+  li{margin-bottom:6px;}
 
-.container{
-  max-width:420px;
-  margin:0 auto;
-  padding:20px;
-  text-align:center;
-}
+  .wheel-wrapper{
+    position:relative;
+    width:100%;
+    aspect-ratio:1/1;
+    margin:30px auto 10px;
+  }
 
-.wheel-wrapper{
-  position:relative;
-  width:320px;
-  height:320px;
-  margin:0 auto 10px;
-}
+  .wheel{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    border:6px solid #f5c400;
+    background:#6a4fd3;
+    position:relative;
+    transition:transform 4s cubic-bezier(0.17,0.67,0.14,0.99);
+  }
 
-#wheel{
-  width:100%;
-  height:100%;
-  border-radius:50%;
-  border:4px solid #f5c542;
-  transition:transform 4s cubic-bezier(.17,.67,.32,1.02);
-}
+  .slice-line{
+    position:absolute;
+    width:50%;
+    height:4px;
+    background:#f5c400;
+    top:50%;
+    left:50%;
+    transform-origin:left center;
+  }
 
-/* 🔻 SETA FIXA EM BAIXO – APONTA PARA CIMA */
-.pointer{
-  position:absolute;
-  bottom:-14px;
-  left:50%;
-  transform:translateX(-50%) rotate(180deg);
-  width:0;
-  height:0;
-  border-left:12px solid transparent;
-  border-right:12px solid transparent;
-  border-bottom:22px solid #4dd0ff;
-  z-index:10;
-}
+  .emoji{
+    position:absolute;
+    font-size:28px;
+    transform:translate(-50%,-50%);
+  }
 
-button{
-  background:#f5c542;
-  border:none;
-  border-radius:20px;
-  padding:12px 24px;
-  font-weight:bold;
-  cursor:pointer;
-  margin-top:10px;
-}
+  /* seta fixa EM BAIXO, apontada para cima */
+  .pointer{
+    position:absolute;
+    bottom:-18px;
+    left:50%;
+    transform:translateX(-50%);
+    width:0;height:0;
+    border-left:14px solid transparent;
+    border-right:14px solid transparent;
+    border-top:22px solid #6fd0ff;
+    z-index:5;
+  }
 
-input{
-  width:100%;
-  padding:10px;
-  border-radius:20px;
-  border:none;
-  margin-top:10px;
-}
+  button{
+    width:100%;
+    margin-top:16px;
+    padding:14px;
+    font-size:16px;
+    border:none;
+    border-radius:999px;
+    background:#f5c400;
+    color:#000;
+    font-weight:bold;
+    cursor:pointer;
+  }
 
-.result{
-  margin-top:10px;
-  font-size:18px;
-}
+  input{
+    width:100%;
+    padding:12px;
+    margin-top:14px;
+    border-radius:999px;
+    border:none;
+  }
+
+  .result{
+    text-align:center;
+    margin-top:14px;
+    font-size:18px;
+  }
 </style>
 </head>
 <body>
-
 <div class="container">
-  <h2>RFX2 Community Spin</h2>
+
+  <h1>🎡 RFX2 Community Spin</h1>
+  <ul>
+    <li>1 spin every 6 hours</li>
+    <li>Airdrop slice included</li>
+    <li>Equal probability for all emojis</li>
+  </ul>
 
   <div class="wheel-wrapper">
+    <div class="wheel" id="wheel"></div>
     <div class="pointer"></div>
-    <canvas id="wheel" width="320" height="320"></canvas>
   </div>
 
   <button id="spinBtn">Spin</button>
-  <input placeholder="Solana wallet (optional)" />
+
+  <input type="text" placeholder="Solana wallet (optional)" />
+
   <button>Connect Phantom</button>
   <button>Share your win on X</button>
+
   <div class="result" id="result">Result: —</div>
+
 </div>
 
 <script>
-/* =========================
-   🎯 LÓGICA CORRIGIDA
-   - Probabilidade igual
-   - Resultado = posição real
-   - Seta fixa / roda gira
-========================= */
+  const emojis = ["🔥","❤️","⭐","💎","🙂","😡"];
+  const wheel = document.getElementById("wheel");
+  const resultEl = document.getElementById("result");
 
-const canvas = document.getElementById("wheel");
-const ctx = canvas.getContext("2d");
+  const sliceCount = emojis.length;
+  const sliceAngle = 360 / sliceCount;
 
-const prizes = ["🔥","❤️","⭐","💎","🙂","😡"]; // igual para todos
-const colors = ["#6a5acd","#6f60d5"];
+  /* desenhar linhas e emojis */
+  emojis.forEach((emoji, i) => {
+    const line = document.createElement("div");
+    line.className = "slice-line";
+    line.style.transform = `rotate(${i * sliceAngle}deg)`;
+    wheel.appendChild(line);
 
-const sliceAngle = (2 * Math.PI) / prizes.length;
-let currentRotation = 0;
+    const angle = (i * sliceAngle + sliceAngle / 2) * Math.PI / 180;
+    const r = 35; // %
+    const x = 50 + r * Math.cos(angle);
+    const y = 50 + r * Math.sin(angle);
 
-function drawWheel(){
-  for(let i=0;i<prizes.length;i++){
-    ctx.beginPath();
-    ctx.moveTo(160,160);
-    ctx.fillStyle = colors[i % 2];
-    ctx.arc(160,160,160,i*sliceAngle,(i+1)*sliceAngle);
-    ctx.fill();
+    const e = document.createElement("div");
+    e.className = "emoji";
+    e.style.left = x + "%";
+    e.style.top = y + "%";
+    e.textContent = emoji;
+    wheel.appendChild(e);
+  });
 
-    ctx.save();
-    ctx.translate(160,160);
-    ctx.rotate(i*sliceAngle + sliceAngle/2);
-    ctx.textAlign="right";
-    ctx.fillStyle="#fff";
-    ctx.font="26px Arial";
-    ctx.fillText(prizes[i],130,10);
-    ctx.restore();
-  }
-}
+  let currentRotation = 0;
 
-drawWheel();
+  document.getElementById("spinBtn").onclick = () => {
+    const winnerIndex = Math.floor(Math.random() * sliceCount);
 
-const spinBtn = document.getElementById("spinBtn");
-const resultEl = document.getElementById("result");
+    /*
+      A seta está em baixo (270°).
+      Queremos que o centro da fatia vencedora alinhe com 270°.
+    */
+    const targetAngle = 270 - (winnerIndex * sliceAngle + sliceAngle / 2);
 
-spinBtn.onclick = () => {
-  spinBtn.disabled = true;
+    currentRotation += 360 * 5 + targetAngle;
+    wheel.style.transform = `rotate(${currentRotation}deg)`;
 
-  // 🎲 Sorteio justo
-  const winnerIndex = Math.floor(Math.random() * prizes.length);
-
-  // 🎯 Ângulo exato da fatia vencedora
-  const targetAngle = (prizes.length - winnerIndex) * sliceAngle - sliceAngle / 2;
-
-  // 🔄 Voltas extra para animação
-  const spins = 6 * 2 * Math.PI;
-  currentRotation = spins + targetAngle;
-
-  canvas.style.transform = `rotate(${currentRotation}rad)`;
-
-  setTimeout(() => {
-    resultEl.textContent = `Result: ${prizes[winnerIndex]}`;
-    spinBtn.disabled = false;
-  }, 4200);
-};
+    setTimeout(() => {
+      resultEl.textContent = "Result: " + emojis[winnerIndex];
+    }, 4200);
+  };
 </script>
 
 </body>
