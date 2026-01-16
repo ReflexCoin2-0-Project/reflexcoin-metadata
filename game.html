@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>RFX2 Community Spin</title>
+
 <style>
 body{
   margin:0;
@@ -52,12 +53,12 @@ canvas{
   height:320px;
 }
 
-/* pointer FIXED BOTTOM */
+/* SETA FIXA EM BAIXO (APONTA PARA CIMA) */
 .pointer{
   position:absolute;
   bottom:-14px;
   left:50%;
-  transform:translateX(-50%) rotate(180deg);
+  transform:translateX(-50%);
   width:0;
   height:0;
   border-left:14px solid transparent;
@@ -105,6 +106,7 @@ input{
 }
 </style>
 </head>
+
 <body>
 
 <div class="wrapper">
@@ -145,12 +147,12 @@ const ctx = canvas.getContext('2d');
 
 const emojis = ['🔥','❤️','⭐','💎','🙂','😡'];
 const sliceCount = emojis.length;
-const sliceAngle = (2*Math.PI)/sliceCount;
+const sliceAngle = (2 * Math.PI) / sliceCount;
 
 let currentRotation = 0;
 let spinning = false;
 
-function drawWheel(rotation=0){
+function drawWheel(rotation = 0){
   ctx.clearRect(0,0,320,320);
   ctx.save();
   ctx.translate(160,160);
@@ -181,33 +183,41 @@ drawWheel();
 
 function spin(){
   if(spinning) return;
-  spinning=true;
+  spinning = true;
 
-  // fair random slice
-  const winnerIndex = Math.floor(Math.random()*sliceCount);
+  // Sorteio justo
+  const winnerIndex = Math.floor(Math.random() * sliceCount);
 
-  // pointer is at BOTTOM (270deg)
-  const pointerAngle = 1.5*Math.PI;
+  /*
+    REFERENCIAL CORRETO:
+    - Canvas começa às 3h (0 rad)
+    - Seta está fixa às 6h (PI/2)
+    - Alinhar o CENTRO da fatia vencedora com a seta
+  */
+  const pointerAngle = Math.PI / 2;
+  const sliceCenter = winnerIndex * sliceAngle + sliceAngle / 2;
 
-  const targetAngle = pointerAngle - (winnerIndex*sliceAngle + sliceAngle/2);
+  const extraSpins = 5 * 2 * Math.PI;
+  const targetRotation = extraSpins + (pointerAngle - sliceCenter);
 
-  const spins = 5*2*Math.PI;
-  const finalRotation = spins + targetAngle;
-
-  let start=null;
-  const duration=3500;
+  const startRotation = currentRotation;
+  const duration = 3500;
+  let start = null;
 
   function animate(ts){
-    if(!start) start=ts;
-    const p = Math.min((ts-start)/duration,1);
-    const ease = 1-Math.pow(1-p,3);
-    currentRotation = ease*finalRotation;
+    if(!start) start = ts;
+    const progress = Math.min((ts - start) / duration, 1);
+    const easeOut = 1 - Math.pow(1 - progress, 3);
+
+    currentRotation = startRotation + easeOut * (targetRotation - startRotation);
     drawWheel(currentRotation);
-    if(p<1){
+
+    if(progress < 1){
       requestAnimationFrame(animate);
     } else {
-      spinning=false;
-      document.getElementById('result').innerText = 'Result: '+emojis[winnerIndex];
+      spinning = false;
+      document.getElementById('result').innerText =
+        'Result: ' + emojis[winnerIndex];
     }
   }
 
@@ -219,12 +229,17 @@ function connectPhantom(){
     window.solana.connect().then(r=>{
       document.getElementById('wallet').value = r.publicKey.toString();
     });
-  } else alert('Phantom not found');
+  } else {
+    alert('Phantom not found');
+  }
 }
 
 function shareX(){
   const text = encodeURIComponent('I just spun the RFX2 Community Spin 🎡');
-  window.open('https://twitter.com/intent/tweet?text='+text,'_blank');
+  window.open(
+    'https://twitter.com/intent/tweet?text=' + text,
+    '_blank'
+  );
 }
 </script>
 
