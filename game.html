@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RFX2 Community Spin</title>
 
 <style>
@@ -28,14 +28,10 @@ body{
   padding:24px;
 }
 
-h1{
-  color:#f5c400;
-  margin-top:0;
-}
+h1{color:#f5c400;margin-top:0}
+ul{padding-left:18px}
 
-ul{padding-left:18px;}
-
-/* wheel */
+/* ===== WHEEL ===== */
 .wheel-box{
   display:flex;
   flex-direction:column;
@@ -53,17 +49,17 @@ canvas{
   height:320px;
 }
 
-/* SETA FIXA EM BAIXO (APONTA PARA CIMA) */
+/* ✅ POINTER FIXED — POINTING UP */
 .pointer{
   position:absolute;
-  bottom:-14px;
+  top:-16px;
   left:50%;
   transform:translateX(-50%);
   width:0;
   height:0;
   border-left:14px solid transparent;
   border-right:14px solid transparent;
-  border-top:22px solid #5bbcff;
+  border-bottom:22px solid #5bbcff;
 }
 
 button{
@@ -89,6 +85,7 @@ input{
   font-size:18px;
 }
 
+/* ===== RIGHT CARD ===== */
 .logo-card{
   background:#fff;
   color:#c8a100;
@@ -96,13 +93,24 @@ input{
 }
 
 .logo-card img{
-  max-width:140px;
+  max-width:90px; /* ✅ smaller logo */
+  margin-bottom:12px;
 }
 
+.logo-card p{
+  font-size:14px;
+  line-height:1.5;
+}
+
+.token-info{
+  margin-top:14px;
+  font-size:13px;
+  color:#333;
+}
+
+/* ===== MOBILE ===== */
 @media(max-width:900px){
-  .wrapper{
-    grid-template-columns:1fr;
-  }
+  .wrapper{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -111,6 +119,7 @@ input{
 
 <div class="wrapper">
 
+  <!-- LEFT -->
   <div class="card">
     <h1>🎡 RFX2 Community Spin</h1>
     <p>Community-driven experiment built around emotion and participation.</p>
@@ -121,6 +130,7 @@ input{
     </ul>
   </div>
 
+  <!-- CENTER -->
   <div class="card wheel-box">
     <div class="wheel-container">
       <canvas id="wheel" width="320" height="320"></canvas>
@@ -128,15 +138,23 @@ input{
     </div>
 
     <button onclick="spin()">Spin</button>
-    <input id="wallet" placeholder="Solana wallet (optional)" />
+    <input id="wallet" placeholder="Solana wallet (optional)">
     <button onclick="connectPhantom()">Connect Phantom</button>
     <button onclick="shareX()">Share your win on X</button>
     <div class="result" id="result">Result: —</div>
   </div>
 
+  <!-- RIGHT -->
   <div class="card logo-card">
-    <img src="logo-rfx2.png" alt="RFX2" />
-    <p><strong>Save your airdrops.<br/>Accumulate. Support RFX2.</strong></p>
+    <img src="logo-rfx2.png" alt="RFX2 logo">
+    <p><strong>Save your airdrops.<br>Accumulate. Support RFX2.</strong></p>
+
+    <div class="token-info">
+      <p><strong>Token:</strong> ReflexCoin 2.0 (RFX2)</p>
+      <p><strong>Network:</strong> Solana</p>
+      <p><strong>Supply:</strong> Fixed · No mint</p>
+      <p><strong>Type:</strong> Experimental / Community</p>
+    </div>
   </div>
 
 </div>
@@ -147,12 +165,12 @@ const ctx = canvas.getContext('2d');
 
 const emojis = ['🔥','❤️','⭐','💎','🙂','😡'];
 const sliceCount = emojis.length;
-const sliceAngle = (2 * Math.PI) / sliceCount;
+const sliceAngle = (2*Math.PI)/sliceCount;
 
 let currentRotation = 0;
 let spinning = false;
 
-function drawWheel(rotation = 0){
+function drawWheel(rotation=0){
   ctx.clearRect(0,0,320,320);
   ctx.save();
   ctx.translate(160,160);
@@ -185,59 +203,51 @@ function spin(){
   if(spinning) return;
   spinning = true;
 
-  // Sorteio justo
-  const winnerIndex = Math.floor(Math.random() * sliceCount);
+  const winnerIndex = Math.floor(Math.random()*sliceCount);
 
-  /*
-    REFERENCIAL CORRETO:
-    - Canvas começa às 3h (0 rad)
-    - Seta está fixa às 6h (PI/2)
-    - Alinhar o CENTRO da fatia vencedora com a seta
-  */
-  const pointerAngle = Math.PI / 2;
-  const sliceCenter = winnerIndex * sliceAngle + sliceAngle / 2;
+  /* pointer at TOP (270° canvas logic inverted) */
+  const pointerAngle = -Math.PI/2;
+  const targetAngle = pointerAngle - (winnerIndex*sliceAngle + sliceAngle/2);
+  const spins = 5 * 2 * Math.PI;
+  const finalRotation = spins + targetAngle;
 
-  const extraSpins = 5 * 2 * Math.PI;
-  const targetRotation = extraSpins + (pointerAngle - sliceCenter);
-
-  const startRotation = currentRotation;
-  const duration = 3500;
-  let start = null;
+  let start=null;
+  const duration=3500;
 
   function animate(ts){
-    if(!start) start = ts;
-    const progress = Math.min((ts - start) / duration, 1);
-    const easeOut = 1 - Math.pow(1 - progress, 3);
-
-    currentRotation = startRotation + easeOut * (targetRotation - startRotation);
+    if(!start) start=ts;
+    const p = Math.min((ts-start)/duration,1);
+    const ease = 1 - Math.pow(1-p,3);
+    currentRotation = ease * finalRotation;
     drawWheel(currentRotation);
-
-    if(progress < 1){
+    if(p<1){
       requestAnimationFrame(animate);
     } else {
-      spinning = false;
+      spinning=false;
       document.getElementById('result').innerText =
         'Result: ' + emojis[winnerIndex];
     }
   }
-
   requestAnimationFrame(animate);
 }
 
 function connectPhantom(){
   if(window.solana && window.solana.isPhantom){
     window.solana.connect().then(r=>{
-      document.getElementById('wallet').value = r.publicKey.toString();
+      document.getElementById('wallet').value =
+        r.publicKey.toString();
     });
   } else {
-    alert('Phantom not found');
+    alert('Phantom wallet not found');
   }
 }
 
 function shareX(){
-  const text = encodeURIComponent('I just spun the RFX2 Community Spin 🎡');
+  const text = encodeURIComponent(
+    'I just spun the RFX2 Community Spin 🎡'
+  );
   window.open(
-    'https://twitter.com/intent/tweet?text=' + text,
+    'https://twitter.com/intent/tweet?text='+text,
     '_blank'
   );
 }
