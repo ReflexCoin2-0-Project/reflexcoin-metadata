@@ -28,10 +28,14 @@ body{
   padding:24px;
 }
 
-h1{color:#f5c400;margin-top:0}
+h1{
+  color:#f5c400;
+  margin-top:0;
+}
+
 ul{padding-left:18px}
 
-/* ===== WHEEL ===== */
+/* wheel */
 .wheel-box{
   display:flex;
   flex-direction:column;
@@ -49,17 +53,17 @@ canvas{
   height:320px;
 }
 
-/* ✅ POINTER FIXED — POINTING UP */
+/* ✅ SETA NO MESMO SÍTIO — BICO PARA CIMA */
 .pointer{
   position:absolute;
-  top:-16px;
+  bottom:-14px;           /* mantém em baixo */
   left:50%;
-  transform:translateX(-50%);
+  transform:translateX(-50%); /* sem rotação */
   width:0;
   height:0;
   border-left:14px solid transparent;
   border-right:14px solid transparent;
-  border-bottom:22px solid #5bbcff;
+  border-bottom:22px solid #5bbcff; /* bico para cima */
 }
 
 button{
@@ -85,7 +89,6 @@ input{
   font-size:18px;
 }
 
-/* ===== RIGHT CARD ===== */
 .logo-card{
   background:#fff;
   color:#c8a100;
@@ -93,24 +96,13 @@ input{
 }
 
 .logo-card img{
-  max-width:90px; /* ✅ smaller logo */
-  margin-bottom:12px;
+  max-width:140px;
 }
 
-.logo-card p{
-  font-size:14px;
-  line-height:1.5;
-}
-
-.token-info{
-  margin-top:14px;
-  font-size:13px;
-  color:#333;
-}
-
-/* ===== MOBILE ===== */
 @media(max-width:900px){
-  .wrapper{grid-template-columns:1fr}
+  .wrapper{
+    grid-template-columns:1fr;
+  }
 }
 </style>
 </head>
@@ -119,7 +111,6 @@ input{
 
 <div class="wrapper">
 
-  <!-- LEFT -->
   <div class="card">
     <h1>🎡 RFX2 Community Spin</h1>
     <p>Community-driven experiment built around emotion and participation.</p>
@@ -130,7 +121,6 @@ input{
     </ul>
   </div>
 
-  <!-- CENTER -->
   <div class="card wheel-box">
     <div class="wheel-container">
       <canvas id="wheel" width="320" height="320"></canvas>
@@ -144,17 +134,9 @@ input{
     <div class="result" id="result">Result: —</div>
   </div>
 
-  <!-- RIGHT -->
   <div class="card logo-card">
-    <img src="logo-rfx2.png" alt="RFX2 logo">
+    <img src="logo-rfx2.png" alt="RFX2">
     <p><strong>Save your airdrops.<br>Accumulate. Support RFX2.</strong></p>
-
-    <div class="token-info">
-      <p><strong>Token:</strong> ReflexCoin 2.0 (RFX2)</p>
-      <p><strong>Network:</strong> Solana</p>
-      <p><strong>Supply:</strong> Fixed · No mint</p>
-      <p><strong>Type:</strong> Experimental / Community</p>
-    </div>
   </div>
 
 </div>
@@ -201,14 +183,15 @@ drawWheel();
 
 function spin(){
   if(spinning) return;
-  spinning = true;
+  spinning=true;
 
   const winnerIndex = Math.floor(Math.random()*sliceCount);
 
-  /* pointer at TOP (270° canvas logic inverted) */
-  const pointerAngle = -Math.PI/2;
-  const targetAngle = pointerAngle - (winnerIndex*sliceAngle + sliceAngle/2);
-  const spins = 5 * 2 * Math.PI;
+  const pointerAngle = Math.PI/2; // seta em baixo, a apontar para cima
+  const targetAngle =
+    pointerAngle - (winnerIndex*sliceAngle + sliceAngle/2);
+
+  const spins = 5*2*Math.PI;
   const finalRotation = spins + targetAngle;
 
   let start=null;
@@ -217,8 +200,8 @@ function spin(){
   function animate(ts){
     if(!start) start=ts;
     const p = Math.min((ts-start)/duration,1);
-    const ease = 1 - Math.pow(1-p,3);
-    currentRotation = ease * finalRotation;
+    const ease = 1-Math.pow(1-p,3);
+    currentRotation = ease*finalRotation;
     drawWheel(currentRotation);
     if(p<1){
       requestAnimationFrame(animate);
@@ -228,6 +211,7 @@ function spin(){
         'Result: ' + emojis[winnerIndex];
     }
   }
+
   requestAnimationFrame(animate);
 }
 
@@ -237,9 +221,7 @@ function connectPhantom(){
       document.getElementById('wallet').value =
         r.publicKey.toString();
     });
-  } else {
-    alert('Phantom wallet not found');
-  }
+  } else alert('Phantom not found');
 }
 
 function shareX(){
